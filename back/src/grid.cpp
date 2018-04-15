@@ -2,6 +2,10 @@
 #include <iostream>
 #include "grid.h"
 
+void Grid::eat() {
+    //TODO
+}
+
 void Grid::displayGrid()
 {
     for (int i = 0; i < 36; i++)
