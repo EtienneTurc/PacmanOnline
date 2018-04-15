@@ -19,12 +19,12 @@ class Entity
     void updateDirection(int direction);
     void pushInput(int direction);
   
-    Entity(Grid* grid,int x_position, int y_position, int direction, float speed);
+    Entity(Grid* grid, int x_position, int y_position, int direction, float speed);
     ~Entity() {}
 
   protected:
     std::queue<uint8_t> _events;
-    uint8_t** _grid;
+    Grid* _grid;
     int _x_position;
     int _y_position;
     int _direction;
