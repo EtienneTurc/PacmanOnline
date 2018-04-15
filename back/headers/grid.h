@@ -1,5 +1,5 @@
 #include <vector>
-#include <iostream>
+#include <cstdint>
 
 #ifndef GRID_H
 #define GRID_H
@@ -12,7 +12,7 @@ public:
     void eat();
     void displayGrid();
     Grid();
-    ~Grid();
+    ~Grid() {};
 private:
     uint8_mat_t _grid;
 };
