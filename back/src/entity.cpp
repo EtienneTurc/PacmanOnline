@@ -1,7 +1,8 @@
 #include "entity.h"
 
-Entity::Entity(uint8_t x_position, uint8_t y_position, char direction, uint8_t speed, uint8_t subsection)
+Entity::Entity(uint8_t **grid, uint8_t x_position, uint8_t y_position, char direction, uint8_t speed, uint8_t subsection)
 {
+    _grid = grid;
     _x_position = x_position;
     _y_position = y_position;
     _direction = direction;
@@ -34,31 +35,31 @@ uint8_t Entity::getSubsection()
     return _subsection;
 }
 
-void Entity::move(uint8_t **grid)
+void Entity::move()
 {
     // Wihtout subsection
     switch (_direction)
     {
     case 'R':
-        if (grid[_x_position][(_y_position + 1) % 28] != 0)
+        if (_grid[_x_position][(_y_position + 1) % 28] != 0)
         {
             _y_position++;
         }
         break;
     case 'L':
-        if (grid[_x_position][(_y_position - 1) % 28] != 0)
+        if (_grid[_x_position][(_y_position - 1) % 28] != 0)
         {
             _y_position--;
         }
         break;
     case 'U':
-        if (grid[(_x_position - 1) % 36][_y_position] != 0)
+        if (_grid[(_x_position - 1) % 36][_y_position] != 0)
         {
             _x_position--;
         }
         break;
     case 'D':
-        if (grid[(_x_position + 1) % 36][_y_position] != 0)
+        if (_grid[(_x_position + 1) % 36][_y_position] != 0)
         {
             _x_position++;
         }

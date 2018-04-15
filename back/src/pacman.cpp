@@ -4,10 +4,8 @@ Pacman::Pacman(uint8_t x_position, uint8_t y_position, char direction, uint8_t s
 
 }
 
-void Pacman::eat(uint8_t** grid) {
-    grid[_x_position][_y_position] = 1; 
-}
-
-void PlayerDirection() {
-
+void PlayerDirection(char direction) {
+    
+    
+    _events.push(direction);
 }
