@@ -4,7 +4,7 @@ Pacman::Pacman(uint8_t x_position, uint8_t y_position, char direction, uint8_t s
 
 }
 
-void PlayerDirection(char direction) {
+void playerDirection(int direction) {
     
     
     _events.push(direction);
