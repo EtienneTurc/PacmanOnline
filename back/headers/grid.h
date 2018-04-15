@@ -1,5 +1,5 @@
 #include <vector>
-#include <iostream>
+#include <cstdint>
 
 #ifndef GRID_H
 #define GRID_H

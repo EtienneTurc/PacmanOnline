@@ -1,4 +1,3 @@
-#include <iostream>
 #include "grid.h"
 
 #ifndef GAME_H
