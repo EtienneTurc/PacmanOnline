@@ -1,10 +1,10 @@
 #include <vector>
-#include <IOSTREAM>
+#include <iostream>
 
 #ifndef GRID_H
 #define GRID_H
 
-typedef std::vector<std::vector<uint8> > uint8_mat_t;
+typedef std::vector<std::vector<uint8_t> > uint8_mat_t;
 
 class Grid
 {
