@@ -7,6 +7,8 @@ Entity::Entity(Grid *grid, int x_position, int y_position, int direction, float 
     _y_position = y_position;
     _direction = direction;
     _speed = speed;
+    _fraction = 1 / 2;
+    _event = 0;
 }
 
 int Entity::getXPosition()
@@ -34,6 +36,36 @@ float Entity::getFraction()
     return _fraction;
 }
 
+void Entity::pushInput(int direction)
+{
+    _event = direction;
+}
+
+void Entity::updateDirection(int direction)
+{
+    if (!_grid->checkWall(_x_position, _y_position, direction))
+    {
+        _direction = direction;
+    }
+}
+
+void Entity::updateFraction(float delta_time)
+{
+    // _fraction can not overtake 0.5 if there is a wall
+    if (_grid->checkWall(_x_position, _y_position, _direction) && _fraction > 0.5)
+    {
+        _fraction = 0.5;
+    }
+    else
+    {
+        _fraction = _fraction + delta_time;
+        while (_fraction > 1)
+        {
+            _fraction = _fraction - 1;
+        }
+    }
+}
+
 void Entity::move(float delta_time)
 {
     // Update the direction
@@ -42,59 +74,42 @@ void Entity::move(float delta_time)
         updateDirection(_event);
     }
 
-    // Update the current position
-    switch (_direction)
+    // Check if there is a wall in front
+    if (!_grid->checkWall(_x_position, _y_position, _direction) || _fraction < 0.5)
     {
-    case LEFT:
-        if (_fraction > 1)
+        // Update the current position
+        switch (_direction)
         {
-            _x_position--;
+        case LEFT:
+            if (_fraction > 1)
+            {
+                _x_position--;
+            }
+            updateFraction(delta_time);
+            break;
+        case RIGHT:
+            if (_fraction > 1)
+            {
+                _x_position++;
+            }
+            updateFraction(delta_time);
+            break;
+        case UP:
+            if (_fraction > 1)
+            {
+                _y_position--;
+            }
+            updateFraction(delta_time);
+            break;
+        case DOWN:
+            if (_fraction > 1)
+            {
+                _y_position++;
+            }
+            updateFraction(delta_time);
+            break;
+        default:
+            break;
         }
-        updateFraction(delta_time);
-        break;
-    case RIGHT:
-        if (_fraction > 1)
-        {
-            _x_position++;
-        }
-        updateFraction(delta_time);
-        break;
-    case UP:
-        if (_fraction > 1)
-        {
-            _y_position--;
-        }
-        updateFraction(delta_time);
-        break;
-    case DOWN:
-        if (_fraction > 1)
-        {
-            _y_position++;
-        }
-        updateFraction(delta_time);
-        break;
-    default:
-        break;
-    }
-}
-
-void Entity::updateDirection(int direction)
-{
-    if (!grid.checkWallByDirection(_x_position, _y_position, direction))
-    {
-        _direction = direction;
-    }
-}
-
-void pushInput(int direction)
-{
-    _event = direction;
-}
-
-void updateFraction(float delta_time) {
-    _fraction = _fraction + delta_time
-    while (_fraction > 1) 
-    {
-     _fraction = _fraction - 1;   
     }
 }
