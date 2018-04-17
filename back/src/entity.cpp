@@ -1,6 +1,6 @@
 #include "entity.h"
 
-Entity::Entity(Grid *grid, int x_position, int y_position, int direction, float speed)
+Entity::Entity(Grid *grid, int x_position, int y_position, int direction, float speed, int score)
 {
     _grid = grid;
     _x_position = x_position;
@@ -9,6 +9,7 @@ Entity::Entity(Grid *grid, int x_position, int y_position, int direction, float 
     _speed = speed;
     _fraction = 1 / 2;
     _event = 0;
+    _score = score;
 }
 
 int Entity::getXPosition()
@@ -58,7 +59,7 @@ void Entity::updateFraction(float delta_time)
     }
     else
     {
-        _fraction = _fraction + delta_time;
+        _fraction = _fraction + delta_time*_speed;
         while (_fraction > 1)
         {
             _fraction = _fraction - 1;

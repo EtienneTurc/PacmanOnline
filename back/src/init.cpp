@@ -9,7 +9,7 @@ void Game::init()
     _pacmans.push_back(pacman);
 
     //Initialisation ghost
-    Ghost gasper(_grid, 6,4,RIGHT,1, 0);
+    Ghost gasper(&_grid, 6,4,RIGHT,1, GHOST_SCORE, 0);
     _ghosts.push_back(gasper);
 
     _grid->displayGrid();

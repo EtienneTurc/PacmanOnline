@@ -40,8 +40,8 @@ Grid::Grid () {
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
 }
 
-void Grid::eat() {
-    //TODO
+void Grid::setCell(int x_position, int y_position, uint8_t value) {
+    _grid[x_position][y_position] = value;
 }
 
 void Grid::displayGrid()
@@ -56,20 +56,20 @@ void Grid::displayGrid()
     }
 }
 
-bool Grid::checkWall(int _x_position,int _y_position,int direction) {
+bool Grid::checkWall(int x_position,int y_position,int direction) {
     switch (direction)
     {
     case LEFT:
-        return _grid[(_x_position - 1) % _grid.size()][_y_position];
+        return _grid[(x_position - 1) % _grid.size()][y_position];
         break;
     case RIGHT:
-        return _grid[(_x_position + 1) % _grid.size()][_y_position];
+        return _grid[(x_position + 1) % _grid.size()][y_position];
         break;
     case UP:
-        return _grid[_x_position][(_y_position - 1) % _grid[0].size()];
+        return _grid[x_position][(y_position - 1) % _grid[0].size()];
         break;
     case DOWN:
-        return _grid[_x_position][(_y_position + 1) % _grid[0].size()];
+        return _grid[x_position][(y_position + 1) % _grid[0].size()];
         break;
     default:
         return true;

@@ -13,7 +13,7 @@ public:
     void updateSpeed(float new_speed);
     void updateTimeInJail();
 
-    Ghost(Grid* grid, int x_position, int y_position, int direction, float speed, unsigned int time_in_jail);
+    Ghost(Grid* grid, int x_position, int y_position, int direction, float speed, int score, unsigned int time_in_jail);
     ~Ghost(){};
 private:
     unsigned int _time_in_jail;
