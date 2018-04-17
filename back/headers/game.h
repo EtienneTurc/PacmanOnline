@@ -2,6 +2,7 @@
 #define GAME_H
 
 #include <vector>
+#include <iostream>
 
 #include "grid.h"
 #include "parameters.h"
