@@ -12,5 +12,5 @@ void Game::init()
     Ghost gasper(_grid, 6,4,RIGHT,1, GHOST_SCORE, 0);
     _ghosts.push_back(gasper);
 
-    _grid->displayGrid();
+    game.displayEntities();
 }
