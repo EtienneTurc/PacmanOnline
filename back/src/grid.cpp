@@ -1,22 +1,4 @@
-#include <cstdint>
-#include <iostream>
 #include "grid.h"
-
-void Grid::eat() {
-    //TODO
-}
-
-void Grid::displayGrid()
-{
-    for (int i = 0; i < 36; i++)
-    {
-        for (int j = 0; j < 28; j++)
-        {
-            std::cout << (int)_grid[i][j] << " ";
-        }
-        std::cout << '\n';
-    }
-}
 
 Grid::Grid () {
     _grid = {
@@ -56,4 +38,41 @@ Grid::Grid () {
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
+}
+
+void Grid::eat() {
+    //TODO
+}
+
+void Grid::displayGrid()
+{
+    for (int i = 0; i < 36; i++)
+    {
+        for (int j = 0; j < 28; j++)
+        {
+            std::cout << (int)_grid[i][j] << " ";
+        }
+        std::cout << '\n';
+    }
+}
+
+bool Grid::checkWall(int _x_position,int _y_position,int direction) {
+    switch (direction)
+    {
+    case LEFT:
+        return _grid[(_x_position - 1) % _grid.size()][_y_position];
+        break;
+    case RIGHT:
+        return _grid[(_x_position + 1) % _grid.size()][_y_position];
+        break;
+    case UP:
+        return _grid[_x_position][(_y_position - 1) % _grid[0].size()];
+        break;
+    case DOWN:
+        return _grid[_x_position][(_y_position + 1) % _grid[0].size()];
+        break;
+    default:
+        return true;
+        break;
+    }
 }

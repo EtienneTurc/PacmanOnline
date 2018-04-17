@@ -1,9 +1,9 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
-#include <queue>
 #include <cstdint>
 #include "grid.h"
+#include "parameters.h"
 
 class Entity
 {
@@ -15,21 +15,23 @@ class Entity
     float getSpeed();
     float getFraction();
 
-    void move();
-    void updateDirection(int direction);
     void pushInput(int direction);
+    void move(float delta_time);
   
     Entity(Grid* grid, int x_position, int y_position, int direction, float speed);
     ~Entity() {}
 
   protected:
-    std::queue<uint8_t> _events;
     Grid* _grid;
     int _x_position;
     int _y_position;
     int _direction;
     float _speed;
     float _fraction;
+    int _event;
+
+    void updateDirection(int direction);
+    void updateFraction(float delta_time);
 };
 
 #endif

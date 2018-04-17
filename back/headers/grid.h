@@ -1,21 +1,27 @@
-#include <vector>
-#include <cstdint>
-
 #ifndef GRID_H
 #define GRID_H
 
-typedef std::vector<std::vector<uint8_t> > uint8_mat_t;
+#include <vector>
+#include <iostream>
+#include <cstdint>
+#include "parameters.h"
+#include "grid.h"
+
+typedef std::vector<std::vector<uint8_t>> uint8_mat_t;
 
 class Grid
 {
-public:
-    void eat();
+  public:
     void displayGrid();
+
+    void eat();
+    bool checkWall(int _x_position, int _y_position, int direction);
+
     Grid();
-    ~Grid() {};
-private:
+    ~Grid(){};
+
+  private:
     uint8_mat_t _grid;
 };
-
 
 #endif //GRID_H
