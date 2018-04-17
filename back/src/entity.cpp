@@ -1,6 +1,6 @@
 #include "entity.h"
 
-Entity::Entity(Grid* grid, int x_position, int y_position, int direction, float speed)
+Entity::Entity(Grid *grid, int x_position, int y_position, int direction, float speed)
 {
     _grid = grid;
     _x_position = x_position;
@@ -34,41 +34,67 @@ float Entity::getFraction()
     return _fraction;
 }
 
-void Entity::move()
+void Entity::move(float delta_time)
 {
-    // Wihtout subsection
-    // switch (_direction)
-    // {
-    // case 'R':
-    //     if (_grid[_x_position][(_y_position + 1) % 28] != 0)
-    //     {
-    //         _y_position++;
-    //     }
-    //     break;
-    // case 'L':
-    //     if (_grid[_x_position][(_y_position - 1) % 28] != 0)
-    //     {
-    //         _y_position--;
-    //     }
-    //     break;
-    // case 'U':
-    //     if (_grid[(_x_position - 1) % 36][_y_position] != 0)
-    //     {
-    //         _x_position--;
-    //     }
-    //     break;
-    // case 'D':
-    //     if (_grid[(_x_position + 1) % 36][_y_position] != 0)
-    //     {
-    //         _x_position++;
-    //     }
-    //     break;
-    // default:
-    //     break;
-    // }
+    // Update the direction
+    if (_event)
+    {
+        updateDirection(_event);
+    }
+
+    // Update the current position
+    switch (_direction)
+    {
+    case LEFT:
+        if (_fraction > 1)
+        {
+            _x_position--;
+        }
+        updateFraction(delta_time);
+        break;
+    case RIGHT:
+        if (_fraction > 1)
+        {
+            _x_position++;
+        }
+        updateFraction(delta_time);
+        break;
+    case UP:
+        if (_fraction > 1)
+        {
+            _y_position--;
+        }
+        updateFraction(delta_time);
+        break;
+    case DOWN:
+        if (_fraction > 1)
+        {
+            _y_position++;
+        }
+        updateFraction(delta_time);
+        break;
+    default:
+        break;
+    }
 }
 
 void Entity::updateDirection(int direction)
 {
-    _direction = direction;
+    if (!grid.checkWallByDirection(_x_position, _y_position, direction))
+    {
+        _direction = direction;
+    }
+}
+
+void pushInput(int direction)
+{
+    _event = direction;
+}
+
+void updateFraction(float delta_time) {
+    _fraction = _fraction + delta_time
+    while (_fraction > 1) 
+    {
+     _fraction = _fraction - 1;   
+    }
 }

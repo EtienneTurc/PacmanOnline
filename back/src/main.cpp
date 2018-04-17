@@ -21,7 +21,6 @@ int main(int argc, char const *argv[])
     std::cout << "Yposition " << int(entity.getYPosition()) << '\n';
     std::cout << "Direction " << entity.getDirection() << '\n';
     std::cout << "Speed " << int(entity.getSpeed()) << '\n';
-    entity.updateDirection('R');
     std::cout << "New Direction " << entity.getDirection() << '\n';
 
     return 0;

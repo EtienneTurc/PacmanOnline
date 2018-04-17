@@ -15,21 +15,22 @@ class Entity
     float getSpeed();
     float getFraction();
 
-    void move();
-    void updateDirection(int direction);
+    void move(float delta_time);
     void pushInput(int direction);
   
     Entity(Grid* grid, int x_position, int y_position, int direction, float speed);
     ~Entity() {}
 
   protected:
-    std::queue<uint8_t> _events;
+    int _event;
     Grid* _grid;
     int _x_position;
     int _y_position;
     int _direction;
     float _speed;
     float _fraction;
+    void updateDirection(int direction);
+    void updateFraction(float delta_time);
 };
 
 #endif
