@@ -37,6 +37,11 @@ float Entity::getFraction()
     return _fraction;
 }
 
+int Entity::getScore()
+{
+    return _score;
+}
+
 void Entity::pushInput(int direction)
 {
     _event = direction;
@@ -59,7 +64,7 @@ void Entity::updateFraction(float delta_time)
     }
     else
     {
-        _fraction = _fraction + delta_time*_speed;
+        _fraction = _fraction + delta_time * _speed;
         while (_fraction > 1)
         {
             _fraction = _fraction - 1;
@@ -73,6 +78,7 @@ void Entity::move(float delta_time)
     if (_event)
     {
         updateDirection(_event);
+        _event = 0;
     }
 
     // Check if there is a wall in front

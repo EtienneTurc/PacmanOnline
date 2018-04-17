@@ -14,6 +14,7 @@ class Entity
     int getDirection();
     float getSpeed();
     float getFraction();
+    int getScore();
 
     void pushInput(int direction);
     void move(float delta_time);
