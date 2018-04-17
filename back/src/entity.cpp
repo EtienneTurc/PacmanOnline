@@ -90,28 +90,28 @@ void Entity::move(float delta_time)
         case LEFT:
             if (_fraction > 1)
             {
-                _x_position--;
+                _x_position = (_x_position - 1) % 28;
             }
             updateFraction(delta_time);
             break;
         case RIGHT:
             if (_fraction > 1)
             {
-                _x_position++;
+                _x_position = (_x_position + 1) % 28;
             }
             updateFraction(delta_time);
             break;
         case UP:
             if (_fraction > 1)
             {
-                _y_position--;
+                _y_position = (_y_position - 1) % 36;
             }
             updateFraction(delta_time);
             break;
         case DOWN:
             if (_fraction > 1)
             {
-                _y_position++;
+                _y_position = (_y_position + 1) % 36;
             }
             updateFraction(delta_time);
             break;
