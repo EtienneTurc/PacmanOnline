@@ -40,11 +40,11 @@ void Game::displayEntities()
 {
     for(int p = 0; p < _pacmans.size(); p++)
     {
-        _grid->setCell(_pacmans[p].getXPosition(), _pancmans[p].getYPosition(), 9);
+        _grid->setCell(_pacmans[p].getXPosition(), _pacmans[p].getYPosition(), 9);
     }
 
     std::vector<int> ghosts_cells;
-    for(int g = 0; g < _ghosts[g]; g++)
+    for(int g = 0; g < _ghosts.size(); g++)
     {
         ghosts_cells.push_back(_grid->getCell(_ghosts[g].getXPosition(), _ghosts[g].getYPosition()));
         _grid->setCell(_ghosts[g].getXPosition(), _ghosts[g].getYPosition(), 8);
@@ -54,10 +54,10 @@ void Game::displayEntities()
 
     for (int p = 0; p < _pacmans.size(); p++)
     {
-        _grid->setCell(_pacmans[p].getXPosition(), _pancmans[p].getYPosition(), 1);
+        _grid->setCell(_pacmans[p].getXPosition(), _pacmans[p].getYPosition(), 1);
     }
 
-    for (int g = 0; g < _ghosts[g]; g++)
+    for (int g = 0; g < _ghosts.size(); g++)
     {
         _grid->setCell(_ghosts[g].getXPosition(), _ghosts[g].getYPosition(), ghosts_cells[g]);
     }
