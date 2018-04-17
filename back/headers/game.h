@@ -1,22 +1,22 @@
-#include "grid.h"
-
 #ifndef GAME_H
 #define GAME_H
+
+#include "grid.h"
+#include "parameters.h"
 
 class Game
 {
 public:
     unsigned int getScore();
-    std::string getStatus();
+    int getGhostsStatus();
     void updateScore(unsigned int new_score);
-    void updateStatus(std::string new_status);
+    void updateGhostsStatus(int new_ghosts_status);
     Game();
     ~Game() {};
 
 private:
     unsigned int _score;
-    std::string _status;
+    int _ghosts_status;
 };
 
-
-#endif //GAME_H
+#endif 

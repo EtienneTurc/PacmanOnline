@@ -1,27 +1,35 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
-#include <iostream>
+#include <queue>
+#include <cstdint>
+#include "grid.h"
 
 class Entity
 {
   public:
-    Entity(uint8_t x_position, uint8_t y_position, char direction, uint8_t speed, uint8_t subsection);
+
+    int getXPosition();
+    int getYPosition();
+    int getDirection();
+    float getSpeed();
+    float getFraction();
+
+    void move();
+    void updateDirection(int direction);
+    void pushInput(int direction);
+  
+    Entity(Grid* grid, int x_position, int y_position, int direction, float speed);
     ~Entity() {}
-    uint8_t getXPosition();
-    uint8_t getYPosition();
-    char getDirection();
-    uint8_t getSpeed();
-    uint8_t getSubsection();
-    void move(uint8_t** grid);
-    void updateDirection(char direction);
 
   protected:
-    uint8_t _x_position;
-    uint8_t _y_position;
-    char _direction; //'U', 'D', 'L', 'R'
-    uint8_t _speed;
-    uint8_t _subsection;
+    std::queue<uint8_t> _events;
+    Grid* _grid;
+    int _x_position;
+    int _y_position;
+    int _direction;
+    float _speed;
+    float _fraction;
 };
 
 #endif
