@@ -50,7 +50,7 @@ void Grid::displayGrid()
     {
         for (int j = 0; j < 28; j++)
         {
-            std::cout << (int)_grid[i][j] << " ";
+            std::cout << _grid[i][j] << " ";
         }
         std::cout << '\n';
     }
