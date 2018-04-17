@@ -18,7 +18,7 @@ class Entity
     void pushInput(int direction);
     void move(float delta_time);
   
-    Entity(Grid* grid, int x_position, int y_position, int direction, float speed);
+    Entity(Grid* grid, int x_position, int y_position, int direction, float speed, int score);
     ~Entity() {}
 
   protected:
@@ -29,6 +29,7 @@ class Entity
     float _speed;
     float _fraction;
     int _event;
+    int _score;
 
     void updateDirection(int direction);
     void updateFraction(float delta_time);

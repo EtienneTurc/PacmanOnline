@@ -14,8 +14,8 @@ class Grid
   public:
     void displayGrid();
 
-    void eat();
-    bool checkWall(int _x_position, int _y_position, int direction);
+    void setCell(int x_position, int y_position, uint8_t value);
+    bool checkWall(int x_position, int y_position, int direction);
 
     Grid();
     ~Grid(){};

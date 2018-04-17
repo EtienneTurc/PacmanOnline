@@ -9,4 +9,6 @@
 #define ATTACK 404
 #define FLEE 502
 
+#define GHOST_SCORE 10000
+
 #endif 
