@@ -20,6 +20,8 @@ public:
     
     void addGhost(Ghost new_ghost);
     void addPacman(Pacman new_pacman);
+
+    void displayEntities();
     
     void init();
     void run();
