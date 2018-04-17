@@ -11,4 +11,8 @@
 
 #define GHOST_SCORE 10000
 
+#define SCORE_SMALL_BALL 1
+#define SCORE_BIG_BALL 5
+#define SCORE_FRUIT 25
+
 #endif 

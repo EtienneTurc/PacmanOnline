@@ -40,6 +40,11 @@ Grid::Grid () {
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
 }
 
+uint8_t Grid::getCell(int x_position, int y_position)
+{
+    return _grid[x_position][y_position];
+}
+
 void Grid::setCell(int x_position, int y_position, uint8_t value) {
     _grid[x_position][y_position] = value;
 }
