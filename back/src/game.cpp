@@ -6,7 +6,7 @@ Game::Game()
     _ghosts_status = ATTACK;
     std::vector<Pacman> _pacmans;
     std::vector<Ghost> _ghosts;
-    Grid _grid; //Grid constructor fills the grid
+    Grid* _grid; //Grid constructor fills the grid
 }
 
 unsigned int Game::getScore() {
