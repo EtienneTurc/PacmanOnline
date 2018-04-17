@@ -30,7 +30,7 @@ private:
     int _ghosts_status;
     std::vector<Pacman> _pacmans;
     std::vector<Ghost> _ghosts;
-    Grid _grid;
+    Grid* _grid;
 };
 
 #endif 
