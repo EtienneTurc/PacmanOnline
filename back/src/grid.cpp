@@ -1,4 +1,5 @@
 #include "grid.h"
+#include <iostream>
 
 Grid::Grid () {
     _grid = {
@@ -39,6 +40,8 @@ Grid::Grid () {
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
 }
+    int _sizeX = 35;
+    int _sizeY = 28;
 
 uint8_t Grid::getCell(int x_position, int y_position)
 {
@@ -62,19 +65,21 @@ void Grid::displayGrid()
 }
 
 bool Grid::checkWall(int x_position,int y_position,int direction) {
+    std::cout << "position x : " << x_position << "\n";
+    std::cout << "position y : " << y_position << "\n";
     switch (direction)
     {
     case LEFT:
-        return _grid[(x_position - 1) % _grid.size()][y_position];
+        return _grid[(x_position - 1) % _sizeX][y_position] == 0;
         break;
     case RIGHT:
-        return _grid[(x_position + 1) % _grid.size()][y_position];
+        return _grid[(x_position + 1) % _sizeX][y_position] == 0;
         break;
     case UP:
-        return _grid[x_position][(y_position - 1) % _grid[0].size()];
+        return _grid[x_position][(y_position - 1) % _sizeY] == 0;
         break;
     case DOWN:
-        return _grid[x_position][(y_position + 1) % _grid[0].size()];
+        return _grid[x_position][(y_position + 1) % _sizeY] == 0;
         break;
     default:
         return true;

@@ -23,6 +23,8 @@ public:
 
 private:
   uint8_mat_t _grid;
+  int _sizeX;
+  int _sizeY;
 };
 
 #endif //GRID_H
