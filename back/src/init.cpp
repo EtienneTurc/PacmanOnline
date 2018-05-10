@@ -1,18 +1,21 @@
 #include "game.h"
 
-void Game::init()
-{
-    //Grid already initialized
+void Game::init() {
+	//Grid already initialized
+	Grid *grid = new Grid();
+	_grid = grid;
 
-    //Initialisation pacman
-    Pacman pacman(_grid, 4, 1, DOWN, 1);
-    _pacmans.push_back(pacman);
+	//Initialisation pacman
+	Pacman pacman(_grid, 4, 4, LEFT, 10);
+	_pacmans.push_back(pacman);
 
-    //Initialisation ghost
-    Ghost gasper(_grid, 4,6,RIGHT,1, GHOST_SCORE, 0);
-    _ghosts.push_back(gasper);
+	//Initialisation ghost
+	Ghost gasper(_grid, 6,10,UP,10, GHOST_SCORE, 0);
+	_ghosts.push_back(gasper);
 
-    Grid *grid = new Grid();
-    _grid = grid;
-    displayEntities();
+	Ghost blanky(_grid, 6,11,DOWN,10, GHOST_SCORE, 0);
+	_ghosts.push_back(blanky);
+
+	system("clear");
+	displayEntities();
 }
