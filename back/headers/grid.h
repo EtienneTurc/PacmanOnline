@@ -7,15 +7,14 @@
 #include "parameters.h"
 #include "grid.h"
 
+#define RED "\033[0;31m"
+#define GREEN "\033[1;32m"
+#define YELLOW "\033[1;33m"
+#define WALL "\033[38;5;234m"
+#define STREET "\033[38;5;247m"
+#define RESET "\033[0m"
+
 typedef std::vector<std::vector<uint8_t>> uint8_mat_t;
-
-const std::string red("\033[0;31m");
-const std::string green("\033[1;32m");
-const std::string yellow("\033[1;33m");
-const std::string cyan("\033[0;36m");
-const std::string magenta("\033[0;35m");
-const std::string reset("\033[0m");
-
 
 class Grid
 {

@@ -1,0 +1,5 @@
+.vscode
+back/.vscode
+back/deps
+back/objs
+back/main
