@@ -58,12 +58,25 @@ void Grid::displayGrid() {
 	system("clear");
 	for (int i = 0; i < _sizeX; i++) {
 		for (int j = 0; j < _sizeY; j++) {
-			if (_grid[i][j] == 9) {
-				std::cout << yellow << int(_grid[i][j]) << reset << " ";
-			} else if (_grid[i][j] == 8) {
-				std::cout << red << int(_grid[i][j]) << reset << " ";
-			} else {
-				std::cout << int(_grid[i][j]) << " ";
+			switch (_grid[i][j]) {
+			case 0:
+				// Wall
+				std::cout << WALL"██"RESET;
+				break;
+			case 1:
+				// Street
+				std::cout << STREET"░░"RESET;
+				break;
+			case 8:
+				// Ghost
+				std::cout << RED"╚╝"RESET;
+				break;
+			case 9:
+				// Pacman
+				std::cout << YELLOW"└┘"RESET;
+				break;
+			default:
+				break;
 			}
 		}
 		std::cout << '\n';
