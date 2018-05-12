@@ -15,4 +15,6 @@
 #define SCORE_BIG_BALL 5
 #define SCORE_FRUIT 25
 
-#endif 
+#define COLLISION_RANGE 0.3
+
+#endif

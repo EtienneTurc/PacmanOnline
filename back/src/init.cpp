@@ -16,6 +16,5 @@ void Game::init() {
 	Ghost blanky(_grid, 6,11,DOWN,10, GHOST_SCORE, 0);
 	_ghosts.push_back(blanky);
 
-	system("clear");
 	displayEntities();
 }

@@ -55,14 +55,20 @@ void Grid::setCell(int x_position, int y_position, uint8_t value) {
 }
 
 void Grid::displayGrid() {
+	system("clear");
 	for (int i = 0; i < _sizeX; i++) {
 		for (int j = 0; j < _sizeY; j++) {
-			std::cout << int(_grid[i][j]) << " ";
+			if (_grid[i][j] == 9) {
+				std::cout << yellow << int(_grid[i][j]) << reset << " ";
+			} else if (_grid[i][j] == 8) {
+				std::cout << red << int(_grid[i][j]) << reset << " ";
+			} else {
+				std::cout << int(_grid[i][j]) << " ";
+			}
 		}
 		std::cout << '\n';
 	}
 	std::this_thread::sleep_for(std::chrono::seconds(1));
-	system("clear");
 }
 
 bool Grid::checkWall(int x_position,int y_position,int direction) {
@@ -88,4 +94,14 @@ bool Grid::checkWall(int x_position,int y_position,int direction) {
 			break;
 		}
 	}
+}
+
+std::vector<int> Grid::checkIntersection(int x_position, int y_position) {
+	std::vector<int> directions;
+	for (int i = 1; i < 5; i++) {
+		if (!checkWall(x_position, y_position, i)) {
+			directions.push_back(i);
+		}
+	}
+	return directions;
 }

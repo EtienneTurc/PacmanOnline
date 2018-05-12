@@ -35,6 +35,25 @@ int Entity::getScore() {
 	return _score;
 }
 
+Grid* Entity::getGrid() {
+	return _grid;
+}
+
+bool Entity::entityCollision(Entity entity) {
+	int dir = entity.getDirection();
+	float fract = entity.getFraction();
+
+	if (dir%2 == _direction%2) {
+		if (dir != _direction){
+			return (abs(1-fract-_fraction) < COLLISION_RANGE);
+		} else {
+			return (abs(fract-_fraction) < COLLISION_RANGE);
+		}
+	} else {
+		return (((0.5-fract)*(0.5-fract) + (0.5-_fraction)*(0.5-_fraction)) < COLLISION_RANGE*COLLISION_RANGE);
+	}
+}
+
 void Entity::pushInput(int direction) {
 	_event = direction;
 }
@@ -102,4 +121,28 @@ void Entity::move(float delta_time) {
 			}
 		}
 	}
+}
+
+void Entity::virtualMove() {
+	switch (_direction) {
+		case LEFT: {
+			_x_position = (_x_position - 1) % 28;
+			break;
+		}
+		case RIGHT: {
+			_x_position = (_x_position + 1) % 28;
+			break;
+		}
+		case UP: {
+			_y_position = (_y_position - 1) % 36;
+			break;
+		}
+		case DOWN: {
+			_y_position = (_y_position + 1) % 36;
+			break;
+		}
+		default: {
+			break;
+		}
+}
 }
