@@ -42,8 +42,8 @@ Grid::Grid () {
 		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 	};
-	_sizeX = 36;
-	_sizeY = 28;
+	_sizeX = 28;
+	_sizeY = 36;
 }
 
 uint8_t Grid::getCell(int x_position, int y_position) {
@@ -56,9 +56,9 @@ void Grid::setCell(int x_position, int y_position, uint8_t value) {
 
 void Grid::displayGrid() {
 	system("clear");
-	for (int i = 0; i < _sizeX; i++) {
-		for (int j = 0; j < _sizeY; j++) {
-			switch (_grid[i][j]) {
+	for (int j = 0; j < _sizeY; j++) {
+		for (int i = 0; i < _sizeX; i++) {
+			switch (_grid[j][i]) {
 			case 0:
 				// Wall
 				std::cout << WALL"██"RESET;

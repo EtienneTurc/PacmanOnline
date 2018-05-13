@@ -40,17 +40,23 @@ Grid* Entity::getGrid() {
 }
 
 bool Entity::entityCollision(Entity entity) {
+	int x_pos = entity.getXPosition();
+	int y_pos = entity.getYPosition();
 	int dir = entity.getDirection();
 	float fract = entity.getFraction();
 
-	if (dir%2 == _direction%2) {
-		if (dir != _direction){
-			return (abs(1-fract-_fraction) < COLLISION_RANGE);
-		} else {
-			return (abs(fract-_fraction) < COLLISION_RANGE);
-		}
+	if ( (_x_position != x_pos) || (_y_position != y_pos)) {
+		return 0;
 	} else {
-		return (((0.5-fract)*(0.5-fract) + (0.5-_fraction)*(0.5-_fraction)) < COLLISION_RANGE*COLLISION_RANGE);
+		if (dir%2 == _direction%2) {
+			if (dir != _direction){
+				return (abs(1-fract-_fraction) < COLLISION_RANGE);
+			} else {
+				return (abs(fract-_fraction) <= COLLISION_RANGE);
+			}
+		} else {
+			return (((0.5-fract)*(0.5-fract) + (0.5-_fraction)*(0.5-_fraction)) < COLLISION_RANGE*COLLISION_RANGE);
+		}
 	}
 }
 
@@ -70,7 +76,6 @@ void Entity::updateFraction(float delta_time) {
 		_fraction = 0.5;
 	}
 	else {
-		_fraction = _fraction + delta_time * _speed;
 		while (_fraction > 1) {
 			_fraction = _fraction - 1;
 		}
@@ -87,6 +92,7 @@ void Entity::move(float delta_time) {
 	// Check if there is a wall in front
 	if (!_grid->checkWall(_x_position, _y_position, _direction) || _fraction < 0.5) {
 		// Update the current position
+		_fraction = _fraction + delta_time * _speed;
 		switch (_direction) {
 			case LEFT: {
 				if (_fraction >= 1) {

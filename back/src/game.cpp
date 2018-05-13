@@ -52,3 +52,39 @@ void Game::displayEntities() {
 		_grid->setCell(_ghosts[g].getXPosition(), _ghosts[g].getYPosition(), ghosts_cells[g]);
 	}
 }
+
+void Game::init() {
+	//Grid already initialized
+	Grid *grid = new Grid();
+	_grid = grid;
+
+	//Initialisation pacman
+	Pacman pacman(_grid, 18, 29, LEFT, 10);
+	_pacmans.push_back(pacman);
+
+	//Initialisation ghost
+	Ghost gasper(_grid, 6,10,UP,10, GHOST_SCORE, 0);
+	_ghosts.push_back(gasper);
+
+	Ghost blanky(_grid, 4,4,DOWN,10, GHOST_SCORE, 0);
+	_ghosts.push_back(blanky);
+
+	displayEntities();
+}
+
+void Game::run() {
+	for(int i = 0; i < 20; i++) {
+
+		for(int p = 0; p < _pacmans.size(); p++) {
+			_pacmans[p].move(1);
+		}
+
+		for (int p = 0; p < _ghosts.size(); p++) {
+			int direction = lowestDirection(_pacmans[0], _ghosts[p]);
+			_ghosts[p].pushInput(direction);
+			_ghosts[p].move(1);
+		}
+
+		displayEntities();
+	}
+}

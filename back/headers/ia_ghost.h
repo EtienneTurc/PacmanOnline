@@ -6,6 +6,6 @@
 #include "virtual_ghost.h"
 #include "grid.h"
 
-int lowestDirection(Pacman pacman, Virtual_ghost v_ghost);
+int lowestDirection(Pacman pacman, Ghost ghost);
 
 #endif
