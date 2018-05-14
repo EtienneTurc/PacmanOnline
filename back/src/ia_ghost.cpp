@@ -15,6 +15,10 @@ int lowestDirection(Pacman pacman, Ghost ghost) {
 		return directions[0];
 	}
 
+	if (ghost.entityCollision(pacman)) {
+		return ghost.getDirection();
+	}
+
 	virtual_grid->setCell(ghost.getXPosition(), ghost.getYPosition(), MARKED);
 	for (int i = 0; i < directions.size(); i++) {
 		Virtual_ghost v_ghost(directions[i],  grid,ghost.getXPosition(), ghost.getYPosition(), directions[i]);
@@ -32,6 +36,8 @@ int lowestDirection(Pacman pacman, Ghost ghost) {
 				return virtual_ghosts[i].getInitialDirection();
 			}
 		}
+
+		// virtual_grid->displayGrid();
 
 		//Update Virtual_ghost population
 		int v_size = virtual_ghosts.size();
@@ -52,6 +58,29 @@ int lowestDirection(Pacman pacman, Ghost ghost) {
 					}
 				}
 			}
+		}
+	}
+}
+
+int randomDirection(Entity entity) {
+	Grid* grid = entity.getGrid();
+	std::vector<int> directions = grid->checkIntersection(entity.getXPosition(), entity.getYPosition());
+
+	float probaUTurn = 0.02;
+	float p = ((float) rand() / (RAND_MAX));
+
+	//Low probability of U-turn
+	if (p < probaUTurn) {
+		return (entity.getDirection()+2)%4;
+	}
+
+	directions.erase(std::remove(directions.begin(), directions.end(), (entity.getDirection()+2)%4), directions.end());
+	float q = directions.size();
+	float r = ((float) rand() / (RAND_MAX));
+
+	for (int i = 0; i < q; i++) {
+		if (r < (i+1)/q) {
+			return directions[i];
 		}
 	}
 }

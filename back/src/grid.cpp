@@ -67,6 +67,10 @@ void Grid::displayGrid() {
 				// Street
 				std::cout << STREET"░░"RESET;
 				break;
+				case 5:
+					// Street
+					std::cout << STREET"aa"RESET;
+					break;
 			case 8:
 				// Ghost
 				std::cout << RED"╚╝"RESET;
@@ -81,7 +85,7 @@ void Grid::displayGrid() {
 		}
 		std::cout << '\n';
 	}
-	std::this_thread::sleep_for(std::chrono::seconds(1));
+	std::this_thread::sleep_for(std::chrono::milliseconds(200));
 }
 
 bool Grid::checkWall(int x_position,int y_position,int direction) {

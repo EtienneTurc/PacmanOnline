@@ -73,18 +73,47 @@ void Game::init() {
 }
 
 void Game::run() {
-	for(int i = 0; i < 20; i++) {
+	bool game_over = false;
+	while (!game_over) {
 
-		for(int p = 0; p < _pacmans.size(); p++) {
+		for (int p = 0; p < _pacmans.size(); p++) {
+			int direction = randomDirection(_pacmans[p]);
+			_pacmans[p].pushInput(direction);
 			_pacmans[p].move(1);
 		}
 
-		for (int p = 0; p < _ghosts.size(); p++) {
-			int direction = lowestDirection(_pacmans[0], _ghosts[p]);
-			_ghosts[p].pushInput(direction);
-			_ghosts[p].move(1);
+		game_over = gameOver();
+		if (game_over) {
+			break;
+		}
+
+		for (int g = 0; g < _ghosts.size(); g++) {
+			int direction = lowestDirection(_pacmans[0], _ghosts[g]);
+			_ghosts[g].pushInput(direction);
+
+			_ghosts[g].move(1);
 		}
 
 		displayEntities();
+
+		if (!game_over) {
+			game_over = gameOver();
+		}
 	}
+}
+
+bool Game::gameOver() {
+	//Return True if the game is over
+	int count = 0;
+	for (int p = 0; p < _pacmans.size(); p++) {
+		for (int g = 0; g < _ghosts.size(); g++) {
+			if (_ghosts[g].entityCollision(_pacmans[p])) {
+				count++;
+			}
+		}
+	}
+	if (count == _pacmans.size()) {
+		return true;
+	}
+	return false;
 }

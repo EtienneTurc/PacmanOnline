@@ -30,6 +30,7 @@ public:
 
 	void init();
 	void run();
+	bool gameOver();
 
 	Game();
 	~Game() {};

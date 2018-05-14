@@ -10,6 +10,6 @@ int main(int argc, char const *argv[]) {
 
 	game.run();
 
-	std::cout << "Loop ended succesfully\n";
+	std::cout << "Game over\n";
 	return 0;
 }
