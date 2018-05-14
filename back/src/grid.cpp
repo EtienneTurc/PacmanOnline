@@ -42,8 +42,8 @@ Grid::Grid () {
 		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 	};
-	_sizeX = 36;
-	_sizeY = 28;
+	_sizeX = 28;
+	_sizeY = 36;
 }
 
 uint8_t Grid::getCell(int x_position, int y_position) {
@@ -55,14 +55,33 @@ void Grid::setCell(int x_position, int y_position, uint8_t value) {
 }
 
 void Grid::displayGrid() {
-	for (int i = 0; i < _sizeX; i++) {
-		for (int j = 0; j < _sizeY; j++) {
-			std::cout << int(_grid[i][j]) << " ";
+	system("clear");
+	for (int j = 0; j < _sizeY; j++) {
+		for (int i = 0; i < _sizeX; i++) {
+			switch (_grid[j][i]) {
+			case 0:
+				// Wall
+				std::cout << WALL"██"RESET;
+				break;
+			case 1:
+				// Street
+				std::cout << STREET"░░"RESET;
+				break;
+			case 8:
+				// Ghost
+				std::cout << RED"╚╝"RESET;
+				break;
+			case 9:
+				// Pacman
+				std::cout << YELLOW"└┘"RESET;
+				break;
+			default:
+				break;
+			}
 		}
 		std::cout << '\n';
 	}
 	std::this_thread::sleep_for(std::chrono::seconds(1));
-	system("clear");
 }
 
 bool Grid::checkWall(int x_position,int y_position,int direction) {
@@ -88,4 +107,14 @@ bool Grid::checkWall(int x_position,int y_position,int direction) {
 			break;
 		}
 	}
+}
+
+std::vector<int> Grid::checkIntersection(int x_position, int y_position) {
+	std::vector<int> directions;
+	for (int i = 1; i < 5; i++) {
+		if (!checkWall(x_position, y_position, i)) {
+			directions.push_back(i);
+		}
+	}
+	return directions;
 }

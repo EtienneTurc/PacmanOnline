@@ -5,19 +5,18 @@
 
 #include "entity.h"
 
-class Ghost : public Entity
-{
+class Ghost : public Entity {
 public:
-    unsigned int getTimeInJail();
+	unsigned int getTimeInJail();
 
-    void updateSpeed(float new_speed);
-    void updateTimeInJail();
+	void updateSpeed(float new_speed);
+	void updateTimeInJail();
 
-    Ghost(Grid* grid, int x_position, int y_position, int direction, float speed, int score, unsigned int time_in_jail);
-    ~Ghost(){};
+	Ghost(Grid* grid, int x_position, int y_position, int direction, float speed, int score, unsigned int time_in_jail);
+	~Ghost(){};
 private:
-    unsigned int _time_in_jail;
+	unsigned int _time_in_jail;
 };
 
 
-#endif 
+#endif

@@ -15,4 +15,8 @@
 #define SCORE_BIG_BALL 5
 #define SCORE_FRUIT 25
 
-#endif 
+#define COLLISION_RANGE 1
+
+#define MARKED 5 // has to be different to any other value in the grid
+
+#endif

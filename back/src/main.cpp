@@ -3,15 +3,13 @@
 #include "game.h"
 #include "parameters.h"
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
 
-    Game game;
-    game.init();
+	Game game;
+	game.init();
 
-    game.run();
+	game.run();
 
-    std::cout << "Loop ended succesfully\n";
-
-    return 0;
+	std::cout << "Loop ended succesfully\n";
+	return 0;
 }
