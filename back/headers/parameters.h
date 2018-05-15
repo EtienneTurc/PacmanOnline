@@ -16,6 +16,8 @@
 #define SCORE_FRUIT 25
 
 #define COLLISION_RANGE 1
+#define RANDOM_RANGE 10
+#define PROBA_U_TURN 0.05
 
 #define MARKED 5 // has to be different to any other value in the grid
 

@@ -17,6 +17,7 @@ public:
 	Grid* getGrid();
 
 	bool entityCollision(Entity entity);
+	int distanceTo(int x_position, int y_position);
 
 	void pushInput(int direction);
 	void move(float delta_time);

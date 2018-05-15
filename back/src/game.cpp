@@ -63,7 +63,7 @@ void Game::init() {
 	_pacmans.push_back(pacman);
 
 	//Initialisation ghost
-	Ghost gasper(_grid, 6,10,UP,10, GHOST_SCORE, 0);
+	Ghost gasper(_grid, 6,10,DOWN,10, GHOST_SCORE, 0);
 	_ghosts.push_back(gasper);
 
 	Ghost blanky(_grid, 4,4,DOWN,10, GHOST_SCORE, 0);
@@ -88,7 +88,10 @@ void Game::run() {
 		}
 
 		// for (int g = 0; g < _ghosts.size(); g++) {
-			int direction = lowestDirection(_pacmans[0], _ghosts[0]);
+			// int direction = lowestDirection(_pacmans[0], _ghosts[0]);
+			// _ghosts[0].pushInput(direction);
+			// _ghosts[0].move(1);
+			int direction = lowestDirectionUntilRandom(_pacmans[0], _ghosts[0]);
 			_ghosts[0].pushInput(direction);
 			_ghosts[0].move(1);
 			direction = lowestDirectionToIntersection(_pacmans[0], _ghosts[1]);

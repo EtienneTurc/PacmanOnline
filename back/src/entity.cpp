@@ -60,6 +60,10 @@ bool Entity::entityCollision(Entity entity) {
 	}
 }
 
+int Entity::distanceTo(int x_position, int y_position) {
+	return (abs(x_position - _x_position) +  abs(y_position - _y_position));
+}
+
 void Entity::pushInput(int direction) {
 	_event = direction;
 }

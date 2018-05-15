@@ -1,5 +1,6 @@
 #include "ia_ghost.h"
-#include <time.h>
+#include <chrono>
+#include <thread>
 
 // TODO Tunnel
 // The ranking indicates the choice of the best way to choose (ie 0 corresponds to the best, 1 corresponds to the second best direction)
@@ -62,7 +63,7 @@ int lowestDirection(Pacman pacman, Ghost ghost, int ranking) {
 				virtual_grid->setCell(v_ghost.getXPosition(), v_ghost.getYPosition(), MARKED);
 
 				for (int j = 0; j < directions.size(); j++) {
-					if ((directions[j] + 2)%4 != v_ghost.getDirection()) {
+					if (((directions[j] + 1)%4 +1) != v_ghost.getDirection()) {
 						Virtual_ghost new_v_ghost = v_ghost;
 						new_v_ghost.updateDirection(directions[j]);
 						virtual_ghosts.push_back(new_v_ghost);
@@ -74,25 +75,23 @@ int lowestDirection(Pacman pacman, Ghost ghost, int ranking) {
 }
 
 int randomDirection(Entity entity) {
-	srand (time(NULL));
 
 	Grid* grid = entity.getGrid();
 	std::vector<int> directions = grid->checkIntersection(entity.getXPosition(), entity.getYPosition());
 
-	float probaUTurn = 0;
 	float p = ((float) rand() / (RAND_MAX));
 
 	//Low probability of U-turn
-	if (p < probaUTurn) {
-		return (entity.getDirection()+2)%4;
+	if (p < PROBA_U_TURN) {
+		return ((entity.getDirection()+1)%4 +1);
 	}
 
-	directions.erase(std::remove(directions.begin(), directions.end(), (entity.getDirection()+2)%4), directions.end());
-	float q = directions.size();
-	float r = ((float) rand() / (RAND_MAX));
+	directions.erase(std::remove(directions.begin(), directions.end(), ((entity.getDirection()+1)%4) +1), directions.end());
+	float size = directions.size();
+	float random = ((float) rand() / (RAND_MAX));
 
-	for (int i = 0; i < q; i++) {
-		if (r < (i+1)/q) {
+	for (int i = 0; i < size; i++) {
+		if (random < (i+1)/size) {
 			return directions[i];
 		}
 	}
@@ -108,7 +107,7 @@ int lowestDirectionToIntersection(Pacman pacman, Ghost ghost) {
 	int direction = virtual_pacman.getDirection();
 	while (size < 3) {
 		for (int i = 0; i < directions.size(); i++) {
-			if ((directions[i] + 2)%4 != virtual_pacman.getDirection()) {
+			if (((directions[i] + 1)%4+1) != virtual_pacman.getDirection()) {
 				direction = directions[i];
 			}
 		}
@@ -118,7 +117,16 @@ int lowestDirectionToIntersection(Pacman pacman, Ghost ghost) {
 		directions = grid->checkIntersection(virtual_pacman.getXPosition(), virtual_pacman.getYPosition());
 		size = directions.size();
 	}
-	std::cout << "hi\n";
 
 	return lowestDirection(virtual_pacman, ghost);
+}
+
+int lowestDirectionUntilRandom(Pacman pacman, Ghost ghost) {
+	int distance = ghost.distanceTo(pacman.getXPosition(), pacman.getYPosition());
+
+	if (distance > RANDOM_RANGE) {
+		return lowestDirection(pacman, ghost);
+	} else {
+		return randomDirection(ghost);
+	}
 }
