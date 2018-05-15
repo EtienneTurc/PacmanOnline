@@ -9,8 +9,10 @@
 #include "virtual_ghost.h"
 #include "grid.h"
 
-int lowestDirection(Pacman pacman, Ghost ghost);
+int lowestDirection(Pacman pacman, Ghost ghost, int ranking = 0);
 
 int randomDirection(Entity entity);
+
+int lowestDirectionToIntersection(Pacman pacman, Ghost ghost);
 
 #endif

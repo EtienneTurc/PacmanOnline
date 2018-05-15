@@ -87,12 +87,14 @@ void Game::run() {
 			break;
 		}
 
-		for (int g = 0; g < _ghosts.size(); g++) {
-			int direction = lowestDirection(_pacmans[0], _ghosts[g]);
-			_ghosts[g].pushInput(direction);
-
-			_ghosts[g].move(1);
-		}
+		// for (int g = 0; g < _ghosts.size(); g++) {
+			int direction = lowestDirection(_pacmans[0], _ghosts[0]);
+			_ghosts[0].pushInput(direction);
+			_ghosts[0].move(1);
+			direction = lowestDirectionToIntersection(_pacmans[0], _ghosts[1]);
+			_ghosts[1].pushInput(direction);
+			_ghosts[1].move(1);
+		// }
 
 		displayEntities();
 
