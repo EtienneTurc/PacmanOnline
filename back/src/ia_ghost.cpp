@@ -1,4 +1,5 @@
 #include "ia_ghost.h"
+#include <time.h>
 
 // TODO Tunnel
 
@@ -63,6 +64,8 @@ int lowestDirection(Pacman pacman, Ghost ghost) {
 }
 
 int randomDirection(Entity entity) {
+	srand (time(NULL));
+
 	Grid* grid = entity.getGrid();
 	std::vector<int> directions = grid->checkIntersection(entity.getXPosition(), entity.getYPosition());
 
