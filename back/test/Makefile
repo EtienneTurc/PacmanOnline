@@ -17,9 +17,9 @@
 GTEST_DIR = ../../googletest-master/googletest
 
 # Where to find user code.
-USER_DIR = .
-HEADERS = ../headers
-SRC = ../src
+TEST_DIR = .
+HEADERS_DIR = ../headers
+SRC_DIR = ../src
 
 
 # Variables
@@ -30,7 +30,6 @@ CC = g++
 CPPFLAGS = -Wall -Wextra -O3 -Iheaders -std=c++11
 CPPFLAGS += -isystem $(GTEST_DIR)/include
 
-# Flags passed to the C++ compiler.
 CXXFLAGS += -g -Wall -Wextra -pthread
 
 # All tests produced by this Makefile.  Remember to add new tests you
@@ -77,12 +76,12 @@ gtest_main.a : gtest-all.o gtest_main.o
 # gtest_main.a, depending on whether it defines its own main()
 # function.
 
-grid.o : $(SRC)/grid.cpp $(HEADERS)/grid.h $(GTEST_HEADERS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(SRC)/grid.cpp
+grid.o : $(SRC_DIR)/grid.cpp $(HEADERS_DIR)/grid.h $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(SRC_DIR)/grid.cpp
 
-unittest.o : $(USER_DIR)/unittest.cpp \
-                     $(HEADERS)/grid.h $(GTEST_HEADERS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/unittest.cpp
+unittest.o : $(TEST_DIR)/unittest.cpp \
+                     $(HEADERS_DIR)/grid.h $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)/unittest.cpp
 
 unittest : grid.o unittest.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@

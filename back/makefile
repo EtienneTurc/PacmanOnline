@@ -25,7 +25,6 @@ init:
 clean:
 	@echo Clearing...
 	rm -fr $(OBJDIR)/ $(DEPDIR)/
-	rm -f $(TESTS) gtest.a gtest_main.a *.o
 
 
 .PHONY: all clean test
