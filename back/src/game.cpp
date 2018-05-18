@@ -32,11 +32,13 @@ void Game::addPacman(Pacman new_pacman) {
 }
 
 void Game::displayEntities() {
+	std::vector<uint8_t> pacmans_cells;
 	for(int p = 0; p < _pacmans.size(); p++) {
+		pacmans_cells.push_back(_grid->getCell(_pacmans[p].getXPosition(), _pacmans[p].getYPosition()));
 		_grid->setCell(_pacmans[p].getXPosition(), _pacmans[p].getYPosition(), 9);
 	}
 
-	std::vector<int> ghosts_cells;
+	std::vector<uint8_t> ghosts_cells;
 	for(int g = 0; g < _ghosts.size(); g++) {
 		ghosts_cells.push_back(_grid->getCell(_ghosts[g].getXPosition(), _ghosts[g].getYPosition()));
 		_grid->setCell(_ghosts[g].getXPosition(), _ghosts[g].getYPosition(), 8);
@@ -45,11 +47,17 @@ void Game::displayEntities() {
 	_grid->displayGrid();
 
 	for (int p = 0; p < _pacmans.size(); p++) {
-		_grid->setCell(_pacmans[p].getXPosition(), _pacmans[p].getYPosition(), 1);
+		uint8_t cell_value = pacmans_cells[p];
+		if (cell_value != 9) {
+			_grid->setCell(_pacmans[p].getXPosition(), _pacmans[p].getYPosition(), 1);
+		}
 	}
 
 	for (int g = 0; g < _ghosts.size(); g++) {
-		_grid->setCell(_ghosts[g].getXPosition(), _ghosts[g].getYPosition(), ghosts_cells[g]);
+		uint8_t cell_value = ghosts_cells[g];
+		if (cell_value != 8) {
+			_grid->setCell(_ghosts[g].getXPosition(), _ghosts[g].getYPosition(), ghosts_cells[g]);
+		}
 	}
 }
 
