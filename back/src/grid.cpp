@@ -59,7 +59,8 @@ void Grid::setBigBalls() {
 	setCell(1, 6, BIG_BALL);
 	setCell(26, 6, BIG_BALL);
 	setCell(1, 25, BIG_BALL);
-	setCell(26, 25, BIG_BALL);
+	// setCell(26, 25, BIG_BALL);
+	setCell(18, 28, BIG_BALL);
 }
 
 void Grid::displayGrid() {

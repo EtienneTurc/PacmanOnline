@@ -68,14 +68,14 @@ void Game::init() {
 
 	//Initialisation pacman
 	Pacman pacman(_grid, 18, 29, LEFT, 10);
-	_pacmans.push_back(pacman);
+	addPacman(pacman);
 
 	//Initialisation ghost
-	Ghost gasper(_grid, 6,10,DOWN,10, GHOST_SCORE, 0);
-	_ghosts.push_back(gasper);
+	Ghost gasper(_grid, 16,26,DOWN,10, GHOST_SCORE, 0);
+	addGhost(gasper);
 
 	Ghost blanky(_grid, 4,4,DOWN,10, GHOST_SCORE, 0);
-	_ghosts.push_back(blanky);
+	addGhost(blanky);
 
 	displayEntities();
 }
@@ -97,6 +97,8 @@ void Game::run() {
 			}
 			std::cout << "Score :" << _pacmans[p].getScore() << "\n";
 		}
+
+		eatGhosts();
 
 		game_over = gameOver();
 		if (game_over) {
@@ -146,4 +148,19 @@ bool Game::gameOver() {
 		return true;
 	}
 	return false;
+}
+
+void Game::eatGhosts() {
+	//Return True if the game is over
+	if (_time_to_flee) {
+		for (int p = 0; p < _pacmans.size(); p++) {
+			for (int g = 0; g < _ghosts.size(); g++) {
+				if (_ghosts[g].entityCollision(_pacmans[p])) {
+					_ghosts[g].setXPosition(X_CENTER);
+					_ghosts[g].setYPosition(Y_CENTER);
+					_pacmans[p].addScore(SCORE_EAT_GHOST);
+				}
+			}
+		}
+	}
 }
