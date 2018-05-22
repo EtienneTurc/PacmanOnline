@@ -26,9 +26,11 @@ clean:
 	@echo Clearing...
 	rm -fr $(OBJDIR)/ $(DEPDIR)/
 
+
 .PHONY: all clean test
 
 -include $(DEPS)
+
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 	mkdir -p $(dir $@)
