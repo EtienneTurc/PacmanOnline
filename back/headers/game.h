@@ -19,7 +19,7 @@ public:
 	std::vector<Pacman> getPacmans();
 	std::vector<Ghost> getGhosts();
 
-	void updateGhostsStatus(int new_ghosts_status);
+	void updateGhostsStatus(int new_time_to_flee);
 
 	void addGhost(Ghost new_ghost);
 	void addPacman(Pacman new_pacman);
@@ -36,7 +36,7 @@ public:
 	~Game() {};
 
 private:
-	int _ghosts_status;
+	int _time_to_flee;
 	std::vector<Pacman> _pacmans;
 	std::vector<Ghost> _ghosts;
 	Grid* _grid;

@@ -1,18 +1,18 @@
 #include "game.h"
 
 Game::Game() {
-	_ghosts_status = ATTACK;
+	_time_to_flee = 0;
 	std::vector<Pacman> _pacmans;
 	std::vector<Ghost> _ghosts;
 	Grid* _grid; //Grid constructor fills the grid
 }
 
 int Game::getGhostsStatus() {
-	return _ghosts_status;
+	return _time_to_flee;
 }
 
-void Game::updateGhostsStatus(int new_ghosts_status) {
-	_ghosts_status = new_ghosts_status;
+void Game::updateGhostsStatus(int new_time_to_flee) {
+	_time_to_flee = new_time_to_flee;
 }
 
 std::vector<Pacman> Game::getPacmans() {
@@ -76,10 +76,18 @@ void Game::run() {
 	bool game_over = false;
 	while (!game_over) {
 
+		if (_time_to_flee) {
+			_time_to_flee--;
+		}
+
 		for (int p = 0; p < _pacmans.size(); p++) {
 			int direction = randomDirection(_pacmans[p]);
 			_pacmans[p].pushInput(direction);
 			_pacmans[p].move(1);
+			if (_pacmans[p].eat() == BIG_BALL) {
+				updateGhostsStatus(TIME_TO_FLEE);
+			}
+			std::cout << "Score :" << _pacmans[p].getScore() << "\n";
 		}
 
 		game_over = gameOver();
@@ -91,12 +99,21 @@ void Game::run() {
 			// int direction = lowestDirection(_pacmans[0], _ghosts[0]);
 			// _ghosts[0].pushInput(direction);
 			// _ghosts[0].move(1);
-			int direction = lowestDirectionUntilRandom(_pacmans[0], _ghosts[0]);
-			_ghosts[0].pushInput(direction);
-			_ghosts[0].move(1);
-			direction = lowestDirectionToIntersection(_pacmans[0], _ghosts[1]);
-			_ghosts[1].pushInput(direction);
-			_ghosts[1].move(1);
+			if (_time_to_flee) {
+				int direction = randomDirection(_ghosts[0]);
+				_ghosts[0].pushInput(direction);
+				_ghosts[0].move(1);
+				direction = randomDirection(_ghosts[1]);
+				_ghosts[1].pushInput(direction);
+				_ghosts[1].move(1);
+			} else {
+				int direction = lowestDirectionUntilRandom(_pacmans[0], _ghosts[0]);
+				_ghosts[0].pushInput(direction);
+				_ghosts[0].move(1);
+				direction = lowestDirectionToIntersection(_pacmans[0], _ghosts[1]);
+				_ghosts[1].pushInput(direction);
+				_ghosts[1].move(1);
+			}
 		// }
 
 		displayEntities();
