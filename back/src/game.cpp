@@ -71,11 +71,12 @@ void Game::init() {
 	addPacman(pacman);
 
 	//Initialisation ghost
-	Ghost gasper(_grid, 16,26,DOWN,10, GHOST_SCORE, 0);
+	Ghost gasper(_grid, 16,26,DOWN,10, GHOST_SCORE, 5);
 	addGhost(gasper);
 
-	Ghost blanky(_grid, 4,4,DOWN,10, GHOST_SCORE, 0);
+	Ghost blanky(_grid, X_CENTER,Y_CENTER + 2,DOWN,10, GHOST_SCORE, 10);
 	addGhost(blanky);
+	std::cout << "Time in jail : " << _ghosts[1].getTimeInJail() << '\n';
 
 	displayEntities();
 }
@@ -98,7 +99,7 @@ void Game::run() {
 			std::cout << "Score :" << _pacmans[p].getScore() << "\n";
 		}
 
-		eatGhosts();
+		eatGhostsIfAllowed();
 
 		game_over = gameOver();
 		if (game_over) {
@@ -106,24 +107,29 @@ void Game::run() {
 		}
 
 		// for (int g = 0; g < _ghosts.size(); g++) {
-			// int direction = lowestDirection(_pacmans[0], _ghosts[0]);
-			// _ghosts[0].pushInput(direction);
-			// _ghosts[0].move(1);
-			if (_time_to_flee) {
-				int direction = randomDirection(_ghosts[0]);
-				_ghosts[0].pushInput(direction);
-				_ghosts[0].move(1);
-				direction = randomDirection(_ghosts[1]);
-				_ghosts[1].pushInput(direction);
-				_ghosts[1].move(1);
-			} else {
-				int direction = lowestDirectionUntilRandom(_pacmans[0], _ghosts[0]);
-				_ghosts[0].pushInput(direction);
-				_ghosts[0].move(1);
-				direction = lowestDirectionToIntersection(_pacmans[0], _ghosts[1]);
-				_ghosts[1].pushInput(direction);
-				_ghosts[1].move(1);
-			}
+		// int direction = lowestDirection(_pacmans[0], _ghosts[0]);
+		// _ghosts[0].pushInput(direction);
+		// _ghosts[0].move(1);
+		std::cout << "Time in jail : " << _ghosts[1].getTimeInJail() << '\n';
+		if (_time_to_flee) {
+			_ghosts[0].updateTimeInJail();
+			int direction = randomDirection(_ghosts[0]);
+			_ghosts[0].pushInput(direction);
+			_ghosts[0].move(1);
+			_ghosts[1].updateTimeInJail();
+			direction = randomDirection(_ghosts[1]);
+			_ghosts[1].pushInput(direction);
+			_ghosts[1].move(1);
+		} else {
+			_ghosts[0].updateTimeInJail();
+			int direction = lowestDirectionUntilRandom(_pacmans[0], _ghosts[0]);
+			_ghosts[0].pushInput(direction);
+			_ghosts[0].move(1);
+			_ghosts[1].updateTimeInJail();
+			direction = lowestDirectionToIntersection(_pacmans[0], _ghosts[1]);
+			_ghosts[1].pushInput(direction);
+			_ghosts[1].move(1);
+		}
 		// }
 
 		displayEntities();
@@ -150,7 +156,7 @@ bool Game::gameOver() {
 	return false;
 }
 
-void Game::eatGhosts() {
+void Game::eatGhostsIfAllowed() {
 	//Return True if the game is over
 	if (_time_to_flee) {
 		for (int p = 0; p < _pacmans.size(); p++) {

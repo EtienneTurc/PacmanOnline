@@ -30,7 +30,7 @@ public:
 	void init();
 	void run();
 	bool gameOver();
-	void eatGhosts();
+	void eatGhostsIfAllowed();
 
 	Game();
 	~Game() {};
