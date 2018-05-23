@@ -16,6 +16,10 @@ public:
 	int getScore();
 	Grid* getGrid();
 
+	void setXPosition(int x_position);
+	void setYPosition(int y_position);
+	void addScore(int score_to_add);
+
 	bool entityCollision(Entity entity);
 	int distanceTo(int x_position, int y_position);
 

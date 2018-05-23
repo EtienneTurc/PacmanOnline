@@ -39,6 +39,18 @@ Grid* Entity::getGrid() {
 	return _grid;
 }
 
+void Entity::setXPosition(int x_position) {
+	_x_position = x_position;
+}
+
+void Entity::setYPosition(int y_position) {
+	_y_position = y_position;
+}
+
+void Entity::addScore(int score_to_add) {
+	_score += score_to_add;
+}
+
 bool Entity::entityCollision(Entity entity) {
 	int x_pos = entity.getXPosition();
 	int y_pos = entity.getYPosition();

@@ -15,8 +15,7 @@
 
 typedef std::vector<std::vector<uint8_t>> uint8_mat_t;
 
-class Grid
-{
+class Grid {
 public:
 	void displayGrid();
 	uint8_t getCell(int x_position, int y_position);
@@ -32,6 +31,7 @@ private:
 	uint8_mat_t _grid;
 	int _sizeX;
 	int _sizeY;
+	void setBigBalls();
 };
 
 #endif //GRID_H

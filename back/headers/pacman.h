@@ -3,13 +3,12 @@
 
 #include "entity.h"
 
-class Pacman : public Entity
-{
+class Pacman : public Entity {
 public:
-  void eat();
+	int eat();
 
-  Pacman(Grid *grid, int x_position, int y_position, int direction, float speed);
-  ~Pacman() {}
+	Pacman(Grid *grid, int x_position, int y_position, int direction, float speed);
+	~Pacman() {}
 
 private:
 };
