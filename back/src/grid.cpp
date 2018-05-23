@@ -1,4 +1,4 @@
-#include "../headers/grid.h"
+#include "grid.h"
 #include <iostream>
 #include <chrono>
 #include <thread>

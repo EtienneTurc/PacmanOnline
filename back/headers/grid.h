@@ -5,7 +5,6 @@
 #include <iostream>
 #include <cstdint>
 #include "parameters.h"
-#include "grid.h"
 
 #define RED "\033[0;31m"
 #define GREEN "\033[1;32m"
