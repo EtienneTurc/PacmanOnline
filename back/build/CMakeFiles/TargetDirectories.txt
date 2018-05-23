@@ -1,3 +1,0 @@
-/home/soline/DaTA/pacman/back/build/CMakeFiles/rebuild_cache.dir
-/home/soline/DaTA/pacman/back/build/CMakeFiles/edit_cache.dir
-/home/soline/DaTA/pacman/back/build/CMakeFiles/main.dir
