@@ -9,6 +9,7 @@ install google test librairies and cmake
 ```
 sudo apt-get install libgtest-dev
 sudo apt-get install cmake
+sudo apt install libboost-all-dev
 ```
 
 Complie Gtest into a useable librairy
