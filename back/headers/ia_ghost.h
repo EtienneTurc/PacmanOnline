@@ -10,7 +10,7 @@
 #include "grid.h"
 #include "parameters.h"
 
-int lowestDirection(Pacman pacman, Ghost ghost, int ranking = 0);
+int lowestDirection(Pacman pacman, Ghost ghost);
 int randomDirection(Entity entity);
 int lowestDirectionToIntersection(Pacman pacman, Ghost ghost);
 int lowestDirectionUntilRandom(Pacman pacman, Ghost ghost);

@@ -13,13 +13,16 @@ void Ghost::updateSpeed(float new_speed) {
 	_speed = new_speed;
 }
 
-void Ghost::updateTimeInJail() {
-	if (_time_in_jail > 1) {
-		_time_in_jail --;
-	} else if (_time_in_jail == 1) {
-		setXPosition(X_CENTER);
-		setYPosition(Y_CENTER);
-		_time_in_jail --;
+bool Ghost::inJail() {
+	std::cout << "_time_in_jail : " << _time_in_jail << '\n';
+	if (_time_in_jail == 0) {
+		return false;
+	} else {
+		if (_time_in_jail == 1) {
+			setXPosition(X_CENTER);
+			setYPosition(Y_CENTER);
+		}
+		_time_in_jail--;
+		return true;
 	}
-	std::cout << "Time in jail : " << _time_in_jail << '\n';
 }

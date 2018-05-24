@@ -3,8 +3,7 @@
 #include <thread>
 
 // TODO Tunnel
-// The ranking indicates the choice of the best way to choose (ie 0 corresponds to the best, 1 corresponds to the second best direction)
-int lowestDirection(Pacman pacman, Ghost ghost, int ranking) {
+int lowestDirection(Pacman pacman, Ghost ghost) {
 	Grid* grid = pacman.getGrid();
 	std::vector<Virtual_ghost> virtual_ghosts;
 
@@ -36,17 +35,8 @@ int lowestDirection(Pacman pacman, Ghost ghost, int ranking) {
 			virtual_ghosts[i].virtualMove();
 			bool val = virtual_ghosts[i].entityCollision(pacman);
 			if (virtual_ghosts[i].entityCollision(pacman)) {
-				if (count == ranking) {
-					return virtual_ghosts[i].getInitialDirection();
-				}  else {
-					count++;
-					index_to_delete = i;
-				}
+				return virtual_ghosts[i].getInitialDirection();
 			}
-		}
-
-		if (index_to_delete != v_size) {
-			virtual_ghosts.erase(virtual_ghosts.begin() + index_to_delete);
 		}
 
 		// virtual_grid->displayGrid();

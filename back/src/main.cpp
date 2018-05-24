@@ -3,16 +3,14 @@
 #include "entity.h"
 #include "game.h"
 #include "parameters.h"
-// #include "safequeue.h"
-// #include "socket.h"
+#include "safequeue.h"
+#include "socket.h"
 
 int main(int argc, char const *argv[]) {
 	srand (time(NULL));
 
-	// Socket server;
-	// server.run();
-
-	std::cout << "hi\n";
+	Socket server;
+	server.run();
 
 	Game game;
 	game.init();
