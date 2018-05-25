@@ -32,16 +32,18 @@ void Socket::on_close (websocketpp::connection_hdl hdl) {
 void Socket::on_message (websocketpp::connection_hdl hdl, WsServer::message_ptr msg) {
 	// When a new message comes, its content is pushed to the queue
 	std::string instruction = msg->get_payload();
-	// TODO put the client id
-	_client_queue.push(instruction);
+	std::pair <websocketpp::connection_hdl, std::string> instructions;
+	instructions = std::make_pair(hdl, instruction);
+	send(instructions);
+	_client_queue.push(instructions);
 }
 
-void Socket::send (std::string command) {
+void Socket::send (std::pair <websocketpp::connection_hdl, std::string> instructions) {
 	// Loop through all connexions to send the command
-	con_list::iterator it;
-	for (it = _connections.begin(); it != _connections.end(); ++it) {
-		_server.send(*it, command, websocketpp::frame::opcode::text);
-	}
+	// con_list::iterator it;
+	// for (it = _connections.begin(); it != _connections.end(); ++it) {
+	// }
+	_server.send(instructions.first, instructions.second, websocketpp::frame::opcode::text);
 }
 
 void Socket::run () {

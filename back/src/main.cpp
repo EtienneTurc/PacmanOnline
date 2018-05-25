@@ -12,10 +12,20 @@ int main(int argc, char const *argv[]) {
 	Socket server;
 	server.run();
 
-	Game game;
-	game.init();
+	while (true) {
+		// std::cout << "Message du client" << '\n';
+		SafeQueue<std::pair<websocketpp::connection_hdl, std::string> >* client_queue = server.getQueuePtr();
+		std::pair <websocketpp::connection_hdl, std::string> instructions;
+		if (client_queue->pop(instructions)) {
+			std::cout << "Message du client : " << instructions.second<< '\n';
+			server.send(instructions);
+		};
+	}
 
-	game.run();
+	// Game game;
+	// game.init();
+	//
+	// game.run();
 
 	std::cout << "Game over\n";
 	return 0;
