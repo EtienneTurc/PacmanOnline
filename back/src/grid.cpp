@@ -103,6 +103,8 @@ void Grid::displayGrid() {
 }
 
 bool Grid::checkWall(int x_position,int y_position,int direction) {
+	//return true if there is a wall, and false if not
+	
 	switch (direction) {
 		case LEFT: {
 			return (int(_grid[y_position][(x_position - 1) % _sizeX]) == 0);
