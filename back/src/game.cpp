@@ -71,10 +71,10 @@ void Game::init() {
 	addPacman(pacman);
 
 	//Initialisation ghost
-	Ghost gasper(_grid, 16,26,DOWN,10, GHOST_SCORE, 5);
+	Ghost gasper(_grid, 16,26,DOWN,10, GHOST_SCORE, 0);
 	addGhost(gasper);
 
-	Ghost blanky(_grid, X_CENTER,Y_CENTER + 2,DOWN,10, GHOST_SCORE, 10);
+	Ghost blanky(_grid, X_CENTER,Y_CENTER + 2 ,DOWN,10, GHOST_SCORE, 10);
 	addGhost(blanky);
 	std::cout << "Time in jail : " << _ghosts[1].getTimeInJail() << '\n';
 
@@ -105,32 +105,26 @@ void Game::run() {
 		if (game_over) {
 			break;
 		}
+		std::vector<int (*)(Pacman, Ghost)> ia;
+		ia.push_back(lowestDirection);
+		ia.push_back(lowestDirectionToIntersection);
+		ia.push_back(lowestDirectionUntilRandom);
 
-		// for (int g = 0; g < _ghosts.size(); g++) {
-		// int direction = lowestDirection(_pacmans[0], _ghosts[0]);
-		// _ghosts[0].pushInput(direction);
-		// _ghosts[0].move(1);
-		std::cout << "Time in jail : " << _ghosts[1].getTimeInJail() << '\n';
-		if (_time_to_flee) {
-			_ghosts[0].updateTimeInJail();
-			int direction = randomDirection(_ghosts[0]);
-			_ghosts[0].pushInput(direction);
-			_ghosts[0].move(1);
-			_ghosts[1].updateTimeInJail();
-			direction = randomDirection(_ghosts[1]);
-			_ghosts[1].pushInput(direction);
-			_ghosts[1].move(1);
-		} else {
-			_ghosts[0].updateTimeInJail();
-			int direction = lowestDirectionUntilRandom(_pacmans[0], _ghosts[0]);
-			_ghosts[0].pushInput(direction);
-			_ghosts[0].move(1);
-			_ghosts[1].updateTimeInJail();
-			direction = lowestDirectionToIntersection(_pacmans[0], _ghosts[1]);
-			_ghosts[1].pushInput(direction);
-			_ghosts[1].move(1);
+		for (int g = 0; g < _ghosts.size(); g++) {
+			bool in_jail = _ghosts[g].inJail();
+			std::cout << "In jail :" << in_jail << "\n";
+			if (!in_jail) {
+				if (_time_to_flee) {
+					int direction = randomDirection(_ghosts[g]);
+					_ghosts[g].pushInput(direction);
+					_ghosts[g].move(1);
+				} else {
+					int direction = ia[1](_pacmans[0], _ghosts[g]);
+					_ghosts[g].pushInput(direction);
+					_ghosts[g].move(1);
+				}
+			}
 		}
-		// }
 
 		displayEntities();
 
