@@ -21,3 +21,8 @@ window.onload = function () {
 		context.fillRect(200, 200, 100, 100);
 	}
 }
+
+document.addEventListener('keypress', (event) => {
+	const keyName = event.key;
+	socket.send(keyName);
+});

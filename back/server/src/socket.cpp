@@ -34,7 +34,7 @@ void Socket::on_message (websocketpp::connection_hdl hdl, WsServer::message_ptr 
 	std::string instruction = msg->get_payload();
 	std::pair <websocketpp::connection_hdl, std::string> instructions;
 	instructions = std::make_pair(hdl, instruction);
-	send(instructions);
+	// send(instructions);
 	_client_queue.push(instructions);
 }
 
