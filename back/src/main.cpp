@@ -9,13 +9,23 @@
 int main(int argc, char const *argv[]) {
 	srand (time(NULL));
 
-	Socket server;
-	server.run();
+	Socket socket;
+	socket.run();
 
-	Game game;
-	game.init();
+	while (true) {
+		// std::cout << "Message du client" << '\n';
+		SafeQueue<std::pair<websocketpp::connection_hdl, std::string> >* client_queue = socket.getQueuePtr();
+		std::pair <websocketpp::connection_hdl, std::string> instructions;
+		if (client_queue->pop(instructions)) {
+			std::cout << "Message du client : " << instructions.second << '\n';
+			socket.send(instructions);
+		};
+	}
 
-	game.run();
+	// Game game;
+	// game.init();
+	//
+	// game.run();
 
 	std::cout << "Game over\n";
 	return 0;

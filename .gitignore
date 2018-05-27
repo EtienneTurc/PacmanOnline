@@ -3,3 +3,4 @@ back/.vscode
 back/deps
 back/objs
 back/main
+client/node_modules

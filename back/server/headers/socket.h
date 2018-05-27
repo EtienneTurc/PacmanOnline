@@ -14,7 +14,7 @@ private:
 	WsServer _server;
 	con_list _connections;
 	std::thread* _server_thread;
-	SafeQueue<std::string> _client_queue;
+	SafeQueue<std::pair <websocketpp::connection_hdl, std::string>> _client_queue;
 	bool _is_alive;
 	void* _handler_queue;
 
@@ -26,8 +26,8 @@ private:
 public:
 	void run ();
 	bool isAlive () { return _is_alive; }
-	void send (std::string command);
-	SafeQueue<std::string>* getQueuePtr() {
+	void send (std::pair <websocketpp::connection_hdl, std::string> instructions);
+	SafeQueue<std::pair <websocketpp::connection_hdl, std::string>>* getQueuePtr() {
 		return &_client_queue;
 	}
 
