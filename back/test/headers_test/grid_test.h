@@ -1,3 +1,6 @@
+#ifndef GRID_TEST_H
+#define  GRID_TEST_H
+
 #include "grid.h"
 #include "parameters.h"
 
@@ -9,3 +12,5 @@ class GridTest : public ::testing::Test {
 
 		Grid* _grid;
 };
+
+#endif

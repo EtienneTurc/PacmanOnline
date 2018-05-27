@@ -26,11 +26,14 @@ TEST_F(GridTest, setCell) {
 }
 
 TEST_F(GridTest, checkWall_true) {
-	EXPECT_EQ(true, _grid->checkWall(0, 0, DOWN));
+	EXPECT_TRUE(_grid->checkWall(0, 0, DOWN));
 }
 
 TEST_F(GridTest, checkWall_false) {
-	EXPECT_EQ(false, _grid->checkWall(3, 4, LEFT));
+}
+
+TEST_F(GridTest, checkWall_error) {
+	EXPECT_TRUE(_grid->checkWall(1, 4, 6));
 }
 
 TEST_F(GridTest, checkIntersection_size_4) {
