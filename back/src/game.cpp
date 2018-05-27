@@ -82,56 +82,47 @@ void Game::init() {
 }
 
 void Game::run() {
-	bool game_over = false;
-	while (!game_over) {
+	if (_time_to_flee) {
+		_time_to_flee--;
+	}
 
-		if (_time_to_flee) {
-			_time_to_flee--;
+	for (int p = 0; p < _pacmans.size(); p++) {
+		int direction = randomDirection(_pacmans[p]);
+		_pacmans[p].pushInput(direction);
+		_pacmans[p].move(1);
+		if (_pacmans[p].eat() == BIG_BALL) {
+			updateGhostsStatus(TIME_TO_FLEE);
 		}
+		std::cout << "Score :" << _pacmans[p].getScore() << "\n";
+	}
 
-		for (int p = 0; p < _pacmans.size(); p++) {
-			int direction = randomDirection(_pacmans[p]);
-			_pacmans[p].pushInput(direction);
-			_pacmans[p].move(1);
-			if (_pacmans[p].eat() == BIG_BALL) {
-				updateGhostsStatus(TIME_TO_FLEE);
+	eatGhostsIfAllowed();
+
+	if (gameOver()) {
+		exit(-1);
+	}
+
+	std::vector<int (*)(Pacman, Ghost)> ia;
+	ia.push_back(lowestDirection);
+	ia.push_back(lowestDirectionToIntersection);
+	ia.push_back(lowestDirectionUntilRandom);
+
+	for (int g = 0; g < _ghosts.size(); g++) {
+		bool in_jail = _ghosts[g].inJail();
+		std::cout << "In jail :" << in_jail << "\n";
+		if (!in_jail) {
+			if (_time_to_flee) {
+				int direction = randomDirection(_ghosts[g]);
+				_ghosts[g].pushInput(direction);
+				_ghosts[g].move(1);
+			} else {
+				int direction = ia[1](_pacmans[0], _ghosts[g]);
+				_ghosts[g].pushInput(direction);
+				_ghosts[g].move(1);
 			}
-			std::cout << "Score :" << _pacmans[p].getScore() << "\n";
-		}
-
-		eatGhostsIfAllowed();
-
-		game_over = gameOver();
-		if (game_over) {
-			break;
-		}
-		std::vector<int (*)(Pacman, Ghost)> ia;
-		ia.push_back(lowestDirection);
-		ia.push_back(lowestDirectionToIntersection);
-		ia.push_back(lowestDirectionUntilRandom);
-
-		for (int g = 0; g < _ghosts.size(); g++) {
-			bool in_jail = _ghosts[g].inJail();
-			std::cout << "In jail :" << in_jail << "\n";
-			if (!in_jail) {
-				if (_time_to_flee) {
-					int direction = randomDirection(_ghosts[g]);
-					_ghosts[g].pushInput(direction);
-					_ghosts[g].move(1);
-				} else {
-					int direction = ia[1](_pacmans[0], _ghosts[g]);
-					_ghosts[g].pushInput(direction);
-					_ghosts[g].move(1);
-				}
-			}
-		}
-
-		displayEntities();
-
-		if (!game_over) {
-			game_over = gameOver();
 		}
 	}
+	displayEntities();
 }
 
 bool Game::gameOver() {

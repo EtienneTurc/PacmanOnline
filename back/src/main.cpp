@@ -5,6 +5,7 @@
 #include "parameters.h"
 #include "safequeue.h"
 #include "socket.h"
+#include "route.h"
 
 int main(int argc, char const *argv[]) {
 	srand (time(NULL));
@@ -12,15 +13,17 @@ int main(int argc, char const *argv[]) {
 	Socket socket;
 	socket.run();
 
+	Games games;
 	while (true) {
-		// std::cout << "Message du client" << '\n';
 		SafeQueue<std::pair<websocketpp::connection_hdl, std::string> >* client_queue = socket.getQueuePtr();
 		std::pair <websocketpp::connection_hdl, std::string> instructions;
 		if (client_queue->pop(instructions)) {
-			std::cout << "Message du client : " << instructions.second << '\n';
-			socket.send(instructions);
+			treatInstruction(instructions, &games);
 		};
 	}
+
+	// std::cout << "Message du client : " << instructions.second << '\n';
+	// socket.send(instructions);
 
 	// Game game;
 	// game.init();

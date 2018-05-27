@@ -22,7 +22,6 @@ window.onload = function () {
 	}
 }
 
-document.addEventListener('keypress', (event) => {
-	const keyName = event.key;
+document.addEventListener('keypress', (event) => {const keyName = event.key;
 	socket.send(keyName);
 });
