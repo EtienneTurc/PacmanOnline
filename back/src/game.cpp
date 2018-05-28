@@ -7,10 +7,6 @@ Game::Game() {
 	Grid* _grid; //Grid constructor fills the grid
 }
 
-int Game::getGhostsStatus() {
-	return _time_to_flee;
-}
-
 void Game::updateGhostsStatus(int new_time_to_flee) {
 	_time_to_flee = new_time_to_flee;
 }
@@ -21,6 +17,14 @@ std::vector<Pacman> Game::getPacmans() {
 
 std::vector<Ghost> Game::getGhosts() {
 	return _ghosts;
+}
+
+Grid* Game::getGrid() {
+	return _grid;
+}
+
+int Game::getTimeToFlee() {
+	return _time_to_flee;
 }
 
 void Game::addGhost(Ghost new_ghost) {

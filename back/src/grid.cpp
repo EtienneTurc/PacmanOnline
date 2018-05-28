@@ -47,6 +47,14 @@ Grid::Grid () {
 	setBigBalls();
 }
 
+int Grid::getSizeX() {
+	return _sizeX;
+}
+
+int Grid::getSizeY() {
+	return _sizeY;
+}
+
 uint8_t Grid::getCell(int x_position, int y_position) {
 	return _grid[y_position][x_position];
 }
@@ -104,7 +112,7 @@ void Grid::displayGrid() {
 
 bool Grid::checkWall(int x_position,int y_position,int direction) {
 	//return true if there is a wall, and false if not
-	
+
 	switch (direction) {
 		case LEFT: {
 			return (int(_grid[y_position][(x_position - 1) % _sizeX]) == 0);

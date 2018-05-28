@@ -8,8 +8,27 @@
 typedef std::vector<std::pair<websocketpp::connection_hdl, Game*>> Games;
 typedef std::pair <websocketpp::connection_hdl, std::string> Instructions;
 
-void treatInstruction(Instructions instructions, Games* games);
-void routeBeginGame(websocketpp::connection_hdl hdl, std::vector<std::string>* data, Games* games);
-// void getGrid()
+class Route {
+public:
+	void treatInstruction();
+
+	void routeBeginGame(std::vector<std::string>* data);
+	void routeGetGrid();
+	void routeGetEntity(Entity* entity, bool is_Pacman, int index_in_vector);
+	void routeGetNextAttackIn();
+	void routeGetGame();
+
+	Route(Instructions instructions, Games* games, Socket* socket);
+	~Route(){};
+
+private:
+	websocketpp::connection_hdl _hdl;
+	std::string _instructions;
+	Game* _game;
+	Socket* _socket;
+
+	Game* getGame(Games* games);
+	Game* createGame(Games* games);
+};
 
 #endif

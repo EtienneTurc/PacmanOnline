@@ -19,6 +19,8 @@ class Grid {
 public:
 	void displayGrid();
 	uint8_t getCell(int x_position, int y_position);
+	int getSizeX();
+	int getSizeY();
 
 	void setCell(int x_position, int y_position, uint8_t value);
 	bool checkWall(int x_position, int y_position, int direction);

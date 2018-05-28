@@ -15,10 +15,10 @@
 
 class Game {
 public:
-	int getGhostsStatus();
 	std::vector<Pacman> getPacmans();
 	std::vector<Ghost> getGhosts();
-
+	Grid* getGrid();
+	int getTimeToFlee();
 
 	void addGhost(Ghost new_ghost);
 	void addPacman(Pacman new_pacman);
