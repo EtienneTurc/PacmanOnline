@@ -1,7 +1,9 @@
+#ifndef ENTITY_TEST_H
+#define ENTITY_TEST_H
+
 #include "entity.h"
 #include "grid.h"
 #include "parameters.h"
-#include "gtest/gtest.h"
 
 class EntityTest : public ::testing::Test {
 	protected:
@@ -17,3 +19,5 @@ class EntityTest : public ::testing::Test {
 		Entity* _entity2;
 		Entity* _entity3;
 };
+
+#endif
