@@ -1,5 +1,5 @@
 #ifndef PACMAN_TEST_H
-#define  PACMAN_TEST_H
+#define PACMAN_TEST_H
 
 #include "grid.h"
 #include "pacman.h"

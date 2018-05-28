@@ -1,5 +1,5 @@
 #ifndef GHOST_TEST_H
-#define  GHOST_TEST_H
+#define GHOST_TEST_H
 
 #include "grid.h"
 #include "ghost.h"

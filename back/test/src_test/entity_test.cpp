@@ -95,11 +95,9 @@ TEST_F(EntityTest, move_good_event) {
 TEST_F(EntityTest, move_bad_event) {
 	_entity3->pushInput(UP);
 	_entity3->move(1);
-	EXPECT_EQ(UP, _entity3->getDirection());
-	std::cout << "Entity position" << _entity3->getXPosition() << "/n";
-	std::cout << "Entity position" << _entity3->getYPosition() << "/n";
+	EXPECT_EQ(DOWN, _entity3->getDirection());
 	EXPECT_EQ(1, _entity3->getXPosition());
-	EXPECT_EQ(4, _entity3->getYPosition());
+	EXPECT_EQ(5, _entity3->getYPosition());
 }
 
 TEST_F(EntityTest, virtualMove) {
