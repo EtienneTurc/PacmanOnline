@@ -1,5 +1,8 @@
 window.onload = function () {
 	var canvas = document.getElementById('canvas');
+	canvas.setAttribute('width', 420);
+	canvas.setAttribute('height', 540);
+
 	if (!canvas) {
 		alert("Impossible to get the canvas");
 		return;
@@ -11,14 +14,20 @@ window.onload = function () {
 		return;
 	}
 
+	context.fillStyle = "black";
+	context.fillRect(0, 0, canvas.width, canvas.height);
+
 	var myInterval = setInterval(animate, 1000 / 30);
+
 
 	var xPos = 10
 	var yPos = 10
 
+
 	function animate() {
-		context.fillRect(xPos, yPos, 100, 100);
-		context.fillRect(200, 200, 100, 100);
+		drawGrid(context)
+		// context.fillRect(xPos, yPos, 100, 100);
+		// context.fillRect(200, 200, 100, 100);
 	}
 }
 

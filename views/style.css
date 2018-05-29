@@ -1,0 +1,9 @@
+/* .canvas_container {
+	width: 100%;
+	text-align: center;
+} */
+
+canvas {
+	margin: 0 auto;
+	display: block;
+}
