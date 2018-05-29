@@ -3,37 +3,37 @@
 
 Route::Route(Instructions instructions, Games* games, Socket* socket) {
 	_hdl = instructions.first;
-	_instructions = instructions.second;
 	_game = getGame(games);
 	_socket = socket;
+
+	std::vector<std::string> results;
+	boost::split(results, instructions.second, [](char c){return c == ';';});
+
+	_method = results[0];
+	_data = {};
+	for (int i = 1; i < results.size(); i++) {
+		_data.push_back(results[i]);
+	}
 }
 
 void Route::treatInstruction() {
-
-	std::vector<std::string> results;
-	boost::split(results, _instructions, [](char c){return c == ';';});
-
-	std::string method = results[0];
-	std::vector<std::string> data;
-	for (int i = 1; i < results.size(); i++) {
-		data.push_back(results[i]);
-	}
-
-	if (method == "routeBeginGame") {
-		routeBeginGame(&data);
-	} else if (method == "routeGetGrid") {
+	if (_method == "routeBeginGame") {
+		routeBeginGame();
+	} else if (_method == "routeGetGrid") {
 		routeGetGrid();
-	} else if (method == "routeGetGame") {
+	} else if (_method == "routeGetGame") {
 		routeGetGame();
-	} else if (method == "routeGetNextAttackIn") {
+	} else if (_method == "routeGetNextAttackIn") {
 		routeGetNextAttackIn();
-	} else if (method == "routeGetEntity") {
+	} else if (_method == "routeGetEntity") {
 		routeGetGrid();
+	} else if (_method == "routePostEntityDirection") {
+		routePostEntityDirection();
 	}
 }
 
 // Start a new game and send to the associated game
-void Route::routeBeginGame(std::vector<std::string>* data) {
+void Route::routeBeginGame() {
 	_game->init();
 	routeGetGame();
 }
@@ -101,14 +101,14 @@ void Route::routeGetNextAttackIn() {
 }
 
 void Route::routeGetGame() {
-	std::vector<Pacman> pacmans = _game->getPacmans();
-	for (int i = 0; i < pacmans.size(); i++) {
-		routeGetEntity(&pacmans[i], true, i);
+	std::vector<Pacman>* pacmans = _game->getPacmans();
+	for (int i = 0; i < pacmans->size(); i++) {
+		routeGetEntity(&pacmans->at(i), true, i);
 	}
 
-	std::vector<Ghost> ghosts = _game->getGhosts();
-	for (int i = 0; i < ghosts.size(); i++) {
-		routeGetEntity(&ghosts[i], false, i);
+	std::vector<Ghost>* ghosts = _game->getGhosts();
+	for (int i = 0; i < ghosts->size(); i++) {
+		routeGetEntity(&ghosts->at(i), false, i);
 	}
 
 	routeGetGrid();
@@ -118,14 +118,15 @@ void Route::routeGetGame() {
 Game* Route::getGame(Games* games) {
 	int j = -1;
 	for (int i = 0; i < games->size(); i++) {
-		if (_hdl.owner_before(games->at(i).first)) {
+		if (!_hdl.owner_before(games->at(i).first) && !games->at(i).first.owner_before(_hdl)) {
 			j = i;
 			break;
 		}
 	}
 
 	if (j != -1) {
-		return games->at(j).second;
+		Game* game = games->at(j).second;
+		return game;
 	} else {
 		return createGame(games);
 	}
@@ -138,4 +139,22 @@ Game* Route::createGame(Games* games) {
 	games->push_back(game);
 
 	return new_game;
+}
+
+//is Pacman ?;Index in vector;Direction (in _data)
+void Route::routePostEntityDirection() {
+	int index_in_vector = std::stoi(_data[1]);
+	int direction = std::stoi(_data[2]);
+
+	std::cout << "post direction: " << _data[2] << '\n';
+
+	if (_data[0] == "true") {
+		std::vector<Pacman>* pacmans = _game->getPacmans();
+		Pacman* pacman = &pacmans->at(index_in_vector);
+		pacman->pushInput(direction);
+	} else {
+		std::vector<Ghost>* ghosts = _game->getGhosts();
+		Ghost* ghost = &ghosts->at(index_in_vector);
+		ghost->pushInput(direction);
+	}
 }

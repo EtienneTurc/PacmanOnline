@@ -14,7 +14,6 @@ void Ghost::updateSpeed(float new_speed) {
 }
 
 bool Ghost::inJail() {
-	std::cout << "_time_in_jail : " << _time_in_jail << '\n';
 	if (_time_in_jail == 0) {
 		return false;
 	} else {

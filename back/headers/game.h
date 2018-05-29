@@ -15,8 +15,8 @@
 
 class Game {
 public:
-	std::vector<Pacman> getPacmans();
-	std::vector<Ghost> getGhosts();
+	std::vector<Pacman>* getPacmans();
+	std::vector<Ghost>* getGhosts();
 	Grid* getGrid();
 	int getTimeToFlee();
 

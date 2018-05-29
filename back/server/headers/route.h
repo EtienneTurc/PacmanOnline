@@ -12,20 +12,23 @@ class Route {
 public:
 	void treatInstruction();
 
-	void routeBeginGame(std::vector<std::string>* data);
+	void routeBeginGame();
 	void routeGetGrid();
 	void routeGetEntity(Entity* entity, bool is_Pacman, int index_in_vector);
 	void routeGetNextAttackIn();
 	void routeGetGame();
+
+	void routePostEntityDirection();
 
 	Route(Instructions instructions, Games* games, Socket* socket);
 	~Route(){};
 
 private:
 	websocketpp::connection_hdl _hdl;
-	std::string _instructions;
 	Game* _game;
 	Socket* _socket;
+	std::string _method;
+	std::vector<std::string> _data;
 
 	Game* getGame(Games* games);
 	Game* createGame(Games* games);

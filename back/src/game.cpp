@@ -11,12 +11,12 @@ void Game::updateGhostsStatus(int new_time_to_flee) {
 	_time_to_flee = new_time_to_flee;
 }
 
-std::vector<Pacman> Game::getPacmans() {
-	return _pacmans;
+std::vector<Pacman>* Game::getPacmans() {
+	return &_pacmans;
 }
 
-std::vector<Ghost> Game::getGhosts() {
-	return _ghosts;
+std::vector<Ghost>* Game::getGhosts() {
+	return &_ghosts;
 }
 
 Grid* Game::getGrid() {
@@ -75,12 +75,11 @@ void Game::init() {
 	addPacman(pacman);
 
 	//Initialisation ghost
-	Ghost gasper(_grid, 16,26,DOWN,10, GHOST_SCORE, 0);
-	addGhost(gasper);
-
-	Ghost blanky(_grid, X_CENTER,Y_CENTER + 2 ,DOWN,10, GHOST_SCORE, 10);
-	addGhost(blanky);
-	std::cout << "Time in jail : " << _ghosts[1].getTimeInJail() << '\n';
+	// Ghost gasper(_grid, 16,26,DOWN,10, GHOST_SCORE, 0);
+	// addGhost(gasper);
+	//
+	// Ghost blanky(_grid, X_CENTER,Y_CENTER + 2 ,DOWN,10, GHOST_SCORE, 10);
+	// addGhost(blanky);
 
 	displayEntities();
 }
@@ -91,13 +90,12 @@ void Game::run() {
 	}
 
 	for (int p = 0; p < _pacmans.size(); p++) {
-		int direction = randomDirection(_pacmans[p]);
-		_pacmans[p].pushInput(direction);
+		// int direction = randomDirection(_pacmans[p]);
+		// _pacmans[p].pushInput(direction);
 		_pacmans[p].move(1);
 		if (_pacmans[p].eat() == BIG_BALL) {
 			updateGhostsStatus(TIME_TO_FLEE);
 		}
-		std::cout << "Score :" << _pacmans[p].getScore() << "\n";
 	}
 
 	eatGhostsIfAllowed();
@@ -113,7 +111,6 @@ void Game::run() {
 
 	for (int g = 0; g < _ghosts.size(); g++) {
 		bool in_jail = _ghosts[g].inJail();
-		std::cout << "In jail :" << in_jail << "\n";
 		if (!in_jail) {
 			if (_time_to_flee) {
 				int direction = randomDirection(_ghosts[g]);

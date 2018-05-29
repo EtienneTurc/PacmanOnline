@@ -13,14 +13,20 @@ int main(int argc, char const *argv[]) {
 	Socket socket;
 	socket.run();
 
-	Games* games;
+	Games games {};
 	while (true) {
 		SafeQueue<std::pair<websocketpp::connection_hdl, std::string> >* client_queue = socket.getQueuePtr();
-		std::pair <websocketpp::connection_hdl, std::string> instructions;
-		if (client_queue->pop(instructions)) {
-			Route route(instructions, games, &socket);
-			route.treatInstruction();
+		std::vector<std::pair <websocketpp::connection_hdl, std::string>> instructions;
+		if (client_queue->popAll(instructions)) {
+			for (int i = 0; i < instructions.size(); i++) {
+				Route route(instructions[i], &games, &socket);
+				route.treatInstruction();
+			}
 		};
+
+		for (int i = 0; i < games.size(); i++) {
+			games.at(i).second->run();
+		}
 	}
 
 	// std::cout << "Message du client : " << instructions.second << '\n';

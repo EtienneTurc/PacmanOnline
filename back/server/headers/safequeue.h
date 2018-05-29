@@ -27,6 +27,18 @@ public:
 		return true;
 	}
 
+	bool popAll(std::vector<T>& elem) {
+		std::lock_guard<std::mutex> lock(m);
+		if (q.empty()) {
+			return false;
+		}
+		while (!q.empty()) {
+			elem.push_back(q.front());
+			q.pop();
+		}
+		return true;
+	}
+
 	void clear() {
 		std::lock_guard<std::mutex> lock(m);
 		std::queue<T>().swap(q);

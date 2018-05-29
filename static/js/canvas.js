@@ -22,6 +22,74 @@ window.onload = function () {
 	}
 }
 
-document.addEventListener('keypress', (event) => {const keyName = event.key;
-	socket.send(keyName);
-});
+document.onkeydown = function(e) {
+	let direction = "0"
+	switch (e.keyCode) {
+		case 37:
+		// left
+		direction = "2";
+		break;
+		case 38:
+		// up
+		direction = "1";
+		break;
+		case 39:
+		// right
+		direction = "4";
+		break;
+		case 40:
+		// down
+		direction = "3";
+		break;
+		default: break;
+	}
+
+	if (direction != "0") {
+		socket.send("routePostEntityDirection;true;0;"+ direction + ";");
+		console.log("routePostEntityDirection;true;0;"+ direction + ";");
+	}
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// document.addEventListener('keydown', (event) => {const keyName = event.key;
+// 	let direction = "0"
+// 	console.log(keyName);
+// 	switch (keyName) {
+// 		// Up
+// 		case 38:
+// 		direction = "1";
+// 		break;
+// 		// Left
+// 		case 37:
+// 		direction = "2";
+// 		break;
+// 		// Down
+// 		case 40:
+// 		direction = "3";
+// 		break;
+// 		// Right
+// 		case 39:
+// 		direction = "4";
+// 		break;
+// 		default:
+// 		break;
+// 	}
+//
+// });
