@@ -81,10 +81,8 @@ void Entity::pushInput(int direction) {
 }
 
 void Entity::updateDirection(int direction) {
-	std::cout << "before update direction : " << direction << '\n';
 	if (!_grid->checkWall(_x_position, _y_position, direction)) {
 		_direction = direction;
-		std::cout << "Direction updated" << '\n';
 	}
 }
 

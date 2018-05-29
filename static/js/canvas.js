@@ -46,50 +46,5 @@ document.onkeydown = function(e) {
 
 	if (direction != "0") {
 		socket.send("routePostEntityDirection;true;0;"+ direction + ";");
-		console.log("routePostEntityDirection;true;0;"+ direction + ";");
 	}
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// document.addEventListener('keydown', (event) => {const keyName = event.key;
-// 	let direction = "0"
-// 	console.log(keyName);
-// 	switch (keyName) {
-// 		// Up
-// 		case 38:
-// 		direction = "1";
-// 		break;
-// 		// Left
-// 		case 37:
-// 		direction = "2";
-// 		break;
-// 		// Down
-// 		case 40:
-// 		direction = "3";
-// 		break;
-// 		// Right
-// 		case 39:
-// 		direction = "4";
-// 		break;
-// 		default:
-// 		break;
-// 	}
-//
-// });
