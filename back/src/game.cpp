@@ -75,11 +75,11 @@ void Game::init() {
 	addPacman(pacman);
 
 	//Initialisation ghost
-	// Ghost gasper(_grid, 16,26,DOWN,10, GHOST_SCORE, 0);
-	// addGhost(gasper);
-	//
-	// Ghost blanky(_grid, X_CENTER,Y_CENTER + 2 ,DOWN,10, GHOST_SCORE, 10);
-	// addGhost(blanky);
+	Ghost gasper(_grid, 16,26,DOWN,10, GHOST_SCORE, 0);
+	addGhost(gasper);
+
+	Ghost blanky(_grid, X_CENTER,Y_CENTER + 2 ,DOWN,10, GHOST_SCORE, 10);
+	addGhost(blanky);
 
 	displayEntities();
 }
@@ -99,10 +99,6 @@ void Game::run() {
 	}
 
 	eatGhostsIfAllowed();
-
-	if (gameOver()) {
-		exit(-1);
-	}
 
 	std::vector<int (*)(Pacman, Ghost)> ia;
 	ia.push_back(lowestDirection);

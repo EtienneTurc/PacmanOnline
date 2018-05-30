@@ -21,6 +21,7 @@ public:
 	void routePostEntityDirection();
 
 	Route(Instructions instructions, Games* games, Socket* socket);
+	Route(std::pair<websocketpp::connection_hdl, Game*> game, Socket* socket);
 	~Route(){};
 
 private:

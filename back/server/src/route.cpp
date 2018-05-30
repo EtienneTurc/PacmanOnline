@@ -16,6 +16,12 @@ Route::Route(Instructions instructions, Games* games, Socket* socket) {
 	}
 }
 
+Route::Route(std::pair<websocketpp::connection_hdl, Game*> game, Socket* socket) {
+	_hdl = game.first;
+	_game = game.second;
+	_socket = socket;
+}
+
 void Route::treatInstruction() {
 	if (_method == "routeBeginGame") {
 		routeBeginGame();
@@ -63,16 +69,18 @@ void Route::routeGetGrid() {
 }
 
 // index_in_vector is the index of the entity in the vector -> it identifies it
-//Route;Pacman or Ghost?;Index in vector;XPosition;YPosition;Direction;Fraction;Score
+//Route;Pacman or Ghost?;Index in vector;Nbr of entities in the vector;XPosition;YPosition;Direction;Fraction;Score
 void Route::routeGetEntity(Entity* entity, bool is_Pacman, int index_in_vector) {
 	std::string data = "routeGetEntity;";
 	if (is_Pacman) {
-		std::string data = "Pacman;";
+		data += "true;";
 	} else {
-		std::string data = "Ghost;";
+		data += "false;";
 	}
 
 	data += std::to_string(index_in_vector);
+	data += ";";
+	data += std::to_string(_game->getPacmans()->size());
 	data += ";";
 	data += std::to_string(entity->getXPosition());
 	data += ";";
@@ -145,8 +153,6 @@ Game* Route::createGame(Games* games) {
 void Route::routePostEntityDirection() {
 	int index_in_vector = std::stoi(_data[1]);
 	int direction = std::stoi(_data[2]);
-
-	std::cout << "post direction: " << _data[2] << '\n';
 
 	if (_data[0] == "true") {
 		std::vector<Pacman>* pacmans = _game->getPacmans();

@@ -25,7 +25,11 @@ int main(int argc, char const *argv[]) {
 		};
 
 		for (int i = 0; i < games.size(); i++) {
-			games.at(i).second->run();
+			if (!games.at(i).second->gameOver()) {
+				games.at(i).second->run();
+				Route route(games.at(i), &socket);
+				route.routeGetGame();
+			}
 		}
 	}
 
