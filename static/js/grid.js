@@ -57,15 +57,15 @@ function drawGrid (context) {
 			} else {
 				context.fillStyle = PATH_COLOR
 				context.fillRect(j*quantum, i*quantum, (j+1)* quantum, (i+1)*quantum)
-
 			}
 
 			if (grid[i][j] == 2) {
-				context.fillStyle = SMALL_BALL_COLOR
+				context.beginPath()
 				context.arc((j+0.5)*quantum , (i+0.5)*quantum, SMALL_BALL_RADIUS, 0*Math.PI, 2*Math.PI);
+				context.closePath()
+				context.fillStyle = SMALL_BALL_COLOR
 			}
 		}
 	}
-
 
 }

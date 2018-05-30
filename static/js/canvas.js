@@ -14,8 +14,8 @@ window.onload = function () {
 		return;
 	}
 
-	context.fillStyle = "black";
-	context.fillRect(0, 0, canvas.width, canvas.height);
+	// context.fillStyle = "black";
+	// context.fillRect(0, 0, canvas.width, canvas.height);
 
 	var myInterval = setInterval(animate, 1000 / 30);
 
@@ -28,6 +28,9 @@ window.onload = function () {
 		drawGrid(context)
 		// context.fillRect(xPos, yPos, 100, 100);
 		// context.fillRect(200, 200, 100, 100);
+		context.fillStyle = "yellow"
+		context.strock()
+		// context.arc(150 , 150, 50, 0*Math.PI, 2*Math.PI, true);
 	}
 }
 
