@@ -1,7 +1,7 @@
 window.onload = function () {
 	var canvas = document.getElementById('canvas');
-	canvas.setAttribute('width', 420);
-	canvas.setAttribute('height', 540);
+	// canvas.setAttribute('width', 420);
+	// canvas.setAttribute('height', 540);
 
 	if (!canvas) {
 		alert("Impossible to get the canvas");
@@ -12,6 +12,16 @@ window.onload = function () {
 	if (!context) {
 		alert("Impossible to get the canvas context");
 		return;
+	}
+
+	context.canvas.width = window.innerWidth
+	context.canvas.height = window.innerHeight
+	var quantum;
+
+	if (canvas.width/28 < canvas.height/36) {
+		quantum = Math.floor(canvas.width/28)
+	} else {
+		quantum = Math.floor(canvas.height/36)
 	}
 
 	// context.fillStyle = "black";
@@ -25,12 +35,9 @@ window.onload = function () {
 
 
 	function animate() {
-		drawGrid(context)
-		// context.fillRect(xPos, yPos, 100, 100);
-		// context.fillRect(200, 200, 100, 100);
-		context.fillStyle = "yellow"
-		context.strock()
-		// context.arc(150 , 150, 50, 0*Math.PI, 2*Math.PI, true);
+		// drawGrid(context, quantum)
+		// drawGhost(context, true)
+		drawPacman(context)
 	}
 }
 
