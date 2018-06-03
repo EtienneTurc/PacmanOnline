@@ -1,11 +1,11 @@
 function drawGrid (context, quantum) {
 
 
-	var BORDER_COLOR = "white"
+	var BORDER_COLOR = "#0047cc"
 	var WALL_COLOR = "black"
 	var PATH_COLOR = "grey"
-	var SMALL_BALL_COLOR = "yellow"
-	var BIG_BALL_COLOR = "orange"
+	var SMALL_BALL_COLOR = "#fbf2b7"
+	var BIG_BALL_COLOR = "#F6DC12"
 
 	var SMALL_BALL_RADIUS = 2
 	var BIG_BALL_RADIUS = 4
@@ -124,7 +124,7 @@ function drawGrid (context, quantum) {
 				}
 
 				context.lineWidth = 5;
-				context.strokeStyle = "red";
+				context.strokeStyle = BORDER_COLOR;
 				context.stroke();
 				context.closePath()
 
