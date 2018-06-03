@@ -109,6 +109,8 @@ void Route::routeGetNextAttackIn() {
 }
 
 void Route::routeGetGame() {
+	std::pair <websocketpp::connection_hdl, std::string> instructions = std::make_pair(_hdl, "hi");
+	_socket->send(instructions);
 	std::vector<Pacman>* pacmans = _game->getPacmans();
 	for (int i = 0; i < pacmans->size(); i++) {
 		routeGetEntity(&pacmans->at(i), true, i);

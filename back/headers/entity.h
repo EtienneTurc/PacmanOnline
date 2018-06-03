@@ -28,7 +28,7 @@ public:
 	void virtualMove();
 
 	void updateDirection(int direction);
-	void updateFraction(float delta_time);
+	void updateFraction();
 
 	Entity(Grid* grid, int x_position, int y_position, int direction, float speed, int score);
 	~Entity() {}

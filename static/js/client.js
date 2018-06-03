@@ -5,8 +5,10 @@ var ghosts = []
 var next_attack_in
 var sizeX
 var sizeY
+var new_grid = false
 
 socket.addEventListener('open', function (event) {
+	init()
 	socket.send("routeBeginGame;1;2;");
 });
 
@@ -17,31 +19,33 @@ socket.addEventListener('message', function (event) {
 
 	switch (route) {
 		case "routeGetGrid":
-			routeGetGrid(data);
-			break;
+		routeGetGrid(data);
+		break;
 		case "routeGetEntity":
-			routeGetEntity(data);
-			break;
+		routeGetEntity(data);
+		break;
 		case "routeGetNextAttackIn":
-			routeGetNextAttackIn(data);
-			break;
+		routeGetNextAttackIn(data);
+		break;
 		default:
-			break;
+		break;
 	}
 });
 
 function routeGetGrid(data) {
-	sizeX = data[0]
-	sizeY = data[1]
+	grid = [[]]
+	sizeX = parseInt(data[0])
+	sizeY = parseInt(data[1])
 	for (var i = 0; i < sizeY; i++) {
 		grid.push(new Array(sizeX))
 	}
 	data.splice(0,2)
-	for (var i = 0; i < sizeY; i++) {
+	for (var i = 0; i < sizeX; i++) {
 		for (var j = 0; j < sizeY; j++) {
-			grid[i][j] = parseInt(data[j*sizeY + i])
+			grid[i][j] = parseInt(data[j + i*sizeY])
 		}
 	}
+	game()
 }
 
 function routeGetNextAttackIn(data) {
@@ -69,3 +73,30 @@ function routeGetEntity(data) {
 		ghosts[index_in_vector] = entity
 	}
 }
+
+document.onkeydown = function(e) {
+	let direction = "0"
+	switch (e.keyCode) {
+		case 37:
+		// left
+		direction = "2";
+		break;
+		case 38:
+		// up
+		direction = "1";
+		break;
+		case 39:
+		// right
+		direction = "4";
+		break;
+		case 40:
+		// down
+		direction = "3";
+		break;
+		default: break;
+	}
+
+	if (direction != "0") {
+		socket.send("routePostEntityDirection;true;0;"+ direction + ";");
+	}
+};

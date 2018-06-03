@@ -107,7 +107,7 @@ TEST_F(EntityTest, virtualMove) {
 }
 
 TEST_F(EntityTest, updateFraction) {
-	_entity->updateFraction(2/5);
+	_entity->updateFraction();
 	EXPECT_EQ(2/5, _entity->getFraction());
 }
 

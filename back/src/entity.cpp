@@ -86,7 +86,7 @@ void Entity::updateDirection(int direction) {
 	}
 }
 
-void Entity::updateFraction(float delta_time) {
+void Entity::updateFraction() {
 	// _fraction can not overtake 0.5 if there is a wall
 	if (_grid->checkWall(_x_position, _y_position, _direction) && _fraction > 0.5) {
 		_fraction = 0.5;
@@ -114,28 +114,28 @@ void Entity::move(float delta_time) {
 				if (_fraction >= 1) {
 					_x_position = (_x_position - 1) % 28;
 				}
-				updateFraction(delta_time);
+				updateFraction();
 				break;
 			}
 			case RIGHT: {
 				if (_fraction >= 1) {
 					_x_position = (_x_position + 1) % 28;
 				}
-				updateFraction(delta_time);
+				updateFraction();
 				break;
 			}
 			case UP: {
 				if (_fraction >= 1) {
 					_y_position = (_y_position - 1) % 36;
 				}
-				updateFraction(delta_time);
+				updateFraction();
 				break;
 			}
 			case DOWN: {
 				if (_fraction >= 1) {
 					_y_position = (_y_position + 1) % 36;
 				}
-				updateFraction(delta_time);
+				updateFraction();
 				break;
 			}
 			default: {

@@ -73,17 +73,17 @@ void Game::init() {
 	_grid = grid;
 
 	//Initialisation pacman
-	Pacman pacman(_grid, 18, 29, LEFT, 10);
+	Pacman pacman(_grid, 18, 29, LEFT,  SPEED);
 	addPacman(pacman);
 
 	//Initialisation ghost
 	// Ghost gasper(_grid, 16,26,DOWN,10, GHOST_SCORE, 0);
 	// addGhost(gasper);
 
-	Ghost blanky(_grid, X_CENTER,Y_CENTER + 2 ,DOWN,10, GHOST_SCORE, 10);
+	Ghost blanky(_grid, X_CENTER,Y_CENTER + 2 ,DOWN, SPEED, GHOST_SCORE, 10);
 	addGhost(blanky);
 
-	displayEntities();
+	// displayEntities();
 }
 
 void Game::run() {
@@ -121,8 +121,8 @@ void Game::run() {
 			}
 		}
 	}
-	displayEntities();
-	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+	// displayEntities();
+	std::this_thread::sleep_for(std::chrono::milliseconds(100));
 }
 
 bool Game::gameOver() {
@@ -130,7 +130,7 @@ bool Game::gameOver() {
 	int count = 0;
 	for (int p = 0; p < _pacmans.size(); p++) {
 		for (int g = 0; g < _ghosts.size(); g++) {
-			if (_ghosts[g].entityCollision(_pacmans[p])) {
+			if (_ghosts[g].entityCollision(_pacmans[p]) && !_time_to_flee) {
 				count++;
 			}
 		}
@@ -142,8 +142,8 @@ bool Game::gameOver() {
 }
 
 void Game::eatGhostsIfAllowed() {
-	//Return True if the game is over
 	if (_time_to_flee) {
+		std::cout << "TIME_TO_FLEE : " << _time_to_flee << '\n';
 		for (int p = 0; p < _pacmans.size(); p++) {
 			for (int g = 0; g < _ghosts.size(); g++) {
 				if (_ghosts[g].entityCollision(_pacmans[p])) {
