@@ -17,6 +17,8 @@ window.onload = function () {
 	context.canvas.width = window.innerWidth
 	context.canvas.height = window.innerHeight
 	var quantum;
+	var interval = 0;
+	var pacmanMouth = false;
 
 	if (canvas.width/28 < canvas.height/36) {
 		quantum = Math.floor(canvas.width/28)
@@ -29,16 +31,20 @@ window.onload = function () {
 	function animate() {
 		context.fillStyle = "black";
 		context.fillRect(0, 0, canvas.width, canvas.height);
+
+		if (interval>= 50) {
+			interval = 0;
+			pacmanMouth = !pacmanMouth;
+		}
+		interval ++
+
 		drawGrid(context, quantum)
-		// console.log(grid);
-		// console.log(pacmans);
-		// console.log(sizeX);
-		// drawGhost(context, quantum, true)
+
 		for (var i = 0; i < pacmans.length; i++) {
-			drawPacman(context, quantum, pacmans[i])
+			drawPacman(context, quantum, pacmans[i], pacmanMouth)
 		}
 		for (var i = 0; i < ghosts.length; i++) {
-			drawGhost(context, quantum, ghosts[i])
+			drawGhost(context, quantum, ghosts[i], i)
 		}
 	}
 }

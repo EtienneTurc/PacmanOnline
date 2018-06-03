@@ -1,4 +1,4 @@
-function drawPacman(context, quantum, pacman) {
+function drawPacman(context, quantum, pacman, mouthOpen) {
 
 	var xPos = pacman.x_position * quantum + quantum/2;
 	var yPos = pacman.y_position * quantum + quantum/2;
@@ -6,7 +6,6 @@ function drawPacman(context, quantum, pacman) {
 
 	var PACMAN_COLOR = "yellow"
 	var color;
-	var mouthOpen = true
 
 	// directions
 	var UP = 1;

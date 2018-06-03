@@ -1,4 +1,4 @@
-function drawGhost(context, quantum, ghost) {
+function drawGhost(context, quantum, ghost, ghostIndex) {
 	var isDead = false;
 	var isWeak = false;
 	var isBlinking = false;
@@ -8,9 +8,31 @@ function drawGhost(context, quantum, ghost) {
 	var yPos = ghost.y_position * quantum + quantum/2;
 	var ghost_radius = quantum/2
 
-	var color = "green"
+	var color
+	var RED = "red";
+	var PINK = "#ff9cce";
+	var CYAN = "#00ffde";
+	var ORANGE = "#ffb847";
 	var WEAK_COLOR = "#0031ff";
 	var BLINKING_COLOR = "white";
+
+	switch (ghostIndex) {
+		case 0:
+			color = ORANGE
+			break;
+		case 1:
+			color = RED
+			break;
+		case 2:
+			color = CYAN
+			break;
+		case 3:
+			color = PINK
+			break;
+		default:
+			color = "green"
+			break;
+	}
 
 	// directions
 	var UP = 1;

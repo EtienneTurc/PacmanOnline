@@ -13,7 +13,6 @@ int main(int argc, char const *argv[]) {
 
 	int tref = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
 	int t = tref + 1;
-	std::cout << tref*1000 << '\n';
 
 	Socket socket;
 	socket.run();
@@ -21,10 +20,8 @@ int main(int argc, char const *argv[]) {
 	Games games {};
 	while (true) {
 		t = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
-		std::cout << t << '\n';
 		if (t >= tref+1) {
 			tref = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
-			std::cout << "hi" << '\n';
 			SafeQueue<std::pair<websocketpp::connection_hdl, std::string> >* client_queue = socket.getQueuePtr();
 			std::vector<std::pair <websocketpp::connection_hdl, std::string>> instructions;
 
