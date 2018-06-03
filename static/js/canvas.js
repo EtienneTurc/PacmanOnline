@@ -20,6 +20,7 @@ window.onload = function () {
 	var interval = 0;
 	var pacmanMouth = false;
 	var ghostOndulation = false;
+	var blinking = false;
 
 	if (canvas.width/28 < canvas.height/36) {
 		quantum = Math.floor(canvas.width/28)
@@ -39,6 +40,13 @@ window.onload = function () {
 		if (interval%10 == 0) {
 			ghostOndulation = !ghostOndulation;
 		}
+		if (next_attack_in <= 7) {
+			if (interval%10 == 0) {
+				blinking = !blinking
+			}
+		} else {
+			blinking = false
+		}
 		interval ++
 
 		drawGrid(context, quantum)
@@ -48,7 +56,7 @@ window.onload = function () {
 			drawPacman(context, quantum, pacmans[i], pacmanMouth)
 		}
 		for (var i = 0; i < ghosts.length; i++) {
-			drawGhost(context, quantum, ghosts[i], i, ghostOndulation)
+			drawGhost(context, quantum, ghosts[i], i, ghostOndulation, blinking)
 		}
 	}
 }

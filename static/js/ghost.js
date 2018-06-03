@@ -1,7 +1,6 @@
-function drawGhost(context, quantum, ghost, ghostIndex, isMoving) {
+function drawGhost(context, quantum, ghost, ghostIndex, isMoving, isBlinking) {
 	var isDead = false;
-	var isWeak = false;
-	var isBlinking = false;
+	var isWeak = (next_attack_in != 0);
 
 	var xPos = ghost.x_position * quantum + quantum/2;
 	var yPos = ghost.y_position * quantum + quantum/2;
@@ -39,6 +38,24 @@ function drawGhost(context, quantum, ghost, ghostIndex, isMoving) {
 	var DOWN = 3;
 	var RIGHT = 4;
 	var direction = ghost.direction
+
+	//TODO: implement fractions properly
+	// switch (direction) {
+	// 	case UP:
+	// 		yPos = yPos - ghost.fraction * quantum
+	// 		break;
+	// 	case LEFT:
+	// 		xPos = xPos - ghost.fraction * quantum
+	// 		break;
+	// 	case DOWN:
+	// 		yPos = yPos + ghost.fraction * quantum
+	// 		break;
+	// 	case RIGHT:
+	// 		xPos = xPos + ghost.fraction * quantum
+	// 		break;
+	// 	default:
+	// 		break;
+	// }
 
 	if(!isDead){
 		// body color
