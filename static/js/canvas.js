@@ -42,6 +42,7 @@ window.onload = function () {
 		interval ++
 
 		drawGrid(context, quantum)
+		// console.log(grid);
 
 		for (var i = 0; i < pacmans.length; i++) {
 			drawPacman(context, quantum, pacmans[i], pacmanMouth)

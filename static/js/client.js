@@ -33,21 +33,20 @@ socket.addEventListener('message', function (event) {
 function routeGetGrid(data) {
 	sizeX = data[0]
 	sizeY = data[1]
-	// grid = []
 	for (var i = 0; i < sizeY; i++) {
 		grid.push(new Array(sizeX))
 	}
 	data.splice(0,2)
-	for (var i = 0; i < sizeX; i++) {
+	for (var i = 0; i < sizeY; i++) {
 		for (var j = 0; j < sizeY; j++) {
-			grid[j][i] = parseInt(data[i*sizeX + j])
+			grid[i][j] = parseInt(data[j*sizeY + i])
 		}
 	}
 }
 
 function routeGetNextAttackIn(data) {
 	next_attack_in = parseInt(data[0])
-	console.log(next_attack_in);
+	// console.log(next_attack_in);
 }
 
 //Route;Pacman or Ghost?;Index in vector;XPosition;YPosition;Direction;Fraction;Score
