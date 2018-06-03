@@ -19,6 +19,7 @@ window.onload = function () {
 	var quantum;
 	var interval = 0;
 	var pacmanMouth = false;
+	var ghostOndulation = false;
 
 	if (canvas.width/28 < canvas.height/36) {
 		quantum = Math.floor(canvas.width/28)
@@ -32,9 +33,11 @@ window.onload = function () {
 		context.fillStyle = "black";
 		context.fillRect(0, 0, canvas.width, canvas.height);
 
-		if (interval>= 50) {
-			interval = 0;
+		if (interval%10 == 0) {
 			pacmanMouth = !pacmanMouth;
+		}
+		if (interval%10 == 0) {
+			ghostOndulation = !ghostOndulation;
 		}
 		interval ++
 
@@ -44,7 +47,7 @@ window.onload = function () {
 			drawPacman(context, quantum, pacmans[i], pacmanMouth)
 		}
 		for (var i = 0; i < ghosts.length; i++) {
-			drawGhost(context, quantum, ghosts[i], i)
+			drawGhost(context, quantum, ghosts[i], i, ghostOndulation)
 		}
 	}
 }

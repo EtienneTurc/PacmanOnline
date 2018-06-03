@@ -1,8 +1,7 @@
-function drawGhost(context, quantum, ghost, ghostIndex) {
+function drawGhost(context, quantum, ghost, ghostIndex, isMoving) {
 	var isDead = false;
 	var isWeak = false;
 	var isBlinking = false;
-	var isMoving = true
 
 	var xPos = ghost.x_position * quantum + quantum/2;
 	var yPos = ghost.y_position * quantum + quantum/2;
