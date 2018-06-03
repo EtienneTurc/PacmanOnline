@@ -160,9 +160,11 @@ void Route::routePostEntityDirection() {
 		std::vector<Pacman>* pacmans = _game->getPacmans();
 		Pacman* pacman = &pacmans->at(index_in_vector);
 		pacman->pushInput(direction);
+		pacman->setInputTime(INPUT_TIME);
 	} else {
 		std::vector<Ghost>* ghosts = _game->getGhosts();
 		Ghost* ghost = &ghosts->at(index_in_vector);
 		ghost->pushInput(direction);
+		ghost->setInputTime(INPUT_TIME);
 	}
 }

@@ -9,6 +9,7 @@ Entity::Entity(Grid *grid, int x_position, int y_position, int direction, float 
 	_fraction = 1 / 2;
 	_event = 0;
 	_score = score;
+	_input_time = 0;
 }
 
 int Entity::getXPosition() {
@@ -45,6 +46,10 @@ void Entity::setXPosition(int x_position) {
 
 void Entity::setYPosition(int y_position) {
 	_y_position = y_position;
+}
+
+void Entity::setInputTime(int input_time) {
+	_input_time = input_time;
 }
 
 void Entity::addScore(int score_to_add) {
@@ -102,7 +107,11 @@ void Entity::move(float delta_time) {
 	// Update the direction
 	if (_event) {
 		updateDirection(_event);
-		_event = 0;
+		if (!_input_time) {
+			_event = 0;
+		} else {
+			_input_time--;
+		}
 	}
 
 	// Check if there is a wall in front

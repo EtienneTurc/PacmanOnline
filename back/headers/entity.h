@@ -18,6 +18,7 @@ public:
 
 	void setXPosition(int x_position);
 	void setYPosition(int y_position);
+	void setInputTime(int input_time);
 	void addScore(int score_to_add);
 
 	bool entityCollision(Entity entity);
@@ -42,6 +43,7 @@ protected:
 	float _fraction;
 	int _event;
 	int _score;
+	int _input_time;
 };
 
 #endif
