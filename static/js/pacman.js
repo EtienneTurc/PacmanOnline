@@ -1,8 +1,8 @@
-function drawPacman(context) {
+function drawPacman(context, quantum, pacman) {
 
-	var xPos = 150;
-	var yPos = 150;
-	var pacman_radius = 9
+	var xPos = pacman.x_position * quantum + quantum/2;
+	var yPos = pacman.y_position * quantum + quantum/2;
+	var pacman_radius = quantum/2
 
 	var PACMAN_COLOR = "yellow"
 	var color;
@@ -10,10 +10,10 @@ function drawPacman(context) {
 
 	// directions
 	var UP = 1;
-	var DOWN = 2;
-	var LEFT = 3;
+	var LEFT = 2;
+	var DOWN = 3;
 	var RIGHT = 4;
-	var direction = LEFT
+	var direction = pacman.direction
 
 	if (color == undefined){
 		context.fillStyle = PACMAN_COLOR;
@@ -31,6 +31,7 @@ function drawPacman(context) {
 
 			case DOWN:
 			context.arc(xPos, yPos, pacman_radius, 2*Math.PI-Math.PI*29/18, 2*Math.PI-Math.PI*25/18, true);
+			console.log();
 			break;
 
 			case LEFT:

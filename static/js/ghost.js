@@ -1,12 +1,12 @@
-function drawGhost(context, attacked) {
+function drawGhost(context, quantum, ghost) {
 	var isDead = false;
 	var isWeak = false;
 	var isBlinking = false;
 	var isMoving = true
 
-	var xPos = 150
-	var yPos = 150
-	var ghost_radius = 9
+	var xPos = ghost.x_position * quantum + quantum/2;
+	var yPos = ghost.y_position * quantum + quantum/2;
+	var ghost_radius = quantum/2
 
 	var color = "green"
 	var WEAK_COLOR = "#0031ff";
@@ -14,10 +14,10 @@ function drawGhost(context, attacked) {
 
 	// directions
 	var UP = 1;
-	var DOWN = 2;
-	var LEFT = 3;
+	var LEFT = 2;
+	var DOWN = 3;
 	var RIGHT = 4;
-	var direction = LEFT
+	var direction = ghost.direction
 
 	if(!isDead){
 		// body color

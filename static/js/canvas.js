@@ -24,20 +24,22 @@ window.onload = function () {
 		quantum = Math.floor(canvas.height/36)
 	}
 
-	// context.fillStyle = "black";
-	// context.fillRect(0, 0, canvas.width, canvas.height);
-
 	var myInterval = setInterval(animate, 1000 / 30);
 
-
-	var xPos = 10
-	var yPos = 10
-
-
 	function animate() {
-		// drawGrid(context, quantum)
-		// drawGhost(context, true)
-		drawPacman(context)
+		context.fillStyle = "black";
+		context.fillRect(0, 0, canvas.width, canvas.height);
+		drawGrid(context, quantum)
+		// console.log(grid);
+		// console.log(pacmans);
+		// console.log(sizeX);
+		// drawGhost(context, quantum, true)
+		for (var i = 0; i < pacmans.length; i++) {
+			drawPacman(context, quantum, pacmans[i])
+		}
+		for (var i = 0; i < ghosts.length; i++) {
+			drawGhost(context, quantum, ghosts[i])
+		}
 	}
 }
 

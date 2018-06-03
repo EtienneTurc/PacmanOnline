@@ -1,5 +1,6 @@
 #include <iostream>
 #include <time.h>
+#include <chrono>
 #include "entity.h"
 #include "game.h"
 #include "parameters.h"
@@ -10,25 +11,36 @@
 int main(int argc, char const *argv[]) {
 	srand (time(NULL));
 
+	int tref = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
+	int t = tref + 1;
+	std::cout << tref*1000 << '\n';
+
 	Socket socket;
 	socket.run();
 
 	Games games {};
 	while (true) {
-		SafeQueue<std::pair<websocketpp::connection_hdl, std::string> >* client_queue = socket.getQueuePtr();
-		std::vector<std::pair <websocketpp::connection_hdl, std::string>> instructions;
-		if (client_queue->popAll(instructions)) {
-			for (int i = 0; i < instructions.size(); i++) {
-				Route route(instructions[i], &games, &socket);
-				route.treatInstruction();
-			}
-		};
+		t = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
+		std::cout << t << '\n';
+		if (t >= tref+1) {
+			tref = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
+			std::cout << "hi" << '\n';
+			SafeQueue<std::pair<websocketpp::connection_hdl, std::string> >* client_queue = socket.getQueuePtr();
+			std::vector<std::pair <websocketpp::connection_hdl, std::string>> instructions;
 
-		for (int i = 0; i < games.size(); i++) {
-			if (!games.at(i).second->gameOver()) {
-				games.at(i).second->run();
-				Route route(games.at(i), &socket);
-				route.routeGetGame();
+			if (client_queue->popAll(instructions)) {
+				for (int i = 0; i < instructions.size(); i++) {
+					Route route(instructions[i], &games, &socket);
+					route.treatInstruction();
+				}
+			};
+
+			for (int i = 0; i < games.size(); i++) {
+				if (!games.at(i).second->gameOver()) {
+					games.at(i).second->run();
+					Route route(games.at(i), &socket);
+					route.routeGetGame();
+				}
 			}
 		}
 	}
