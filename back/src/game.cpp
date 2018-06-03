@@ -1,4 +1,6 @@
 #include "game.h"
+#include <chrono>
+#include <thread>
 
 Game::Game() {
 	_time_to_flee = 0;
@@ -75,8 +77,8 @@ void Game::init() {
 	addPacman(pacman);
 
 	//Initialisation ghost
-	Ghost gasper(_grid, 16,26,DOWN,10, GHOST_SCORE, 0);
-	addGhost(gasper);
+	// Ghost gasper(_grid, 16,26,DOWN,10, GHOST_SCORE, 0);
+	// addGhost(gasper);
 
 	Ghost blanky(_grid, X_CENTER,Y_CENTER + 2 ,DOWN,10, GHOST_SCORE, 10);
 	addGhost(blanky);
@@ -120,6 +122,7 @@ void Game::run() {
 		}
 	}
 	displayEntities();
+	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 }
 
 bool Game::gameOver() {

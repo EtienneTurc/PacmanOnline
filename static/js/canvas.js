@@ -1,7 +1,7 @@
 window.onload = function () {
 	var canvas = document.getElementById('canvas');
-	canvas.setAttribute('width', 420);
-	canvas.setAttribute('height', 540);
+	// canvas.setAttribute('width', 420);
+	// canvas.setAttribute('height', 540);
 
 	if (!canvas) {
 		alert("Impossible to get the canvas");
@@ -14,20 +14,50 @@ window.onload = function () {
 		return;
 	}
 
-	context.fillStyle = "black";
-	context.fillRect(0, 0, canvas.width, canvas.height);
+	context.canvas.width = window.innerWidth
+	context.canvas.height = window.innerHeight
+	var quantum;
+	var interval = 0;
+	var pacmanMouth = false;
+	var ghostOndulation = false;
+	var blinking = false;
+
+	if (canvas.width/28 < canvas.height/36) {
+		quantum = Math.floor(canvas.width/28)
+	} else {
+		quantum = Math.floor(canvas.height/36)
+	}
 
 	var myInterval = setInterval(animate, 1000 / 30);
 
-
-	var xPos = 10
-	var yPos = 10
-
-
 	function animate() {
-		drawGrid(context)
-		// context.fillRect(xPos, yPos, 100, 100);
-		// context.fillRect(200, 200, 100, 100);
+		context.fillStyle = "black";
+		context.fillRect(0, 0, canvas.width, canvas.height);
+
+		if (interval%10 == 0) {
+			pacmanMouth = !pacmanMouth;
+		}
+		if (interval%10 == 0) {
+			ghostOndulation = !ghostOndulation;
+		}
+		if (next_attack_in <= 7) {
+			if (interval%10 == 0) {
+				blinking = !blinking
+			}
+		} else {
+			blinking = false
+		}
+		interval ++
+
+		drawGrid(context, quantum)
+		// console.log(grid);
+
+		for (var i = 0; i < pacmans.length; i++) {
+			drawPacman(context, quantum, pacmans[i], pacmanMouth)
+		}
+		for (var i = 0; i < ghosts.length; i++) {
+			drawGhost(context, quantum, ghosts[i], i, ghostOndulation, blinking)
+		}
 	}
 }
 

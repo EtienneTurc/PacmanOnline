@@ -3,6 +3,8 @@ var grid = []
 var pacmans = []
 var ghosts = []
 var next_attack_in
+var sizeX
+var sizeY
 
 socket.addEventListener('open', function (event) {
 	socket.send("routeBeginGame;1;2;");
@@ -29,27 +31,26 @@ socket.addEventListener('message', function (event) {
 });
 
 function routeGetGrid(data) {
-	let sizeX = data[0]
-	let sizeY = data[1]
-	grid = []
+	sizeX = data[0]
+	sizeY = data[1]
 	for (var i = 0; i < sizeY; i++) {
 		grid.push(new Array(sizeX))
 	}
 	data.splice(0,2)
-	for (var i = 0; i < sizeX; i++) {
+	for (var i = 0; i < sizeY; i++) {
 		for (var j = 0; j < sizeY; j++) {
-			grid[j][i] = parseInt(data[i*sizeX + j])
+			grid[i][j] = parseInt(data[j*sizeY + i])
 		}
 	}
 }
 
-function	routeGetNextAttackIn(data) {
+function routeGetNextAttackIn(data) {
 	next_attack_in = parseInt(data[0])
-	console.log(next_attack_in);
+	// console.log(next_attack_in);
 }
 
 //Route;Pacman or Ghost?;Index in vector;XPosition;YPosition;Direction;Fraction;Score
-function	routeGetEntity(data) {
+function routeGetEntity(data) {
 	is_pacman = (data[0] == "true")
 	index_in_vector =  parseInt(data[1])
 	entity_size = parseInt(data[2])
