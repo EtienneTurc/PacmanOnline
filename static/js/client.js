@@ -10,9 +10,22 @@ var new_grid = false
 socket.addEventListener('open', function (event) {
 	init()
 	socket.send("routeBeginGame;1;2;");
+	console.log(socket.readyState)
 });
 
+socket.addEventListener('error', function (error) {
+	console.log(error);
+	console.log(socket.readyState)
+})
+
+socket.onclose = function() {
+	console.log(socket.readyState)
+	// websocket is closed.
+	alert("Connection is closed...");
+};
+
 socket.addEventListener('message', function (event) {
+	console.log(socket.readyState)
 	var data = event.data.split(";")
 	var route = data[0]
 	data.splice(0,1)

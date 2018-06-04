@@ -56,5 +56,9 @@ function game() {
 		for (var i = 0; i < ghosts.length; i++) {
 			drawGhost(context, quantum, ghosts[i], i, ghostOndulation, blinking)
 		}
+
+		context.font = quantum + "px Arial";
+		context.fillStyle = "white";
+		context.fillText("Score : " + pacmans[0].score,quantum,2.5*quantum);
 	}
 }

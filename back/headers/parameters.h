@@ -9,7 +9,7 @@
 #define ATTACK 404
 #define FLEE 502
 #define TIME_TO_FLEE 20
-#define SPEED 2
+#define SPEED 0.5
 #define INPUT_TIME 10
 
 #define GHOST_SCORE 10000
@@ -26,6 +26,7 @@
 #define MARKED 5 // has to be different to any other value in the grid
 
 #define COLLISION_RANGE 1
+#define TURN_RANGE 0.05
 #define RANDOM_RANGE 10
 #define PROBA_U_TURN 0.05
 

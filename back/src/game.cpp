@@ -77,10 +77,10 @@ void Game::init() {
 	addPacman(pacman);
 
 	//Initialisation ghost
-	// Ghost gasper(_grid, 16,26,DOWN,10, GHOST_SCORE, 0);
-	// addGhost(gasper);
+	Ghost gasper(_grid, X_CENTER,Y_CENTER,DOWN,SPEED, GHOST_SCORE, 0, 0);
+	addGhost(gasper);
 
-	Ghost blanky(_grid, X_CENTER,Y_CENTER + 2 ,DOWN, SPEED, GHOST_SCORE, 10);
+	Ghost blanky(_grid, X_CENTER,Y_CENTER + 2 ,RIGHT, SPEED, GHOST_SCORE, 20,1);
 	addGhost(blanky);
 
 	// displayEntities();
@@ -115,7 +115,7 @@ void Game::run() {
 				_ghosts[g].pushInput(direction);
 				_ghosts[g].move(1);
 			} else {
-				int direction = ia[1](_pacmans[0], _ghosts[g]);
+				int direction = ia[_ghosts[g].getIaIndex()](_pacmans[0], _ghosts[g]);
 				_ghosts[g].pushInput(direction);
 				_ghosts[g].move(1);
 			}
@@ -143,7 +143,6 @@ bool Game::gameOver() {
 
 void Game::eatGhostsIfAllowed() {
 	if (_time_to_flee) {
-		std::cout << "TIME_TO_FLEE : " << _time_to_flee << '\n';
 		for (int p = 0; p < _pacmans.size(); p++) {
 			for (int g = 0; g < _ghosts.size(); g++) {
 				if (_ghosts[g].entityCollision(_pacmans[p])) {

@@ -67,12 +67,12 @@ bool Entity::entityCollision(Entity entity) {
 	} else {
 		if (dir%2 == _direction%2) {
 			if (dir != _direction){
-				return (abs(1-fract-_fraction) < COLLISION_RANGE);
+				return (abs(1-fract-_fraction) <= COLLISION_RANGE);
 			} else {
 				return (abs(fract-_fraction) <= COLLISION_RANGE);
 			}
 		} else {
-			return (((0.5-fract)*(0.5-fract) + (0.5-_fraction)*(0.5-_fraction)) < COLLISION_RANGE*COLLISION_RANGE);
+			return (((0.5-fract)*(0.5-fract) + (0.5-_fraction)*(0.5-_fraction)) <= COLLISION_RANGE*COLLISION_RANGE);
 		}
 	}
 }
@@ -86,20 +86,24 @@ void Entity::pushInput(int direction) {
 }
 
 void Entity::updateDirection(int direction) {
-	if (!_grid->checkWall(_x_position, _y_position, direction)) {
-		_direction = direction;
+	if (!_grid->checkWall(_x_position, _y_position, direction) && _direction != direction) {
+		if (((direction + 1)%4 +1) == _direction) {
+			_fraction = 1 - _fraction;
+			_direction = direction;
+		} else if ( abs(0.5-_fraction) < TURN_RANGE) {
+			_fraction = 0.5;
+			_direction = direction;
+		}
 	}
 }
 
 void Entity::updateFraction() {
 	// _fraction can not overtake 0.5 if there is a wall
-	if (_grid->checkWall(_x_position, _y_position, _direction) && _fraction > 0.5) {
-		_fraction = 0.5;
+	while (_fraction >= 1) {
+		_fraction = _fraction - 1;
 	}
-	else {
-		while (_fraction > 1) {
-			_fraction = _fraction - 1;
-		}
+	if (_grid->checkWall(_x_position, _y_position, _direction) && (_fraction >= 0.5)) {
+		_fraction = 0.5;
 	}
 }
 
@@ -175,5 +179,5 @@ void Entity::virtualMove() {
 		default: {
 			break;
 		}
-}
+	}
 }

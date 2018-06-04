@@ -14,23 +14,22 @@ function drawPacman(context, quantum, pacman, mouthOpen) {
 	var RIGHT = 4;
 	var direction = pacman.direction
 
-	//TODO : implement fraction  properly
-	// switch (direction) {
-	// 	case UP:
-	// 		yPos = yPos - pacman.fraction * quantum
-	// 		break;
-	// 	case LEFT:
-	// 		xPos = xPos - pacman.fraction * quantum
-	// 		break;
-	// 	case DOWN:
-	// 		yPos = yPos + pacman.fraction * quantum
-	// 		break;
-	// 	case RIGHT:
-	// 		xPos = xPos + pacman.fraction * quantum
-	// 		break;
-	// 	default:
-	// 		break;
-	// }
+	switch (direction) {
+		case UP:
+			yPos = yPos - (pacman.fraction - 0.5) * quantum
+			break;
+		case LEFT:
+			xPos = xPos - (pacman.fraction - 0.5) * quantum
+			break;
+		case DOWN:
+			yPos = yPos + (pacman.fraction - 0.5) * quantum
+			break;
+		case RIGHT:
+			xPos = xPos + (pacman.fraction - 0.5) * quantum
+			break;
+		default:
+			break;
+	}
 
 	if (color == undefined){
 		context.fillStyle = PACMAN_COLOR;
