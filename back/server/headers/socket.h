@@ -15,6 +15,7 @@ private:
 	con_list _connections;
 	std::thread* _server_thread;
 	SafeQueue<std::pair <websocketpp::connection_hdl, std::string>> _client_queue;
+	SafeQueue<websocketpp::connection_hdl> _closed_connections;
 	bool _is_alive;
 	void* _handler_queue;
 
@@ -29,6 +30,9 @@ public:
 	void send (std::pair <websocketpp::connection_hdl, std::string> instructions);
 	SafeQueue<std::pair <websocketpp::connection_hdl, std::string>>* getQueuePtr() {
 		return &_client_queue;
+	}
+	SafeQueue<websocketpp::connection_hdl>* getClosedConnectionsPtr() {
+		return &_closed_connections;
 	}
 
 	Socket ();

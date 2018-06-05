@@ -9,7 +9,7 @@
 #define ATTACK 404
 #define FLEE 502
 #define TIME_TO_FLEE 20
-#define SPEED 0.5
+#define SPEED 0.4
 #define INPUT_TIME 10
 
 #define GHOST_SCORE 10000

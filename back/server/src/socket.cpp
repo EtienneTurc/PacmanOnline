@@ -25,6 +25,7 @@ void Socket::on_open (websocketpp::connection_hdl hdl) {
 }
 
 void Socket::on_close (websocketpp::connection_hdl hdl) {
+	_closed_connections.push(hdl);
 	_connections.erase(hdl);
 	std::cout << "Socket connection closed" << '\n';
 }
