@@ -6,26 +6,19 @@ var next_attack_in
 var sizeX
 var sizeY
 var new_grid = false
+var game_over = true
 
 socket.addEventListener('open', function (event) {
 	init()
-	socket.send("routeBeginGame;1;2;");
-	console.log(socket.readyState)
+	socket.send("routeBeginGame;");
+	game_over = false
 });
 
 socket.addEventListener('error', function (error) {
 	console.log(error);
-	console.log(socket.readyState)
 })
 
-socket.onclose = function() {
-	console.log(socket.readyState)
-	// websocket is closed.
-	alert("Connection is closed...");
-};
-
 socket.addEventListener('message', function (event) {
-	console.log(socket.readyState)
 	var data = event.data.split(";")
 	var route = data[0]
 	data.splice(0,1)
@@ -40,6 +33,8 @@ socket.addEventListener('message', function (event) {
 		case "routeGetNextAttackIn":
 		routeGetNextAttackIn(data);
 		break;
+		case "routeGameOver":
+		routeGameOver(data)
 		default:
 		break;
 	}
@@ -87,6 +82,12 @@ function routeGetEntity(data) {
 	}
 }
 
+function routeGameOver(data) {
+	console.log(game_over);
+	game_over = true
+	console.log(game_over);
+}
+
 document.onkeydown = function(e) {
 	let direction = "0"
 	switch (e.keyCode) {
@@ -109,7 +110,7 @@ document.onkeydown = function(e) {
 		default: break;
 	}
 
-	if (direction != "0") {
+	if (direction != "0" && !game_over) {
 		socket.send("routePostEntityDirection;true;0;"+ direction + ";");
 	}
 };
