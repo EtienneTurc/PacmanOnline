@@ -40,10 +40,15 @@ void Socket::on_message (websocketpp::connection_hdl hdl, WsServer::message_ptr 
 
 void Socket::send (std::pair <websocketpp::connection_hdl, std::string> instructions) {
 	// Loop through all connexions to send the command
-	// con_list::iterator it;
+	con_list::iterator it;
 	// for (it = _connections.begin(); it != _connections.end(); ++it) {
+	// 	if (!instructions.first.owner_before(*it) && !*it.owner_before(instructions.first)) {
+	// 	}
 	// }
-	_server.send(instructions.first, instructions.second, websocketpp::frame::opcode::text);
+	it = _connections.find(instructions.first);
+	if (it != _connections.end()) {
+		_server.send(instructions.first, instructions.second, websocketpp::frame::opcode::text);
+	}
 }
 
 void Socket::run () {
