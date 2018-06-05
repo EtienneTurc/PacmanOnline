@@ -10,7 +10,7 @@ var game_over = true
 
 socket.addEventListener('open', function (event) {
 	init()
-	socket.send("routeBeginGame;");
+	routeGetGame();
 	game_over = false
 });
 
@@ -39,6 +39,10 @@ socket.addEventListener('message', function (event) {
 		break;
 	}
 });
+
+function routeGetGame() {
+	socket.send("routeBeginGame;");
+}
 
 function routeGetGrid(data) {
 	grid = [[]]
@@ -82,10 +86,13 @@ function routeGetEntity(data) {
 	}
 }
 
+function sleep (time) {
+  return new Promise((resolve) => setTimeout(resolve, time));
+}
+
 function routeGameOver(data) {
-	console.log(game_over);
 	game_over = true
-	console.log(game_over);
+	sleep(1000).then(() => window.location = "game_over.html")
 }
 
 document.onkeydown = function(e) {
