@@ -48,13 +48,19 @@ int main(int argc, char const *argv[]) {
 				Route route(games.at(i), &socket);
 				route.routeGetGame();
 			} else {
+				std::pair<websocketpp::connection_hdl, std::string> game_over = make_pair(games[i].first, "routeGameOver");
+				socket.send(game_over);
+				to_suppress.push_back(i);
+			}
+			if (games.at(i).second->getGrid()->noMoreBalls()) {
+				std::cout << "Has Won" << '\n';
+				std::pair<websocketpp::connection_hdl, std::string> has_won = make_pair(games[i].first, "routeHasWon");
+				socket.send(has_won);
 				to_suppress.push_back(i);
 			}
 		}
 
 		for (int i = (to_suppress.size() -1) ; i >= 0; i--) {
-			std::pair<websocketpp::connection_hdl, std::string> game_over = make_pair(games[i].first, "routeGameOver");
-			socket.send(game_over);
 			games.erase(games.begin()+i);
 		}
 
