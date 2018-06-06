@@ -9,6 +9,7 @@ function init() {
 	ghostOndulation = false;
 	blinking = false;
 	iteration = 0;
+	count = 3;
 }
 
 function game() {
@@ -36,12 +37,16 @@ function game() {
 		context.canvas.width = quantum * 28
 	}
 
-	animate()
-	if (game_over) {
-		gameOver()
-	}
-	if (has_won) {
-		hasWon()
+	if (count === 0) {
+		animate()
+		if (game_over) {
+			gameOver()
+		}
+		if (has_won) {
+			hasWon()
+		}
+	} else {
+		countDown(count)
 	}
 
 	function animate() {
@@ -98,5 +103,19 @@ function game() {
 		context.fillText("You scored " + pacmans[0].score + " points.",context.canvas.width/2,context.canvas.height/2 + 2.5*quantum);
 		context.font = "bold " + 3.5*quantum + "px Bangers, cursive";
 		context.fillText("YOU WON !! ",context.canvas.width/2, context.canvas.height/2 - 3*quantum);
+	}
+
+	function countDown(){
+		context.fillStyle = "black";
+		context.fillRect(0, 0, canvas.width, canvas.height);
+		context.fillStyle = "#F9C328";
+		context.textAlign="center";
+		context.shadowOffsetX = quantum/5
+		context.shadowOffsetY = quantum/5
+		context.shadowColor = "black"
+		context.shadowBlur = quantum/5
+		context.font = 6*quantum + "px Bangers, cursive";
+		context.fillText(count, context.canvas.width/2, context.canvas.height/2);
+
 	}
 }

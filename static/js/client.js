@@ -8,6 +8,7 @@ var sizeY
 var new_grid = false
 var game_over = true
 var has_won = false
+var count
 
 
 socket.addEventListener('open', function (event) {
@@ -102,11 +103,42 @@ function routeHasWon(data) {
 }
 
 function startGame() {
-	init()
-	socket.send("routeBeginGame;");
-	game_over = false
-	has_won = false
+	init();
+	sleep(100)
+	.then(() => {
+		game();
+		count = count -1
+		return sleep(1200)
+	})
+	.then(() => {
+		game();
+		count = count -1
+		return sleep(1200)
+	})
+	.then(() => {
+		game();
+		count = count -1
+		return sleep(1200)
+	})
+	.then(() => {
+		socket.send("routeBeginGame;");
+		game_over = false
+		has_won = false
+	})
 }
+
+function sleep (time) {
+	return new Promise((resolve) => setTimeout(resolve, time));
+}
+
+// function sleep(milliseconds) {
+//   var start = new Date().getTime();
+//   for (var i = 0; i < 1e7; i++) {
+//     if ((new Date().getTime() - start) > milliseconds){
+//       break;
+//     }
+//   }
+// }
 
 document.onkeydown = function(e) {
 	let direction = "0"
