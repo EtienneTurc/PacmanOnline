@@ -59,20 +59,10 @@ int main(int argc, char const *argv[]) {
 		}
 
 		std::chrono::milliseconds now_time = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
-		std::chrono::milliseconds delta_time = std::chrono::milliseconds(70);
+		std::chrono::milliseconds delta_time = std::chrono::milliseconds(40);
 		while (now_time < now + delta_time) {
 			now_time = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
 		}
 	}
-
-	// std::cout << "Message du client : " << instructions.second << '\n';
-	// socket.send(instructions);
-
-	// Game game;
-	// game.init();
-	//
-	// game.run();
-
-	// std::cout << "Game over\n";
 	return 0;
 }

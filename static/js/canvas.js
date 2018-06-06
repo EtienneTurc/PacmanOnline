@@ -2,11 +2,13 @@ var quantum
 var pacmanMouth
 var ghostOndulation
 var blinking
+var iteration
 
 function init() {
 	pacmanMouth = false;
 	ghostOndulation = false;
 	blinking = false;
+	iteration = 0;
 }
 
 function game() {
@@ -40,13 +42,16 @@ function game() {
 		context.fillStyle = "black";
 		context.fillRect(0, 0, canvas.width, canvas.height);
 
-		pacmanMouth = !pacmanMouth;
-		ghostOndulation = !ghostOndulation;
-		if (next_attack_in <= 7) {
-			blinking = !blinking
-		} else {
-			blinking = false
+		if (iteration%2 == 1) {
+			pacmanMouth = !pacmanMouth;
+			ghostOndulation = !ghostOndulation;
+			if (next_attack_in <= 30) {
+				blinking = !blinking
+			} else {
+				blinking = false
+			}
 		}
+		iteration++
 
 		drawGrid(context, quantum)
 

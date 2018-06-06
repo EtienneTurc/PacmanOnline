@@ -67,8 +67,7 @@ void Grid::setBigBalls() {
 	setCell(1, 6, BIG_BALL);
 	setCell(26, 6, BIG_BALL);
 	setCell(1, 25, BIG_BALL);
-	// setCell(26, 25, BIG_BALL);
-	setCell(18, 28, BIG_BALL);
+	setCell(26, 25, BIG_BALL);
 }
 
 void Grid::displayGrid() {
@@ -107,7 +106,6 @@ void Grid::displayGrid() {
 		}
 		std::cout << '\n';
 	}
-	std::this_thread::sleep_for(std::chrono::milliseconds(200));
 }
 
 bool Grid::checkWall(int x_position,int y_position,int direction) {
@@ -142,6 +140,9 @@ std::vector<int> Grid::checkIntersection(int x_position, int y_position) {
 	for (int i = 1; i < 5; i++) {
 		if (!checkWall(x_position, y_position, i)) {
 			directions.push_back(i);
+		}
+		if (x_position == 0 && y_position == 17) {
+			directions.push_back(LEFT);
 		}
 	}
 	return directions;

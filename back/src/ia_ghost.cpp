@@ -40,6 +40,7 @@ int lowestDirection(Pacman pacman, Ghost ghost) {
 		}
 
 		// virtual_grid->displayGrid();
+		// std::this_thread::sleep_for (std::chrono::milliseconds(100));
 
 		//Update Virtual_ghost population
 		v_size = virtual_ghosts.size();
@@ -66,23 +67,25 @@ int lowestDirection(Pacman pacman, Ghost ghost) {
 
 int randomDirection(Entity entity) {
 
-	Grid* grid = entity.getGrid();
-	std::vector<int> directions = grid->checkIntersection(entity.getXPosition(), entity.getYPosition());
+	if (entity.getFraction() < 0.30 ) {
+		Grid* grid = entity.getGrid();
+		std::vector<int> directions = grid->checkIntersection(entity.getXPosition(), entity.getYPosition());
 
-	float p = ((float) rand() / (RAND_MAX));
+		float p = ((float) rand() / (RAND_MAX));
 
-	//Low probability of U-turn
-	if (p < PROBA_U_TURN) {
-		return ((entity.getDirection()+1)%4 +1);
-	}
+		//Low probability of U-turn
+		if (p < PROBA_U_TURN) {
+			return ((entity.getDirection()+1)%4 +1);
+		}
 
-	directions.erase(std::remove(directions.begin(), directions.end(), ((entity.getDirection()+1)%4) +1), directions.end());
-	float size = directions.size();
-	float random = ((float) rand() / (RAND_MAX));
+		directions.erase(std::remove(directions.begin(), directions.end(), ((entity.getDirection()+1)%4) +1), directions.end());
+		float size = directions.size();
+		float random = ((float) rand() / (RAND_MAX));
 
-	for (int i = 0; i < size; i++) {
-		if (random < (i+1)/size) {
-			return directions[i];
+		for (int i = 0; i < size; i++) {
+			if (random < (i+1)/size) {
+				return directions[i];
+			}
 		}
 	}
 }
@@ -102,7 +105,6 @@ int lowestDirectionToIntersection(Pacman pacman, Ghost ghost) {
 			}
 		}
 		virtual_pacman.updateDirection(direction);
-
 		virtual_pacman.virtualMove();
 		directions = grid->checkIntersection(virtual_pacman.getXPosition(), virtual_pacman.getYPosition());
 		size = directions.size();

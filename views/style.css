@@ -9,6 +9,7 @@ canvas {
 }
 
 body {
+	position: fixed;
 	background-image: url("../static/tunnel.jpg");
 	-webkit-background-size: cover;
 	-moz-background-size: cover;

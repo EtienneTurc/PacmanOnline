@@ -8,10 +8,10 @@ var sizeY
 var new_grid = false
 var game_over = true
 
+
 socket.addEventListener('open', function (event) {
-	init()
-	socket.send("routeBeginGame;");
-	game_over = false
+	console.log("open");
+	startGame();
 });
 
 socket.addEventListener('error', function (error) {
@@ -86,6 +86,12 @@ function routeGameOver(data) {
 	console.log(game_over);
 	game_over = true
 	console.log(game_over);
+}
+
+function startGame() {
+	init()
+	socket.send("routeBeginGame;");
+	game_over = false
 }
 
 document.onkeydown = function(e) {

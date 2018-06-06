@@ -4,6 +4,7 @@
 #include <vector>
 #include <iostream>
 #include <stdlib.h>
+#include <chrono>
 
 #include "grid.h"
 #include "parameters.h"

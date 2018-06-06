@@ -124,7 +124,10 @@ void Entity::move(float delta_time) {
 		_fraction = _fraction + delta_time * _speed;
 		switch (_direction) {
 			case LEFT: {
-				if (_fraction >= 1) {
+				if (_fraction >= 0.5 && _x_position == 0) {
+					_x_position = 27;
+					_fraction = 0;
+				} else if (_fraction >= 1) {
 					_x_position = (_x_position - 1) % 28;
 				}
 				updateFraction();
@@ -161,7 +164,11 @@ void Entity::move(float delta_time) {
 void Entity::virtualMove() {
 	switch (_direction) {
 		case LEFT: {
-			_x_position = (_x_position - 1) % 28;
+			if (_x_position == 0) {
+				_x_position = 27;
+			} else {
+				_x_position = (_x_position - 1 + 28) % 28;
+			}
 			break;
 		}
 		case RIGHT: {

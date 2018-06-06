@@ -1,0 +1,25 @@
+/* .canvas_container {
+	width: 100%;
+	text-align: center;
+} */
+
+canvas {
+	margin: 0 auto;
+	display: block;
+}
+
+body {
+	position: fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	height: 100%;
+	min-height: 100%;
+	margin: 0px;
+}
+
+html {
+	margin: 0;
+	height: 100%;
+}

@@ -1,5 +1,4 @@
 #include "game.h"
-#include <chrono>
 #include <thread>
 
 Game::Game() {
@@ -80,9 +79,14 @@ void Game::init() {
 	Ghost gasper(_grid, X_CENTER,Y_CENTER,DOWN,SPEED, GHOST_SCORE, 0, 0);
 	addGhost(gasper);
 
-	Ghost blanky(_grid, X_CENTER,Y_CENTER + 2 ,RIGHT, SPEED, GHOST_SCORE, 20,1);
+	Ghost blanky(_grid, X_CENTER,Y_CENTER + 3 ,RIGHT, SPEED, GHOST_SCORE, 30,1);
 	addGhost(blanky);
 
+	Ghost inky(_grid, X_CENTER + 1 ,Y_CENTER + 3 ,RIGHT, SPEED, GHOST_SCORE, 60,2);
+	addGhost(inky);
+
+	Ghost pinky(_grid, X_CENTER -1  ,Y_CENTER + 3 ,RIGHT, SPEED, GHOST_SCORE, 90,3);
+	addGhost(pinky);
 	// displayEntities();
 }
 
@@ -110,7 +114,7 @@ void Game::run() {
 	for (int g = 0; g < _ghosts.size(); g++) {
 		bool in_jail = _ghosts[g].inJail();
 		if (!in_jail) {
-			if (_time_to_flee) {
+			if (_time_to_flee || _ghosts[g].getIaIndex() == 3 ) {
 				int direction = randomDirection(_ghosts[g]);
 				_ghosts[g].pushInput(direction);
 				_ghosts[g].move(1);
