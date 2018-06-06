@@ -13,8 +13,6 @@ function init() {
 
 function game() {
 	var canvas = document.getElementById('canvas');
-	// canvas.setAttribute('width', 420);
-	// canvas.setAttribute('height', 540);
 
 	if (!canvas) {
 		alert("Impossible to get the canvas");
@@ -32,8 +30,10 @@ function game() {
 
 	if (canvas.width/28 < canvas.height/36) {
 		quantum = Math.floor(canvas.width/28)
+		context.canvas.height = quantum * 36
 	} else {
 		quantum = Math.floor(canvas.height/36)
+		context.canvas.width = quantum * 28
 	}
 
 	animate()
@@ -62,8 +62,8 @@ function game() {
 			drawGhost(context, quantum, ghosts[i], i, ghostOndulation, blinking)
 		}
 
-		context.font = quantum + "px Arial";
-		context.fillStyle = "white";
+		context.font = quantum + "px Bangers, cursive";
+		context.fillStyle = "#F9C328";
 		context.fillText("Score : " + pacmans[0].score,quantum,2.5*quantum);
 	}
 }

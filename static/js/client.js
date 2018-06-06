@@ -40,6 +40,10 @@ socket.addEventListener('message', function (event) {
 	}
 });
 
+function routeGetGame() {
+	socket.send("routeBeginGame;");
+}
+
 function routeGetGrid(data) {
 	grid = [[]]
 	sizeX = parseInt(data[0])
@@ -82,10 +86,13 @@ function routeGetEntity(data) {
 	}
 }
 
+function sleep (time) {
+	return new Promise((resolve) => setTimeout(resolve, time));
+}
+
 function routeGameOver(data) {
-	console.log(game_over);
 	game_over = true
-	console.log(game_over);
+	sleep(1000).then(() => window.location = "game_over.html")
 }
 
 function startGame() {
