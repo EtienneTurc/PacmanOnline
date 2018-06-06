@@ -7,6 +7,7 @@ var sizeX
 var sizeY
 var new_grid = false
 var game_over = true
+var game_over = false
 
 
 socket.addEventListener('open', function (event) {
@@ -35,6 +36,10 @@ socket.addEventListener('message', function (event) {
 		break;
 		case "routeGameOver":
 		routeGameOver(data)
+		break;
+		case "routeHasWon":
+		routeHasWon(data)
+		break;
 		default:
 		break;
 	}
@@ -94,6 +99,11 @@ function routeGameOver(data) {
 	game_over = true
 	game()
 	// sleep(1000).then(() => window.location = "game_over.html")
+}
+
+function routeHasWon(data) {
+	has_won = true
+	console.log(has_won);
 }
 
 function startGame() {

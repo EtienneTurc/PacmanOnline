@@ -22,9 +22,11 @@ public:
 	int getSizeX();
 	int getSizeY();
 
+
 	void setCell(int x_position, int y_position, uint8_t value);
 	bool checkWall(int x_position, int y_position, int direction);
 	std::vector<int> checkIntersection(int x_position, int y_position);
+	bool noMoreBalls();
 
 	Grid();
 	~Grid(){};

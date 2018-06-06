@@ -147,3 +147,14 @@ std::vector<int> Grid::checkIntersection(int x_position, int y_position) {
 	}
 	return directions;
 }
+
+bool Grid::noMoreBalls() {
+	for (int i = 0; i < _sizeX; i++) {
+		for (int j = 0; j < _sizeY; j++) {
+			if (_grid[i][j] >  1) {
+				return false;
+			}
+		}
+	}
+	return true;
+}
