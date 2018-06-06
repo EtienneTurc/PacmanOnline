@@ -40,6 +40,9 @@ function game() {
 	if (game_over) {
 		gameOver()
 	}
+	if (has_won) {
+		hasWon()
+	}
 
 	function animate() {
 		context.fillStyle = "black";
@@ -82,5 +85,18 @@ function game() {
 		context.fillText("You scored " + pacmans[0].score + " points.",context.canvas.width/2,context.canvas.height/2 + 2.5*quantum);
 		context.font = "bold " + 3.5*quantum + "px Bangers, cursive";
 		context.fillText("GAME OVER ",context.canvas.width/2, context.canvas.height/2 - 3*quantum);
+	}
+
+	function hasWon() {
+		context.fillStyle = "#F9C328";
+		context.textAlign="center";
+		context.shadowOffsetX = quantum/5
+		context.shadowOffsetY = quantum/5
+		context.shadowColor = "black"
+		context.shadowBlur = quantum/5
+		context.font = 2*quantum + "px Bangers, cursive";
+		context.fillText("You scored " + pacmans[0].score + " points.",context.canvas.width/2,context.canvas.height/2 + 2.5*quantum);
+		context.font = "bold " + 3.5*quantum + "px Bangers, cursive";
+		context.fillText("YOU WON !! ",context.canvas.width/2, context.canvas.height/2 - 3*quantum);
 	}
 }

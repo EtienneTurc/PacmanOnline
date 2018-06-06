@@ -7,7 +7,7 @@ var sizeX
 var sizeY
 var new_grid = false
 var game_over = true
-var game_over = false
+var has_won = false
 
 
 socket.addEventListener('open', function (event) {
@@ -91,25 +91,21 @@ function routeGetEntity(data) {
 	}
 }
 
-// function sleep (time) {
-// 	return new Promise((resolve) => setTimeout(resolve, time));
-// }
-
 function routeGameOver(data) {
 	game_over = true
 	game()
-	// sleep(1000).then(() => window.location = "game_over.html")
 }
 
 function routeHasWon(data) {
 	has_won = true
-	console.log(has_won);
+	game()
 }
 
 function startGame() {
 	init()
 	socket.send("routeBeginGame;");
 	game_over = false
+	has_won = false
 }
 
 document.onkeydown = function(e) {

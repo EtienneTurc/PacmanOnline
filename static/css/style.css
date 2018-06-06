@@ -1,10 +1,5 @@
-/* .canvas_container {
-	width: 100%;
-	text-align: center;
-} */
-
 canvas {
-	margin: 0 auto;
+	margin: auto;
 	display: block;
 }
 
@@ -44,6 +39,7 @@ input.play {
 	margin-top: 30%;
 }
 input.restart {
+	left:
 	width: 100px;
 	padding: 5px;
 	cursor: pointer;
