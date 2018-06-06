@@ -37,6 +37,9 @@ function game() {
 	}
 
 	animate()
+	if (game_over) {
+		gameOver()
+	}
 
 	function animate() {
 		context.fillStyle = "black";
@@ -65,5 +68,19 @@ function game() {
 		context.font = quantum + "px Bangers, cursive";
 		context.fillStyle = "#F9C328";
 		context.fillText("Score : " + pacmans[0].score,quantum,2.5*quantum);
+
+	}
+
+	function gameOver() {
+		context.fillStyle = "#F9C328";
+		context.textAlign="center";
+		context.shadowOffsetX = quantum/5
+		context.shadowOffsetY = quantum/5
+		context.shadowColor = "black"
+		context.shadowBlur = quantum/5
+		context.font = 2*quantum + "px Bangers, cursive";
+		context.fillText("You scored " + pacmans[0].score + " points.",context.canvas.width/2,context.canvas.height/2 + 2.5*quantum);
+		context.font = "bold " + 3.5*quantum + "px Bangers, cursive";
+		context.fillText("GAME OVER ",context.canvas.width/2, context.canvas.height/2 - 3*quantum);
 	}
 }

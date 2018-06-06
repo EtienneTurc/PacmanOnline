@@ -86,13 +86,14 @@ function routeGetEntity(data) {
 	}
 }
 
-function sleep (time) {
-	return new Promise((resolve) => setTimeout(resolve, time));
-}
+// function sleep (time) {
+// 	return new Promise((resolve) => setTimeout(resolve, time));
+// }
 
 function routeGameOver(data) {
 	game_over = true
-	sleep(1000).then(() => window.location = "game_over.html")
+	game()
+	// sleep(1000).then(() => window.location = "game_over.html")
 }
 
 function startGame() {
