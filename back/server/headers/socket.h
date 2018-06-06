@@ -9,6 +9,10 @@
 typedef websocketpp::server<websocketpp::config::asio> WsServer;
 typedef std::set<websocketpp::connection_hdl,std::owner_less<websocketpp::connection_hdl> > con_list;
 
+using websocketpp::lib::placeholders::_1;
+using websocketpp::lib::placeholders::_2;
+using websocketpp::lib::bind;
+
 class Socket {
 private:
 	WsServer _server;
