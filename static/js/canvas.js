@@ -4,6 +4,17 @@ var ghostOndulation
 var blinking
 var iteration
 
+window.onload=function(){
+	document.getElementById("button").style.display='none';
+
+}
+
+function showButton(){
+	if (count === 0) {
+		document.getElementById("button").style.display='block';
+	}
+}
+
 function init() {
 	pacmanMouth = false;
 	ghostOndulation = false;
@@ -39,6 +50,7 @@ function game() {
 
 	if (count === 0) {
 		animate()
+		showButton()
 		if (game_over) {
 			gameOver()
 		}
@@ -48,6 +60,7 @@ function game() {
 	} else {
 		countDown(count)
 	}
+
 
 	function animate() {
 		context.fillStyle = "black";
@@ -75,7 +88,7 @@ function game() {
 
 		context.font = quantum + "px Bangers, cursive";
 		context.fillStyle = "#F9C328";
-		context.fillText("Score : " + pacmans[0].score,quantum,2.5*quantum);
+		context.fillText("Score : " + pacmans[0].score,quantum,2*quantum);
 
 	}
 
