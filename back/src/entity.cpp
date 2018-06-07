@@ -48,6 +48,13 @@ void Entity::setYPosition(int y_position) {
 	_y_position = y_position;
 }
 
+void Entity::setFraction(float fraction) {
+	while (fraction > 1) {
+		fraction = fraction -1;
+	}
+	_fraction = fraction;
+}
+
 void Entity::setInputTime(int input_time) {
 	_input_time = input_time;
 }
@@ -62,9 +69,9 @@ bool Entity::entityCollision(Entity entity) {
 	int dir = entity.getDirection();
 	float fract = entity.getFraction();
 
-	if ( (_x_position != x_pos) || (_y_position != y_pos)) {
+	if ( (_x_position != x_pos) && (_y_position != y_pos)) {
 		return 0;
-	} else {
+	} else if ((_x_position == x_pos) && (_y_position == y_pos)) {
 		if (dir%2 == _direction%2) {
 			if (dir != _direction){
 				return (abs(1-fract-_fraction) <= COLLISION_RANGE);
@@ -74,7 +81,72 @@ bool Entity::entityCollision(Entity entity) {
 		} else {
 			return (((0.5-fract)*(0.5-fract) + (0.5-_fraction)*(0.5-_fraction)) <= COLLISION_RANGE*COLLISION_RANGE);
 		}
+	} else if (_x_position == x_pos && (abs(y_pos - _y_position)==1)) {
+		if (dir%2 == _direction%2) {
+			if (dir != _direction) {
+				if (y_pos>_y_position) {
+					if (dir==DOWN) {
+						return (abs(_fraction + fract) <= COLLISION_RANGE);
+					} else {
+						return (abs(2 - _fraction - fract) <= COLLISION_RANGE);
+					}
+				} else {
+					if (dir==DOWN) {
+						return (abs(2 - _fraction - fract) <= COLLISION_RANGE);
+					} else {
+						return (abs(_fraction + fract) <= COLLISION_RANGE);
+					}
+				}
+			} else {
+				if (y_pos>_y_position) {
+					if (dir == DOWN) {
+						return (abs(1 - _fraction + fract) <= COLLISION_RANGE);
+					} else {
+						return (abs(1 + _fraction - fract) <= COLLISION_RANGE);
+					}
+				} else {
+					if (dir == DOWN) {
+						return (abs(1 + _fraction - fract) <= COLLISION_RANGE);
+					} else {
+						return (abs(1 - _fraction + fract) <= COLLISION_RANGE);
+					}
+				}
+			}
+		}
+	} else if (_y_position == y_pos && (abs(x_pos - _x_position)==1)) {
+		if (dir%2 == _direction%2) {
+			if (dir != _direction) {
+				if (x_pos>_x_position) {
+					if (dir==RIGHT) {
+						return (abs(_fraction + fract) <= COLLISION_RANGE);
+					} else {
+						return (abs(2 - _fraction - fract) <= COLLISION_RANGE);
+					}
+				} else {
+					if (dir==RIGHT) {
+						return (abs(2 - _fraction - fract) <= COLLISION_RANGE);
+					} else {
+						return (abs(_fraction + fract) <= COLLISION_RANGE);
+					}
+				}
+			} else {
+				if (x_pos>_x_position) {
+					if (dir == RIGHT) {
+						return (abs(1 - _fraction + fract) <= COLLISION_RANGE);
+					} else {
+						return (abs(1 + _fraction - fract) <= COLLISION_RANGE);
+					}
+				} else {
+					if (dir == RIGHT) {
+						return (abs(1 + _fraction - fract) <= COLLISION_RANGE);
+					} else {
+						return (abs(1 - _fraction + fract) <= COLLISION_RANGE);
+					}
+				}
+			}
+		}
 	}
+	return 0;
 }
 
 int Entity::distanceTo(int x_position, int y_position) {

@@ -19,6 +19,7 @@ public:
 	void setXPosition(int x_position);
 	void setYPosition(int y_position);
 	void setInputTime(int input_time);
+	void setFraction(float fraction);
 	void addScore(int score_to_add);
 
 	bool entityCollision(Entity entity);

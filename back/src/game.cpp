@@ -104,8 +104,6 @@ void Game::run() {
 		}
 	}
 
-	eatGhostsIfAllowed();
-
 	std::vector<int (*)(Pacman, Ghost)> ia;
 	ia.push_back(lowestDirection);
 	ia.push_back(lowestDirectionToIntersection);
@@ -125,6 +123,7 @@ void Game::run() {
 			}
 		}
 	}
+	eatGhostsIfAllowed();
 	// displayEntities();
 }
 
@@ -151,6 +150,8 @@ void Game::eatGhostsIfAllowed() {
 				if (_ghosts[g].entityCollision(_pacmans[p])) {
 					_ghosts[g].setXPosition(X_CENTER);
 					_ghosts[g].setYPosition(Y_CENTER);
+					_ghosts[g].updateDirection(RIGHT);
+					_ghosts[g].setFraction(0.5);
 					_pacmans[p].addScore(SCORE_EAT_GHOST);
 				}
 			}
