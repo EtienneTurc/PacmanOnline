@@ -2,7 +2,6 @@
 #include <chrono>
 #include <thread>
 
-// TODO Tunnel
 int lowestDirection(Pacman pacman, Ghost ghost) {
 	Grid* grid = pacman.getGrid();
 	std::vector<Virtual_ghost> virtual_ghosts;

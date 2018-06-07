@@ -88,7 +88,8 @@ function game() {
 
 		context.font = quantum + "px Bangers, cursive";
 		context.fillStyle = "#F9C328";
-		context.fillText("Score : " + pacmans[0].score,quantum,2*quantum);
+		context.textAlign="center";
+		context.fillText("Score : " + pacmans[0].score,context.canvas.width/2,context.canvas.height - 1.2*quantum);
 
 	}
 
@@ -123,10 +124,10 @@ function game() {
 		context.fillRect(0, 0, canvas.width, canvas.height);
 		context.fillStyle = "#F9C328";
 		context.textAlign="center";
-		context.shadowOffsetX = quantum/5
-		context.shadowOffsetY = quantum/5
-		context.shadowColor = "black"
-		context.shadowBlur = quantum/5
+		// context.shadowOffsetX = quantum/5
+		// context.shadowOffsetY = quantum/5
+		// context.shadowColor = "black"
+		// context.shadowBlur = quantum/5
 		context.font = 6*quantum + "px Bangers, cursive";
 		context.fillText(count, context.canvas.width/2, context.canvas.height/2);
 
