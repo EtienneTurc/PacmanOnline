@@ -41,6 +41,6 @@ mkdir build
 
 To compile the unitests, go into the "test" directory and excecute
 ```
-./compile.sh
+./compile_test.sh
 ./build/runTests
 ```
