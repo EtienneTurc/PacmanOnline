@@ -23,15 +23,19 @@ int main(int argc, char const *argv[]) {
 		SafeQueue<std::pair<websocketpp::connection_hdl, std::string> >* client_queue = socket.getQueuePtr();
 		std::vector<std::pair <websocketpp::connection_hdl, std::string>> instructions;
 
+		std::vector<int> to_suppress = {};
 		if (closed_connections->popAll(to_close)) {
 			for (int j = 0; j < to_close.size(); j++) {
 				for (int i = 0; i < games.size(); i++) {
 					if (!to_close[j].owner_before(games[i].first) && !games[i].first.owner_before(to_close[j])) {
-						games.erase(games.begin()+i);
-						break;
+						to_suppress.push_back(i);
 					}
 				}
 			}
+		}
+
+		for (int i = (to_suppress.size() -1) ; i >= 0; i--) {
+			games.erase(games.begin()+i);
 		}
 
 		if (client_queue->popAll(instructions)) {
@@ -41,7 +45,7 @@ int main(int argc, char const *argv[]) {
 			}
 		}
 
-		std::vector<int> to_suppress = {};
+		to_suppress = {};
 		for (int i = 0; i < games.size(); i++) {
 			if (!games.at(i).second->gameOver()) {
 				games.at(i).second->run();
