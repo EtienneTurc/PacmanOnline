@@ -5,7 +5,7 @@ Author : Soline DUCOUSSO and Etienne TURC
 ## Introduction
 
 A pacman game developped for IN104 class.
-You can play at the adress : [pacman.data-ensta.fr](pacamn.data-ensta.fr)
+You can play at the adress : [https://pacman.data-ensta.fr](pacamn.data-ensta.fr)
 
 
 ## Getting started
@@ -30,6 +30,12 @@ mkdir build
 ./build/main
 
 ```
+
+Then, you access the graphic interface by opening your favorite browser and look for the url :
+```
+file:///your/absolute/path/to/folder/pacman/views/index.html
+```
+And Enjoy !
 
 #### Unit tests
 
