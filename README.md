@@ -6,7 +6,7 @@ Author : Soline DUCOUSSO and Etienne TURC
 
 A pacman game developped for IN104 class.
 
-You can play at the adress : [https://pacman.data-ensta.fr](pacman.data-ensta.fr)
+You can play at the adress : [pacman.data-ensta.fr](https://pacman.data-ensta.fr)
 
 
 ## Getting started
