@@ -9,7 +9,7 @@ class GameTest : public ::testing::Test {
 		virtual void SetUp() {
 			_game = new Game;
 			_grid = new Grid;
-			_ghost = new Ghost(_grid, 1, 4, DOWN, 1, 0, 0);
+			_ghost = new Ghost(_grid, 1, 4, DOWN, 1, 0, 0, 1);
 			_pacman = new Pacman(_grid, 1, 4, DOWN, 1);
 		};
 		Game* _game;
