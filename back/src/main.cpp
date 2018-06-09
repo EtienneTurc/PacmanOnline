@@ -31,6 +31,8 @@ int main(int argc, char const *argv[]) {
 		closed_connections = socket.getClosedConnectionsPtr();
 		client_queue = socket.getQueuePtr();
 
+		std::cout << "Before to close" << '\n';
+
 		to_suppress = {};
 		to_close = {};
 		if (closed_connections->popAll(to_close)) {
@@ -43,10 +45,13 @@ int main(int argc, char const *argv[]) {
 			}
 		}
 
+		std::cout << "To supress size : " << to_suppress.size() << '\n';
 
 		for (int i = (to_suppress.size() -1) ; i >= 0; i--) {
 			games.erase(games.begin() + to_suppress[i]);
 		}
+
+		std::cout << "Before treatInstruction" << '\n';
 
 		instructions = {};
 		if (client_queue->popAll(instructions)) {
@@ -55,6 +60,8 @@ int main(int argc, char const *argv[]) {
 				route.treatInstruction();
 			}
 		}
+
+		std::cout << "Pushing into to supress or running" << '\n';
 
 		to_suppress = {};
 		for (int i = 0; i < games.size(); i++) {
@@ -73,6 +80,8 @@ int main(int argc, char const *argv[]) {
 			}
 		}
 
+		std::cout << "before supressing" << '\n';
+
 		for (int i = (to_suppress.size() -1) ; i >= 0; i--) {
 			games.erase(games.begin() + to_suppress[i]);
 		}
@@ -82,6 +91,7 @@ int main(int argc, char const *argv[]) {
 		while (now_time < now + delta_time) {
 			now_time = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
 		}
+		std::cout << "End of the while" << '\n';
 	}
 	return 0;
 }
