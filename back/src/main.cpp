@@ -43,8 +43,9 @@ int main(int argc, char const *argv[]) {
 			}
 		}
 
+
 		for (int i = (to_suppress.size() -1) ; i >= 0; i--) {
-			games.erase(games.begin()+i);
+			games.erase(games.begin() + to_suppress[i]);
 		}
 
 		instructions = {};
@@ -61,21 +62,19 @@ int main(int argc, char const *argv[]) {
 				games.at(i).second->run();
 				Route route(games.at(i), &socket);
 				route.routeGetGame();
+			} else if (games.at(i).second->getGrid()->noMoreBalls()) {
+				has_won = make_pair(games[i].first, "routeHasWon");
+				socket.send(has_won);
+				to_suppress.push_back(i);
 			} else {
 				game_over = make_pair(games[i].first, "routeGameOver");
 				socket.send(game_over);
 				to_suppress.push_back(i);
 			}
-			if (games.at(i).second->getGrid()->noMoreBalls()) {
-				std::cout << "Has Won" << '\n';
-				has_won = make_pair(games[i].first, "routeHasWon");
-				socket.send(has_won);
-				to_suppress.push_back(i);
-			}
 		}
 
 		for (int i = (to_suppress.size() -1) ; i >= 0; i--) {
-			games.erase(games.begin()+i);
+			games.erase(games.begin() + to_suppress[i]);
 		}
 
 		now_time = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
