@@ -15,15 +15,24 @@ int main(int argc, char const *argv[]) {
 	socket.run();
 
 	Games games {};
+	std::chrono::milliseconds now;
+	std::chrono::milliseconds now_time;
+	std::chrono::milliseconds delta_time;
+	SafeQueue<websocketpp::connection_hdl>* closed_connections;
+	std::vector<websocketpp::connection_hdl> to_close;
+	SafeQueue<std::pair<websocketpp::connection_hdl, std::string> >* client_queue;
+	std::vector<std::pair <websocketpp::connection_hdl, std::string>> instructions;
+	std::vector<int> to_suppress = {};
+	std::pair<websocketpp::connection_hdl, std::string> game_over;
+	std::pair<websocketpp::connection_hdl, std::string> has_won;
 	while (true) {
-		std::chrono::milliseconds now = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
+		now = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
 
-		SafeQueue<websocketpp::connection_hdl>* closed_connections = socket.getClosedConnectionsPtr();
-		std::vector<websocketpp::connection_hdl> to_close;
-		SafeQueue<std::pair<websocketpp::connection_hdl, std::string> >* client_queue = socket.getQueuePtr();
-		std::vector<std::pair <websocketpp::connection_hdl, std::string>> instructions;
+		closed_connections = socket.getClosedConnectionsPtr();
+		client_queue = socket.getQueuePtr();
 
-		std::vector<int> to_suppress = {};
+		to_suppress = {};
+		to_close = {};
 		if (closed_connections->popAll(to_close)) {
 			for (int j = 0; j < to_close.size(); j++) {
 				for (int i = 0; i < games.size(); i++) {
@@ -38,6 +47,7 @@ int main(int argc, char const *argv[]) {
 			games.erase(games.begin()+i);
 		}
 
+		instructions = {};
 		if (client_queue->popAll(instructions)) {
 			for (int i = 0; i < instructions.size(); i++) {
 				Route route(instructions[i], &games, &socket);
@@ -52,13 +62,13 @@ int main(int argc, char const *argv[]) {
 				Route route(games.at(i), &socket);
 				route.routeGetGame();
 			} else {
-				std::pair<websocketpp::connection_hdl, std::string> game_over = make_pair(games[i].first, "routeGameOver");
+				game_over = make_pair(games[i].first, "routeGameOver");
 				socket.send(game_over);
 				to_suppress.push_back(i);
 			}
 			if (games.at(i).second->getGrid()->noMoreBalls()) {
 				std::cout << "Has Won" << '\n';
-				std::pair<websocketpp::connection_hdl, std::string> has_won = make_pair(games[i].first, "routeHasWon");
+				has_won = make_pair(games[i].first, "routeHasWon");
 				socket.send(has_won);
 				to_suppress.push_back(i);
 			}
@@ -68,8 +78,8 @@ int main(int argc, char const *argv[]) {
 			games.erase(games.begin()+i);
 		}
 
-		std::chrono::milliseconds now_time = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
-		std::chrono::milliseconds delta_time = std::chrono::milliseconds(40);
+		now_time = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
+		delta_time = std::chrono::milliseconds(40);
 		while (now_time < now + delta_time) {
 			now_time = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
 		}

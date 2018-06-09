@@ -79,13 +79,13 @@ void Game::init() {
 	Ghost gasper(_grid, X_CENTER,Y_CENTER,DOWN,SPEED, GHOST_SCORE, 0, 0);
 	addGhost(gasper);
 
-	Ghost blanky(_grid, X_CENTER,Y_CENTER + 3 ,RIGHT, SPEED, GHOST_SCORE, 30,1);
+	Ghost blanky(_grid, X_CENTER,Y_CENTER + 3 ,RIGHT, SPEED, GHOST_SCORE, 40,1);
 	addGhost(blanky);
 
-	Ghost inky(_grid, X_CENTER + 1 ,Y_CENTER + 3 ,RIGHT, SPEED, GHOST_SCORE, 60,2);
+	Ghost inky(_grid, X_CENTER + 1 ,Y_CENTER + 3 ,RIGHT, SPEED, GHOST_SCORE, 80,2);
 	addGhost(inky);
 
-	Ghost pinky(_grid, X_CENTER -1  ,Y_CENTER + 3 ,RIGHT, SPEED, GHOST_SCORE, 90,3);
+	Ghost pinky(_grid, X_CENTER -1  ,Y_CENTER + 3 ,RIGHT, SPEED, GHOST_SCORE, 120,3);
 	addGhost(pinky);
 	// displayEntities();
 }
