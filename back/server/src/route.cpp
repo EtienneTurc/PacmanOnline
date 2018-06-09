@@ -6,10 +6,12 @@ Route::Route(Instructions instructions, Games* games, Socket* socket) {
 	_game = getGame(games);
 	_socket = socket;
 
-	std::vector<std::string> results;
+	std::vector<std::string> results = {};
 	boost::split(results, instructions.second, [](char c){return c == ';';});
 
-	_method = results[0];
+	if (results.size() > 0) {
+		_method = results[0];
+	}
 	_data = {};
 	for (int i = 1; i < results.size(); i++) {
 		_data.push_back(results[i]);
@@ -151,18 +153,20 @@ Game* Route::createGame(Games* games) {
 
 //is Pacman ?;Index in vector;Direction (in _data)
 void Route::routePostEntityDirection() {
-	int index_in_vector = std::stoi(_data[1]);
-	int direction = std::stoi(_data[2]);
+	if (_data.size() > 2) {
+		int index_in_vector = std::stoi(_data[1]);
+		int direction = std::stoi(_data[2]);
 
-	if (_data[0] == "true") {
-		std::vector<Pacman>* pacmans = _game->getPacmans();
-		Pacman* pacman = &pacmans->at(index_in_vector);
-		pacman->pushInput(direction);
-		pacman->setInputTime(INPUT_TIME);
-	} else {
-		std::vector<Ghost>* ghosts = _game->getGhosts();
-		Ghost* ghost = &ghosts->at(index_in_vector);
-		ghost->pushInput(direction);
-		ghost->setInputTime(INPUT_TIME);
+		if (_data[0] == "true") {
+			std::vector<Pacman>* pacmans = _game->getPacmans();
+			Pacman* pacman = &pacmans->at(index_in_vector);
+			pacman->pushInput(direction);
+			pacman->setInputTime(INPUT_TIME);
+		} else {
+			std::vector<Ghost>* ghosts = _game->getGhosts();
+			Ghost* ghost = &ghosts->at(index_in_vector);
+			ghost->pushInput(direction);
+			ghost->setInputTime(INPUT_TIME);
+		}
 	}
 }
