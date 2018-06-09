@@ -25,6 +25,7 @@ Route::Route(std::pair<websocketpp::connection_hdl, Game*> game, Socket* socket)
 }
 
 void Route::treatInstruction() {
+	std::cout << "Method : " << _method << '\n';
 	if (_method == "routeBeginGame") {
 		routeBeginGame();
 	} else if (_method == "routeGetGrid") {
