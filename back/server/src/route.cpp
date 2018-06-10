@@ -20,7 +20,7 @@ Route::Route(Instructions instructions, Games* games, Socket* socket) {
 		_method = results[0];
 	}
 	_data = {};
-	for (int i = 1; i < results.size(); i++) {
+	for (unsigned int i = 1; i < results.size(); i++) {
 		_data.push_back(results[i]);
 	}
 }
@@ -124,12 +124,12 @@ void Route::routeGetNextAttackIn() {
 // Route that sends the game, meaning pacmans, ghosts, grid and the time before the next attack
 void Route::routeGetGame() {
 	std::vector<Pacman>* pacmans = _game->getPacmans();
-	for (int i = 0; i < pacmans->size(); i++) {
+	for (unsigned int i = 0; i < pacmans->size(); i++) {
 		routeGetEntity(&pacmans->at(i), true, i);
 	}
 
 	std::vector<Ghost>* ghosts = _game->getGhosts();
-	for (int i = 0; i < ghosts->size(); i++) {
+	for (unsigned int i = 0; i < ghosts->size(); i++) {
 		routeGetEntity(&ghosts->at(i), false, i);
 	}
 
@@ -139,15 +139,15 @@ void Route::routeGetGame() {
 
 // Function that returns a pointer to the game linked to a given client, if not found it creates a new game for that client
 Game* Route::getGame(Games* games) {
-	int j = -1;
-	for (int i = 0; i < games->size(); i++) {
+	unsigned int j = games->size();
+	for (unsigned int i = 0; i < games->size(); i++) {
 		if (!_hdl.owner_before(games->at(i).first) && !games->at(i).first.owner_before(_hdl)) {
 			j = i;
 			break;
 		}
 	}
 
-	if (j != -1) {
+	if (j != games->size()) {
 		Game* game = games->at(j).second;
 		return game;
 	} else {
@@ -169,7 +169,7 @@ Game* Route::createGame(Games* games) {
 //is Pacman ?;Index in vector;Direction (in _data)
 void Route::routePostEntityDirection() {
 	if (_data.size() > 2) {
-		int index_in_vector = std::stoi(_data[1]);
+		unsigned int index_in_vector = std::stoi(_data[1]);
 		int direction = std::stoi(_data[2]);
 
 		if (_data[0] == "true") {

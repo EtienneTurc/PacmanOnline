@@ -12,7 +12,7 @@
 // This is the place where the magic happends
 // The server is activating there
 // There is a vector containing all the games with the associated client
-int main(int argc, char const *argv[]) {
+int main() {
 	srand (time(NULL));
 
 	// Initializing the server
@@ -42,8 +42,8 @@ int main(int argc, char const *argv[]) {
 		to_suppress = {};
 		to_close = {};
 		if (closed_connections->popAll(to_close)) {
-			for (int j = 0; j < to_close.size(); j++) {
-				for (int i = 0; i < games.size(); i++) {
+			for (unsigned int j = 0; j < to_close.size(); j++) {
+				for (unsigned int i = 0; i < games.size(); i++) {
 					if (!to_close[j].owner_before(games[i].first) && !games[i].first.owner_before(to_close[j])) {
 						to_suppress.push_back(i);
 					}
@@ -59,7 +59,7 @@ int main(int argc, char const *argv[]) {
 		// Treat the instruction of the player (if there is any)
 		instructions = {};
 		if (client_queue->popAll(instructions)) {
-			for (int i = 0; i < instructions.size(); i++) {
+			for (unsigned int i = 0; i < instructions.size(); i++) {
 				Route route(instructions[i], &games, &socket);
 				route.treatInstruction();
 			}
@@ -67,7 +67,7 @@ int main(int argc, char const *argv[]) {
 
 		// Run the game (Check if the game is over or not)
 		to_suppress = {};
-		for (int i = 0; i < games.size(); i++) {
+		for (unsigned int i = 0; i < games.size(); i++) {
 			if (games[i].second->getGrid()->noMoreBalls()) {
 				has_won = make_pair(games[i].first, "routeHasWon");
 				socket.send(has_won);

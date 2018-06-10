@@ -40,27 +40,27 @@ void Game::addPacman(Pacman new_pacman) {
 // Function that display the grid with the pacmans and ghosts (not used anymore)
 void Game::displayEntities() {
 	std::vector<uint8_t> pacmans_cells;
-	for(int p = 0; p < _pacmans.size(); p++) {
+	for(unsigned int p = 0; p < _pacmans.size(); p++) {
 		pacmans_cells.push_back(_grid->getCell(_pacmans[p].getXPosition(), _pacmans[p].getYPosition()));
 		_grid->setCell(_pacmans[p].getXPosition(), _pacmans[p].getYPosition(), 9);
 	}
 
 	std::vector<uint8_t> ghosts_cells;
-	for(int g = 0; g < _ghosts.size(); g++) {
+	for(unsigned int g = 0; g < _ghosts.size(); g++) {
 		ghosts_cells.push_back(_grid->getCell(_ghosts[g].getXPosition(), _ghosts[g].getYPosition()));
 		_grid->setCell(_ghosts[g].getXPosition(), _ghosts[g].getYPosition(), 8);
 	}
 
 	_grid->displayGrid();
 
-	for (int p = 0; p < _pacmans.size(); p++) {
+	for (unsigned int p = 0; p < _pacmans.size(); p++) {
 		uint8_t cell_value = pacmans_cells[p];
 		if (cell_value != 9) {
 			_grid->setCell(_pacmans[p].getXPosition(), _pacmans[p].getYPosition(), 1);
 		}
 	}
 
-	for (int g = 0; g < _ghosts.size(); g++) {
+	for (unsigned int g = 0; g < _ghosts.size(); g++) {
 		uint8_t cell_value = ghosts_cells[g];
 		if (cell_value != 8) {
 			_grid->setCell(_ghosts[g].getXPosition(), _ghosts[g].getYPosition(), ghosts_cells[g]);
@@ -100,7 +100,7 @@ void Game::run() {
 	}
 
 	// Moving the pacmans and eat the big ball
-	for (int p = 0; p < _pacmans.size(); p++) {
+	for (unsigned int p = 0; p < _pacmans.size(); p++) {
 		_pacmans[p].move(1);
 		if (_pacmans[p].eat() == BIG_BALL) {
 			updateGhostsStatus(TIME_TO_FLEE);
@@ -114,7 +114,7 @@ void Game::run() {
 	ia.push_back(lowestDirectionUntilRandom);
 
 	// Moving the ghosts
-	for (int g = 0; g < _ghosts.size(); g++) {
+	for (unsigned int g = 0; g < _ghosts.size(); g++) {
 		bool in_jail = _ghosts[g].inJail();
 		if (!in_jail) {
 			if (_time_to_flee || _ghosts[g].getIaIndex() == 3 ) {
@@ -137,9 +137,9 @@ void Game::run() {
 // Function that returns true if the game is over
 bool Game::gameOver() {
 	//Return True if the game is over
-	int count = 0;
-	for (int p = 0; p < _pacmans.size(); p++) {
-		for (int g = 0; g < _ghosts.size(); g++) {
+	unsigned int count = 0;
+	for (unsigned int p = 0; p < _pacmans.size(); p++) {
+		for (unsigned int g = 0; g < _ghosts.size(); g++) {
 			if (_ghosts[g].entityCollision(_pacmans[p]) && !_time_to_flee) {
 				count++;
 			}
@@ -154,8 +154,8 @@ bool Game::gameOver() {
 // Function that eats the ghosts if it's allowed and possible
 void Game::eatGhostsIfAllowed() {
 	if (_time_to_flee) {
-		for (int p = 0; p < _pacmans.size(); p++) {
-			for (int g = 0; g < _ghosts.size(); g++) {
+		for (unsigned int p = 0; p < _pacmans.size(); p++) {
+			for (unsigned int g = 0; g < _ghosts.size(); g++) {
 				if (_ghosts[g].entityCollision(_pacmans[p])) {
 					_ghosts[g].setXPosition(X_CENTER);
 					_ghosts[g].setYPosition(Y_CENTER);
