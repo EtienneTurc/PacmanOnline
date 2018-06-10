@@ -1,6 +1,7 @@
 #include "game.h"
 #include <thread>
 
+// Constructor
 Game::Game() {
 	_time_to_flee = 0;
 	std::vector<Pacman> _pacmans;
@@ -36,6 +37,7 @@ void Game::addPacman(Pacman new_pacman) {
 	_pacmans.push_back(new_pacman);
 }
 
+// Function that display the grid with the pacmans and ghosts (not used anymore)
 void Game::displayEntities() {
 	std::vector<uint8_t> pacmans_cells;
 	for(int p = 0; p < _pacmans.size(); p++) {
@@ -66,6 +68,7 @@ void Game::displayEntities() {
 	}
 }
 
+// Function that initializes a game
 void Game::init() {
 	//Grid already initialized
 	Grid *grid = new Grid();
@@ -75,7 +78,7 @@ void Game::init() {
 	Pacman pacman(_grid, 18, 29, LEFT,  SPEED);
 	addPacman(pacman);
 
-	//Initialisation ghost
+	//Initialisation ghosts
 	Ghost gasper(_grid, X_CENTER,Y_CENTER,DOWN,SPEED, GHOST_SCORE, 0, 0);
 	addGhost(gasper);
 
@@ -90,25 +93,27 @@ void Game::init() {
 	// displayEntities();
 }
 
+// Function that runs to game (called at each tick of the server)
 void Game::run() {
 	if (_time_to_flee) {
 		_time_to_flee--;
 	}
 
+	// Moving the pacmans and eat the big ball
 	for (int p = 0; p < _pacmans.size(); p++) {
-		// int direction = randomDirection(_pacmans[p]);
-		// _pacmans[p].pushInput(direction);
 		_pacmans[p].move(1);
 		if (_pacmans[p].eat() == BIG_BALL) {
 			updateGhostsStatus(TIME_TO_FLEE);
 		}
 	}
 
+	// Defining the different possible ias
 	std::vector<int (*)(Pacman, Ghost)> ia;
 	ia.push_back(lowestDirection);
 	ia.push_back(lowestDirectionToIntersection);
 	ia.push_back(lowestDirectionUntilRandom);
 
+	// Moving the ghosts
 	for (int g = 0; g < _ghosts.size(); g++) {
 		bool in_jail = _ghosts[g].inJail();
 		if (!in_jail) {
@@ -123,10 +128,13 @@ void Game::run() {
 			}
 		}
 	}
+
+	// Eat the ghosts if it is allowed
 	eatGhostsIfAllowed();
 	// displayEntities();
 }
 
+// Function that returns true if the game is over
 bool Game::gameOver() {
 	//Return True if the game is over
 	int count = 0;
@@ -143,6 +151,7 @@ bool Game::gameOver() {
 	return false;
 }
 
+// Function that eats the ghosts if it's allowed and possible
 void Game::eatGhostsIfAllowed() {
 	if (_time_to_flee) {
 		for (int p = 0; p < _pacmans.size(); p++) {

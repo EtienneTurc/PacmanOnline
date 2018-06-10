@@ -1,5 +1,6 @@
 #include "entity.h"
 
+// Constructor
 Entity::Entity(Grid *grid, int x_position, int y_position, int direction, float speed, int score) {
 	_grid = grid;
 	_x_position = x_position;
@@ -63,6 +64,7 @@ void Entity::addScore(int score_to_add) {
 	_score += score_to_add;
 }
 
+// Function that returns true if those two entity collides (this function look huge because they are lot of cases to handle)
 bool Entity::entityCollision(Entity entity) {
 	int x_pos = entity.getXPosition();
 	int y_pos = entity.getYPosition();
@@ -157,6 +159,7 @@ void Entity::pushInput(int direction) {
 	_event = direction;
 }
 
+// Function that update the direction of the entity if it is possible
 void Entity::updateDirection(int direction) {
 	if (!_grid->checkWall(_x_position, _y_position, direction) && _direction != direction) {
 		if (((direction + 1)%4 +1) == _direction) {
@@ -179,6 +182,7 @@ void Entity::updateFraction() {
 	}
 }
 
+// Function that moves the entity
 void Entity::move(float delta_time) {
 	// Update the direction
 	if (_event) {
@@ -233,6 +237,7 @@ void Entity::move(float delta_time) {
 	}
 }
 
+// Function that moves an entity regardless of their fractions (used in ia_ghosts.cpp)
 void Entity::virtualMove() {
 	switch (_direction) {
 		case LEFT: {

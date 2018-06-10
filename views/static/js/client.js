@@ -20,6 +20,7 @@ socket.addEventListener('error', function (error) {
 	console.log(error);
 })
 
+// Function that catchs the message send by the server
 socket.addEventListener('message', function (event) {
 	var data = event.data.split(";")
 	var route = data[0]
@@ -46,10 +47,12 @@ socket.addEventListener('message', function (event) {
 	}
 });
 
+// Function that ask for the game (unused)
 function routeGetGame() {
 	socket.send("routeBeginGame;");
 }
 
+// Function that parses the grid given by the server into an array
 function routeGetGrid(data) {
 	grid = [[]]
 	sizeX = parseInt(data[0])
@@ -68,9 +71,9 @@ function routeGetGrid(data) {
 
 function routeGetNextAttackIn(data) {
 	next_attack_in = parseInt(data[0])
-	// console.log(next_attack_in);
 }
 
+// Function that parses the entities given by the server into a json object
 //Route;Pacman or Ghost?;Index in vector;XPosition;YPosition;Direction;Fraction;Score
 function routeGetEntity(data) {
 	is_pacman = (data[0] == "true")
@@ -131,15 +134,7 @@ function sleep (time) {
 	return new Promise((resolve) => setTimeout(resolve, time));
 }
 
-// function sleep(milliseconds) {
-//   var start = new Date().getTime();
-//   for (var i = 0; i < 1e7; i++) {
-//     if ((new Date().getTime() - start) > milliseconds){
-//       break;
-//     }
-//   }
-// }
-
+// Function that get the input of the player
 document.onkeydown = function(e) {
 	let direction = "0"
 	switch (e.keyCode) {

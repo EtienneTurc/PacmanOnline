@@ -25,9 +25,6 @@ public:
 	void addPacman(Pacman new_pacman);
 
 	void displayEntities();
-
-	//bool gameOver();
-
 	void init();
 	void run();
 	bool gameOver();

@@ -3,6 +3,7 @@
 #include <chrono>
 #include <thread>
 
+// Constructor
 Grid::Grid () {
 	_grid = {
 		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -63,6 +64,7 @@ void Grid::setCell(int x_position, int y_position, uint8_t value) {
 	_grid[y_position][x_position] = value;
 }
 
+// Function that initializes the big balls of the grid
 void Grid::setBigBalls() {
 	setCell(1, 6, BIG_BALL);
 	setCell(26, 6, BIG_BALL);
@@ -70,6 +72,7 @@ void Grid::setBigBalls() {
 	setCell(26, 25, BIG_BALL);
 }
 
+// Function that dispay the grid in the terminal (not used anymore)
 void Grid::displayGrid() {
 	system("clear");
 	for (int j = 0; j < _sizeY; j++) {
@@ -108,9 +111,8 @@ void Grid::displayGrid() {
 	}
 }
 
+//Function that returns true if there is a wall in front of the entity, and false if not
 bool Grid::checkWall(int x_position,int y_position,int direction) {
-	//return true if there is a wall, and false if not
-
 	switch (direction) {
 		case LEFT: {
 			return (int(_grid[y_position][(x_position - 1) % _sizeX]) == 0);
@@ -135,12 +137,14 @@ bool Grid::checkWall(int x_position,int y_position,int direction) {
 	}
 }
 
+// Function that returns all the possible directions given a position
 std::vector<int> Grid::checkIntersection(int x_position, int y_position) {
 	std::vector<int> directions;
 	for (int i = 1; i < 5; i++) {
 		if (!checkWall(x_position, y_position, i)) {
 			directions.push_back(i);
 		}
+		// Special case for the tunnel
 		if (x_position == 0 && y_position == 17) {
 			directions.push_back(LEFT);
 		}
@@ -148,10 +152,11 @@ std::vector<int> Grid::checkIntersection(int x_position, int y_position) {
 	return directions;
 }
 
+// Function that returns true if there is no more balls on the grid
 bool Grid::noMoreBalls() {
 	for (int i = 0; i < _sizeX; i++) {
 		for (int j = 0; j < _sizeY; j++) {
-			if (_grid[i][j] >  1) {
+			if (_grid[j][i] >  1) {
 				return false;
 			}
 		}

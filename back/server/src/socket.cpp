@@ -19,12 +19,14 @@ Socket::Socket () {
 }
 
 void Socket::on_open (websocketpp::connection_hdl hdl) {
+	// Opening the socket connection
 	_is_alive = true;
 	_connections.insert(hdl);
 	std::cout << "New socket connection" << '\n';
 }
 
 void Socket::on_close (websocketpp::connection_hdl hdl) {
+	// Closing the socket connection
 	_closed_connections.push(hdl);
 	_connections.erase(hdl);
 	std::cout << "Socket connection closed" << '\n';
@@ -35,17 +37,12 @@ void Socket::on_message (websocketpp::connection_hdl hdl, WsServer::message_ptr 
 	std::string instruction = msg->get_payload();
 	std::pair <websocketpp::connection_hdl, std::string> instructions;
 	instructions = std::make_pair(hdl, instruction);
-	// send(instructions);
 	_client_queue.push(instructions);
 }
 
 void Socket::send (std::pair <websocketpp::connection_hdl, std::string> instructions) {
-	// Loop through all connexions to send the command
+	// Find the client linked to this socket and send him a message if possible
 	con_list::iterator it;
-	// for (it = _connections.begin(); it != _connections.end(); ++it) {
-	// 	if (!instructions.first.owner_before(*it) && !*it.owner_before(instructions.first)) {
-	// 	}
-	// }
 	it = _connections.find(instructions.first);
 	if (it != _connections.end()) {
 		_server.send(instructions.first, instructions.second, websocketpp::frame::opcode::text);

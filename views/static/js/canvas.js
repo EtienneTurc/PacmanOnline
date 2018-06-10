@@ -15,6 +15,7 @@ function showButton(){
 	}
 }
 
+// Function that init the graphics of the game
 function init() {
 	pacmanMouth = false;
 	ghostOndulation = false;
@@ -23,6 +24,7 @@ function init() {
 	count = 3;
 }
 
+// Function that draws the game
 function game() {
 	var canvas = document.getElementById('canvas');
 
@@ -61,7 +63,7 @@ function game() {
 		countDown(count)
 	}
 
-
+	// Function that draws the grid, pacman and the ghosts
 	function animate() {
 		context.fillStyle = "black";
 		context.fillRect(0, 0, canvas.width, canvas.height);
@@ -93,6 +95,7 @@ function game() {
 
 	}
 
+	// Function that draws game Over with the score
 	function gameOver() {
 		context.fillStyle = "#F9C328";
 		context.textAlign="center";
@@ -106,6 +109,7 @@ function game() {
 		context.fillText("GAME OVER ",context.canvas.width/2, context.canvas.height/2 - 3*quantum);
 	}
 
+	// Function that draws Has Won with the score
 	function hasWon() {
 		context.fillStyle = "#F9C328";
 		context.textAlign="center";
@@ -119,6 +123,7 @@ function game() {
 		context.fillText("YOU WON !! ",context.canvas.width/2, context.canvas.height/2 - 3*quantum);
 	}
 
+	// Function that draws the count down
 	function countDown(){
 		context.fillStyle = "black";
 		context.fillRect(0, 0, canvas.width, canvas.height);

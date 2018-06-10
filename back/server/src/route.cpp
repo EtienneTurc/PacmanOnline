@@ -1,6 +1,13 @@
 #include <boost/algorithm/string.hpp>
 #include "route.h"
 
+// The protocol used is the following:
+// - String containing:
+//  - 1st position: the route (for instance routeGetGrid)
+//  - 2nd position and further: the data related to the routes such as inputs
+// - the arguments are separated by ";"
+
+// Constructor
 Route::Route(Instructions instructions, Games* games, Socket* socket) {
 	_hdl = instructions.first;
 	_game = getGame(games);
@@ -24,8 +31,8 @@ Route::Route(std::pair<websocketpp::connection_hdl, Game*> game, Socket* socket)
 	_socket = socket;
 }
 
+// Function that treat the instruction of the client
 void Route::treatInstruction() {
-	std::cout << "Method : " << _method << '\n';
 	if (_method == "routeBeginGame") {
 		routeBeginGame();
 	} else if (_method == "routeGetGrid") {
@@ -47,6 +54,7 @@ void Route::routeBeginGame() {
 	routeGetGame();
 }
 
+// Route that send the grid the the client
 //Route;SizeX;SizeY;Grid
 void Route::routeGetGrid() {
 	std::string data = "routeGetGrid;";
@@ -71,6 +79,7 @@ void Route::routeGetGrid() {
 	_socket->send(instructions);
 }
 
+// Function that sends the entity to the client
 // index_in_vector is the index of the entity in the vector -> it identifies it
 //Route;Pacman or Ghost?;Index in vector;Nbr of entities in the vector;XPosition;YPosition;Direction;Fraction;Score
 void Route::routeGetEntity(Entity* entity, bool is_Pacman, int index_in_vector) {
@@ -100,6 +109,7 @@ void Route::routeGetEntity(Entity* entity, bool is_Pacman, int index_in_vector) 
 	_socket->send(instructions);
 }
 
+// Route that sends the time left before the next attack of the ghosts
 //Route;next_attack_in
 void Route::routeGetNextAttackIn() {
 	std::string data = "routeGetNextAttackIn;";
@@ -111,6 +121,7 @@ void Route::routeGetNextAttackIn() {
 	_socket->send(instructions);
 }
 
+// Route that sends the game, meaning pacmans, ghosts, grid and the time before the next attack
 void Route::routeGetGame() {
 	std::vector<Pacman>* pacmans = _game->getPacmans();
 	for (int i = 0; i < pacmans->size(); i++) {
@@ -126,6 +137,7 @@ void Route::routeGetGame() {
 	routeGetNextAttackIn();
 }
 
+// Function that returns a pointer to the game linked to a given client, if not found it creates a new game for that client
 Game* Route::getGame(Games* games) {
 	int j = -1;
 	for (int i = 0; i < games->size(); i++) {
@@ -143,6 +155,7 @@ Game* Route::getGame(Games* games) {
 	}
 }
 
+// Function that creat a new game and add to it to the vector of games
 Game* Route::createGame(Games* games) {
 	Game* new_game = new Game;
 	std::pair<websocketpp::connection_hdl, Game*> game = std::make_pair(_hdl, new_game);
@@ -152,6 +165,7 @@ Game* Route::createGame(Games* games) {
 	return new_game;
 }
 
+// Function that treats the inputs of the client
 //is Pacman ?;Index in vector;Direction (in _data)
 void Route::routePostEntityDirection() {
 	if (_data.size() > 2) {
@@ -160,14 +174,18 @@ void Route::routePostEntityDirection() {
 
 		if (_data[0] == "true") {
 			std::vector<Pacman>* pacmans = _game->getPacmans();
-			Pacman* pacman = &pacmans->at(index_in_vector);
-			pacman->pushInput(direction);
-			pacman->setInputTime(INPUT_TIME);
+			if (pacmans->size() > index_in_vector) {
+				Pacman* pacman = &pacmans->at(index_in_vector);
+				pacman->pushInput(direction);
+				pacman->setInputTime(INPUT_TIME);
+			}
 		} else {
 			std::vector<Ghost>* ghosts = _game->getGhosts();
-			Ghost* ghost = &ghosts->at(index_in_vector);
-			ghost->pushInput(direction);
-			ghost->setInputTime(INPUT_TIME);
+			if (ghosts->size() > index_in_vector) {
+				Ghost* ghost = &ghosts->at(index_in_vector);
+				ghost->pushInput(direction);
+				ghost->setInputTime(INPUT_TIME);
+			}
 		}
 	}
 }
