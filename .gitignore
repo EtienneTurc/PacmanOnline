@@ -3,4 +3,6 @@ back/.vscode
 back/deps
 back/objs
 back/main
+back/build
 client/node_modules
+wake_server.sh
